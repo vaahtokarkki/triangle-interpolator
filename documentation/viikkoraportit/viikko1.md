@@ -15,7 +15,7 @@ Opin tällä viikolla paljon eri interpolointimenetelmistä sekä barysentrisist
 
 Työn parissa hieman epäselvää on, onko lähestymistapani interpolointiin kuitenkaan oikea ja saadaanko sillä oikeita tuloksia. Periaatteessa sen pitäisi toimia ainakin pienillä syötteillä (vähän mittauksia joista interpoloida), mutta suuremmilla syötteillä algoritmissa voisi mahdollisesti tapahtua jotain kummallista. Se jääköön nähtäväksi kun toteutus edistyy. Myös algoritmin tehokkuus on tällä hetkellä melko avoin ja vaikea arvioida, enne kuin pääsee tarkemmin toteutuksen pariin minkälaisia vaiheita ratkaisu lopulta vaatii. 
 
-Myös yhtenä kysymysmerkkinä tällä hetkellä on, saako javan File- tai Scanner-luokkia käyttää tiedoston lukemiseen ja kirjoittamiseen? Millä tasolla I/O-operaatiot tiedostoon täytyy toteuttaa itse?
+Yhtenä kysymysmerkkinä tällä hetkellä on myös, saako javan File- tai Scanner-luokkia käyttää tiedoston lukemiseen ja kirjoittamiseen? Millä tasolla I/O-operaatiot tiedostoon täytyy toteuttaa itse? Myös lopputuloksena tuotettavan kuvan kirjoittamiseen käytettävät kirjastot ovat vielä täysin kysymysmerkkinä. Palaan näihin vielä myöhemmässä vaiheessa, kun  algoritmi on siinä vaiheessa, että sillä saa tuotettua jotain mistä generoida kuvatiedosto.
 
 ## Mitä teen seuraavaksi?
 
