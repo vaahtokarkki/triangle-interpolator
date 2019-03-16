@@ -7,3 +7,5 @@ Tiralabra 2019 IV
 * [Määrittelydokumentti](documentation/maarittelydokumentti.md)
 
 ## Viikkoraportit
+
+* [Viikko 1](documentation/viikkoraportit/viikko1.md)
