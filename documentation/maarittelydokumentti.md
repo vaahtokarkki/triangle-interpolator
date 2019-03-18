@@ -20,7 +20,20 @@ Tarkoituksena on interpoloida annetuista, satunnaisesti sijoitetuista mittauksis
 
 ## Mitä syötteitä ohjelma saa ja miten näitä käytetään
 
-Aineisto annetaan csv-tiedostossa, jossa mittaukset ja niiden koordinaatit.  Koordinaatit ainakin aluksi vain ETRS-TM35FIN muodossa, mutta mahdollisesti myöhemmässä vaiheessa tuki myös wgs84 desimaalimuodossa oleville koordinaateille. Periaatteessa koordinaatit voisi antaa mielivaltaisessa muodossa, mutta käytännön kannalta totetutan tuen, jollekin käytössä olevalle standardille. Lisäksi ohjelmalle annetaan parametrina resoluutio, jolla määritetään luotavan kuvatiedoston koko. Lopputuloksena olisi siis kuva, jossa on annettujen mittausten rajaamalle alueelle jokaiselle pikselille interpoloitu arvo. Lopputulos voi olla esimerkiksi mustavalkoinen tai arvoille voidaan myös antaa värit. Taustakartta ei luultavasti kuvaan saa lisättyä, koska ei ole välttämättä aivan triviaalia kohdistaa mittauspisteitä ja taustakarttaa oikein, jotta annetut mittaukset osuvat kartassa oikealle kohdalle. 
+Aineisto annetaan csv-tiedostossa, jossa mittaukset ja niiden koordinaatit.  Koordinaatit ainakin aluksi vain ETRS-TM35FIN muodossa, mutta mahdollisesti myöhemmässä vaiheessa tuki myös wgs84 desimaalimuodossa oleville koordinaateille. Periaatteessa koordinaatit voisi antaa mielivaltaisessa muodossa, mutta käytännön kannalta totetutan tuen, jollekin käytössä olevalle standardille. Lisäksi ohjelmalle annetaan parametrina resoluutio, jolla määritetään luotavan kuvatiedoston koko.
+
+Alla muutama rivi esimerkkisyötteestä. Ohjelmalle täytyy antaa myös parametrina, mitä saraketta csv-tiedostossa käytetään x- ja y-koordinaatteihin, sekä minkä sarakkeen arvoa interpoloidaan. 
+
+| xkoord | ykoord  | vaesto |
+|--------|---------|--------|
+| 395000 | 6689000 | 1492   |
+| 394000 | 6689000 | 1369   |
+| 393000 | 6689000 | 3136   |
+| 392000 | 6689000 | 2655   |
+
+Yllä oleva syöte on tehty tilastokeskuksen avoimesta väestöruutuaineistosta ja kuvaa kuinka monta asukasta asuu 1km x 1km ruudun alueella, kun ruudun keskipiste on koordinaattien osoittamassa kohdassa. Muita mahdollisia interpoloitavia kohteita voisi olla esimerkiksi säähavainnot (lämpötila, sademäärä, ilmanlaatu jne) tai korkeustiedot korkeusmallin luomiseksi.
+
+Lopputuloksena olisi siis kuva, jossa on annettujen mittausten rajaamalle alueelle jokaiselle pikselille interpoloitu arvo. Lopputulos voi olla esimerkiksi mustavalkoinen tai arvoille voidaan myös antaa värit. Taustakartta ei luultavasti kuvaan saa lisättyä, koska ei ole välttämättä aivan triviaalia kohdistaa mittauspisteitä ja taustakarttaa oikein, jotta annetut mittaukset osuvat kartassa oikealle kohdalle. 
 
 ## Tavoitteena olevat aika- ja tilavaativuudet (m.m. O-analyysit)
 
