@@ -6,7 +6,6 @@
 package interpolate;
 
 import point.Point;
-import barycentricCalc.CalculateBarycentric;
 
 /**
  *
