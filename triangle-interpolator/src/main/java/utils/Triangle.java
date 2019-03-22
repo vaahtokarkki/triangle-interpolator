@@ -123,7 +123,7 @@ public class Triangle {
      * @param weights an array of calculated weights 
      * @return true if weights are inside triangle, else false
      */
-    public boolean isInsideTriangle(double[] weights) {
+    private boolean isInsideTriangle(double[] weights) {
         if (weights.length < 3) {
             return false;
         }
