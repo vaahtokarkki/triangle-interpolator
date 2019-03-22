@@ -7,7 +7,7 @@ package main;
 
 import static interpolate.Interpolator.*;
 import static imageWriter.Writer.*;
-import point.Point;
+import utils.*;
 import java.util.*;
 
 /**
@@ -41,9 +41,12 @@ public class Main {
 
         Point[] list = {p1, p2, p3, p4, p5, p6};
 
-        Point test = new Point(2, 6, 0);
-
-        System.out.println(Arrays.toString(test.findClosestPoints(list, 3)));
+        Point test = new Point(3, 3, 0);
+        
+        Triangle k = new Triangle(test, test, test);
+        double te = Double.NaN;
+ 
+        System.out.println(Arrays.toString(test.findClosestPoints(list)));
 
     }
 

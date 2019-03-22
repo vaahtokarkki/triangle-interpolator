@@ -5,7 +5,7 @@
  */
 package interpolate;
 
-import point.Point;
+import utils.*;
 
 /**
  *
@@ -15,10 +15,12 @@ public class Interpolator {
     
     
     public static double[][] interpolateMatrix(int[][] matrix) {
-        //For testin only
+        //For testing only
         Point p1 = new Point(500, 0, 250.0);
         Point p2 = new Point(0, 999, 140.0);
         Point p3 = new Point(999, 999, 0.0);
+        
+        Triangle triangle = new Triangle(p1, p2, p3);
         
 
         if (matrix == null || matrix.length == 0) {
@@ -29,16 +31,13 @@ public class Interpolator {
 
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix[0].length; x++) {
-                double[] weights = barycentricCalc.CalculateBarycentric.calcBarycentricWeights(x, y, p1, p2, p3);
+                double interpolatedValue = triangle.calcWeightOfPoint(new Point(x, y, 0));
 
-                if (!barycentricCalc.CalculateBarycentric.insideTriangle(weights)) {
+                if (Double.isNaN(interpolatedValue)) {
                     output[y][x] = -1.0;
                     continue;
                 }
 
-                double interpolatedValue = p1.getWeight() * weights[0]
-                        + p2.getWeight() * weights[1]
-                        + p3.getWeight() * weights[2];
                 output[y][x] = (double) Math.round(interpolatedValue * 100) / 100;;
             }
         }
