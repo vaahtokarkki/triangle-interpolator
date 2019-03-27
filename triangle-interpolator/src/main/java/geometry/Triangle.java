@@ -1,9 +1,9 @@
-package utils;
+package geometry;
 
 /**
  * Represents a triangle in 2D plane
  *
- * @see utils.Point
+ * @see geometry.Point
  * @author lroni
  */
 public class Triangle {
@@ -28,7 +28,7 @@ public class Triangle {
     /**
      * Returns vertex 1
      *
-     * @return vertex as {@link utils.Point}
+     * @return vertex as {@link geometry.Point}
      */
     public Point getVertex1() {
         return vertex1;
@@ -37,7 +37,7 @@ public class Triangle {
     /**
      * Returns vertex 2
      *
-     * @return vertex as {@link utils.Point}
+     * @return vertex as {@link geometry.Point}
      */
     public Point getVertex2() {
         return vertex2;
@@ -46,7 +46,7 @@ public class Triangle {
     /**
      * Returns vertex 3
      *
-     * @return vertex as {@link utils.Point}
+     * @return vertex as {@link geometry.Point}
      */
     public Point getVertex3() {
         return vertex3;
@@ -59,31 +59,27 @@ public class Triangle {
      * i.e. with returned array [0.30, 0.20, 0.50] gives weight for given point:
      * 30% of vertex 1 weight, 20% of vertex 2 weight and 50% of vertex 3 weight
      *
-     * @param p Weight of {@link utils.Point} to calculate
+     * @param p Weight of {@link geometry.Point} to calculate
      * @return an array containing percentages of vertex weights
      */
     private double[] calculatebarycentricWeights(Point p) {
-        int P1x = vertex1.getX();
-        int P1y = vertex1.getY();
-        int P2x = vertex2.getX();
-        int P2y = vertex2.getY();
-        int P3x = vertex3.getX();
-        int P3y = vertex3.getY();
+        double P1x = vertex1.getX();
+        double P1y = vertex1.getY();
+        double P2x = vertex2.getX();
+        double P2y = vertex2.getY();
+        double P3x = vertex3.getX();
+        double P3y = vertex3.getY();
 
-        int x = p.getX();
-        int y = p.getY();
+        double x = p.getX();
+        double y = p.getY();
 
-        double weightP1 = (double) ((P2y - P3y) * (x - P3x) + (P3x - P2x) * (y - P3y))
+        double weightP1 = ((P2y - P3y) * (x - P3x) + (P3x - P2x) * (y - P3y))
                 / ((P2y - P3y) * (P1x - P3x) + (P3x - P2x) * (P1y - P3y));
 
-        double weightP2 = (double) ((P3y - P1y) * (x - P3x) + (P1x - P3x) * (y - P3y))
+        double weightP2 = ((P3y - P1y) * (x - P3x) + (P1x - P3x) * (y - P3y))
                 / ((P2y - P3y) * (P1x - P3x) + (P3x - P2x) * (P1y - P3y));
 
-        double weightP3 = (double) 1 - weightP1 - weightP2 * 1.0;
-
-        weightP1 = (double) Math.round(weightP1 * 100) / 100;
-        weightP2 = (double) Math.round(weightP2 * 100) / 100;
-        weightP3 = (double) Math.round(weightP3 * 100) / 100;
+        double weightP3 = 1 - weightP1 - weightP2 * 1.0;
 
         double[] output = {weightP1, weightP2, weightP3};
 
@@ -97,13 +93,13 @@ public class Triangle {
      *
      * @see Triangle#calculatebarycentricWeights(utils.Point)
      *
-     * @param p Weight of {@link utils.Point} to calculate
+     * @param p Weight of {@link geometry.Point} to calculate
      * @return weight of point or NaN
      */
     public double calcWeightOfPoint(Point p) {
         double[] weights = this.calculatebarycentricWeights(p);
 
-        if (!this.isInsideTriangle(weights)) {
+        if (!this.areWeightsInsideTriangle(weights)) {
             return Double.NaN;
         }
 
@@ -115,15 +111,33 @@ public class Triangle {
     }
 
     /**
+     * Checks if given point is inside triangle.
+     *
+     * @see Triangle#calculatebarycentricWeights(utils.Point)
+     * @see Triangle#areWeightsInsideTriangle(double[])
+     *
+     * @param p
+     * @return true if Point is inside triangle, else false
+     */
+    public boolean isPointInsideTriangle(Point p) {
+        double[] weights = this.calculatebarycentricWeights(p);
+        return areWeightsInsideTriangle(weights);
+    }
+
+    public boolean isValidDelaunay(Point[] listOfPoints) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Checks if calculated barycentric weights are inside triangle. That is if
      * all values in given array is positive.
-     * 
-     * @see Triangle#calculatebarycentricWeights(utils.Point) 
      *
-     * @param weights an array of calculated weights 
+     * @see Triangle#calculatebarycentricWeights(utils.Point)
+     *
+     * @param weights an array of calculated weights
      * @return true if weights are inside triangle, else false
      */
-    private boolean isInsideTriangle(double[] weights) {
+    private boolean areWeightsInsideTriangle(double[] weights) {
         if (weights.length < 3) {
             return false;
         }
@@ -137,7 +151,18 @@ public class Triangle {
         return true;
     }
 
-    public boolean isValidDelaunay() {
+    public Point findCircumcenter() {
+        //Used in isValidDelaunay()
+
+        /*
+        1 find first lines from vertex1 to vertex2 and vertex2 to vertex3
+        2 find for step 1 lines midpoint
+        3 find for step 1 lines normal by step 2 midpoints (line that is a normal
+        4 to original lines and goes trough midpoint of original line)
+        5 calculate perpendicular lines by points calclulkated in step 3
+        6 find point where step 4 lines intersect
+
+         */
         throw new UnsupportedOperationException();
     }
 

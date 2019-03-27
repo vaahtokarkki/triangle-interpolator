@@ -1,4 +1,4 @@
-package utils;
+package geometry;
 
 import java.util.*;
 
@@ -10,8 +10,8 @@ import java.util.*;
  */
 public class Point {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private double weight;
 
     /**
@@ -21,10 +21,17 @@ public class Point {
      * @param y y-coordinate
      * @param weight weight or value assigned to point
      */
-    public Point(int x, int y, double weight) {
+    public Point(double x, double y, double weight) {
         this.x = x;
         this.y = y;
         this.weight = weight;
+
+    }
+
+    public Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+        this.weight = 0;
     }
 
     /**
@@ -32,7 +39,7 @@ public class Point {
      *
      * @return x-coordinate
      */
-    public int getX() {
+    public double getX() {
         return x;
     }
 
@@ -41,7 +48,7 @@ public class Point {
      *
      * @return y-coordinate
      */
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -59,7 +66,7 @@ public class Point {
      *
      * @param x new x-coordinate
      */
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
@@ -68,7 +75,7 @@ public class Point {
      *
      * @param y new y-coordinate
      */
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -88,8 +95,8 @@ public class Point {
      * @return distance
      */
     public double calculateDistance(Point point) {
-        int deltaX = point.x - this.x;
-        int deltaY = point.y - this.y;
+        double deltaX = point.x - this.x;
+        double deltaY = point.y - this.y;
 
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance;
@@ -135,6 +142,24 @@ public class Point {
     @Override
     public String toString() {
         return "x: " + this.x + " y: " + this.y + ", weight: " + this.weight;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        Point p = (Point) o;
+        return p.getX() == x && p.getY() == y && p.getWeight() == weight;
     }
 
 }

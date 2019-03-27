@@ -1,18 +1,17 @@
-package utils;
+package geometry;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import utils.Point;
+import geometry.Point;
 
 /**
  *
@@ -38,10 +37,10 @@ public class PointTest {
 
     @Before
     public void setUp() {
-        P1 = new Point(0, 0, 1.0);
-        P2 = new Point(0, 3, 2.0);
-        P3 = new Point(3, 4, 3.0);
-        P4 = new Point(7, 4, 4.0);
+        P1 = new Point(0, 0);
+        P2 = new Point(0, 3);
+        P3 = new Point(3, 4);
+        P4 = new Point(7, 4);
     }
 
     @After
@@ -50,17 +49,18 @@ public class PointTest {
 
     @Test
     public void testPointXCoordinateCorrect() {
-        assertEquals(0, P1.getX());
+        assertEquals(0.0, P1.getX(), 0.001);
     }
 
     @Test
     public void testPointYCoordinateCorrect() {
-        assertEquals(0, P1.getY());
+        assertEquals(0.0, P1.getY(), 0.001);
     }
 
     @Test
     public void testPointWeightCorrect() {
-        assertEquals(1.0, P1.getWeight(), 0.001);
+        Point newPoint = new Point(0, 0, 1.0);
+        assertEquals(1.0, newPoint.getWeight(), 0.001);
     }
 
     @Test

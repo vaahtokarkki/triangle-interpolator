@@ -1,4 +1,4 @@
-package utils;
+package geometry;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -6,13 +6,14 @@ package utils;
  * and open the template in the editor.
  */
 
+import geometry.Point;
+import geometry.Triangle;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import utils.*;
 
 /**
  *
@@ -80,9 +81,9 @@ public class TriangleTest {
 
     @Test
     public void testCalculatePointWeightWhenOnSide() {
-        assertEquals(5.0, triangle.calcWeightOfPoint(new Point(3, 0, 0)), 0.001);
-        assertEquals(10.0, triangle.calcWeightOfPoint(new Point(0, 3, 0)), 0.001);
-        assertEquals(15.0, triangle.calcWeightOfPoint(new Point(3, 3, 0)), 0.001);
+        assertEquals(5.0, triangle.calcWeightOfPoint(new Point(3.0, 0.0, 0)), 0.001);
+        assertEquals(10.0, triangle.calcWeightOfPoint(new Point(0.0, 3.0, 0)), 0.001);
+        assertEquals(15.0, triangle.calcWeightOfPoint(new Point(3.0, 3.0, 0)), 0.001);
     }
 
     @Test

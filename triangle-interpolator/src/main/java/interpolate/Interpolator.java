@@ -5,7 +5,8 @@
  */
 package interpolate;
 
-import utils.*;
+import geometry.Point;
+import geometry.Triangle;
 
 /**
  *
