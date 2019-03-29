@@ -5,8 +5,8 @@
  */
 package main;
 
-import geometry.Point;
 import geometry.Line;
+import geometry.Point;
 import geometry.Triangle;
 import static interpolate.Interpolator.*;
 import static imageWriter.Writer.*;
@@ -19,52 +19,25 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        /*int[][] matrix = new int[1000][1000];
-        
-        for(int[] i : matrix) {
-            System.out.println(Arrays.toString(i));
-        }
-        
-        double[][] out = interpolateMatrix(matrix);
-        System.out.println(out);
-        for(double[] i : out) {
-            System.out.println(Arrays.toString(i));
-        }
-        
-        writeToImage(out);
-         */
-        Point p1 = new Point(1, 1,0);
-        Point p2 = new Point(4, 4);
-        Point p3 = new Point(1, 8);
-        Point p4 = new Point(2, 4);
-        
-        Point P1 = new Point(0, 0);
-        Point P2 = new Point(5, 0);
-        Point P3 = new Point(8, 5);
-        
-        Line ll = new Line(P1, P2);
-        System.out.println(ll.getMidPoint());
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(5, 0);
+        double[] k = new double[3];
+        System.out.println(new Line(k));
 
-        
-        
-        Triangle triangle = new Triangle(P1, P2, P3);
-//        System.out.println(triangle.calcWeightOfPoint(kala));
-                
-
-        Triangle t = new Triangle(p1, p2, p3);
-//        System.out.println(t.calcWeightOfPoint(new Point(2, 2, 0)));
-
-        Line l1 = new Line(P1, P3);
-        Line l2 = new Line(p3, p4);
-        
-        System.out.println(Arrays.toString(l1.solveLine()));
-        System.out.println(Arrays.toString(l1.findPerpendicularLine()));
-        System.out.println(Arrays.toString(l1.findPerpendicularLineByPoint(P3)));
-        
-        
-
-//        System.out.println(l1.findIntersect(l2));
-
+//        ArrayList<Point> list = new ArrayList<>();
+//        Random rand = new Random(1337);
+//
+//        for (int i = 0; i < 50; i++) {
+//            int x = rand.nextInt(900 + 1);
+//            int y = rand.nextInt(900 + 1);
+//            int value = rand.nextInt((255 - 100) + 1) + 100;
+//            list.add(new Point(x, y, value));
+//        }
+//
+//        HashSet<Triangle> t = triangulate(list);
+//        double[][] out = interpolateMatrix(1000, 1000, list);
+//        writeToImage(out);
+//        writeTrianglesToImage(1000, 1000, t);
     }
 
 }

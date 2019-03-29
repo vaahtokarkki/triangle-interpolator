@@ -107,6 +107,10 @@ public class Line {
      * output array, b is the second element and c is the third element
      */
     public double[] solveLine() {
+        if (start == null || end == null) {
+            return parameters;
+        }
+
         double a = end.getY() - start.getY();
         double b = start.getX() - end.getX();
         double c = a * (start.getX()) + b * (start.getY());
@@ -172,7 +176,7 @@ public class Line {
 
     @Override
     public String toString() {
-        return start + " - " + end + " distance: " + length + " eq: " + Arrays.toString(parameters);
+        return start + " - " + end + " distance: " + length + ", equation: " + parameters[0] + "x + " + parameters[1] + "y = " + parameters[2];
     }
 
 }

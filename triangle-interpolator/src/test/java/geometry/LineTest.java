@@ -80,6 +80,19 @@ public class LineTest {
     }
 
     @Test
+    public void testLineParametersWhenPointsNotDefined() {
+        Line l = new Line(parameters1);
+        assertArrayEquals(parameters1, l.getParameters(), 0.001);
+    }
+
+    @Test
+    public void testLineParametersWhenPointsDefined() {
+        Line l = new Line(P1, P2);
+        double[] expected = l.solveLine();
+        assertArrayEquals(expected, l.getParameters(), 0.001);
+    }
+
+    @Test
     public void testLineLenghtWhenSamePoints() {
         Line l = new Line(P1, P1);
         assertEquals(0, l.getLength(), 0.001);
@@ -113,6 +126,12 @@ public class LineTest {
     }
 
     @Test
+    public void testLineMidpointWhenPointsNotDefined() {
+        Line l = new Line(parameters1);
+        assertNull(l.getMidPoint());
+    }
+
+    @Test
     public void testLineMidpointWhenStraight() {
         Line l1 = new Line(P1, P2);
         Line l2 = new Line(P1, P3);
@@ -130,9 +149,19 @@ public class LineTest {
     }
 
     @Test
-    public void testLineMidpointWhenPointsNotDefined() {
-        Line l = new Line(parameters1);
-        assertNull(l.getMidPoint());
+    public void testSolveLineWhenPointsNotDefined() {
+        double[] params = {1.0, 1.0, 5.0};
+        Line l = new Line(params);
+
+        assertArrayEquals(params, l.solveLine(), 0.001);
+    }
+
+    @Test
+    public void testSolveLineWhenSamePoint() {
+        double[] expected = {0.0, 0.0, 0.0};
+        Line l = new Line(P1, P1);
+
+        assertArrayEquals(expected, l.solveLine(), 0.001);
     }
 
     @Test
@@ -177,6 +206,14 @@ public class LineTest {
         //Test points not on solved line
         assertFalse(pointIsOnLine(values1, pointNotOnLine));
         assertFalse(pointIsOnLine(values2, pointNotOnLine));
+    }
+
+    @Test
+    public void testFindIntersectWhenParallel() {
+        Line l1 = new Line(P1, P2);
+        Line l2 = new Line(P2, P1);
+
+        assertNull(l1.findIntersect(l2));
     }
 
     @Test
@@ -306,4 +343,20 @@ public class LineTest {
         assertArrayEquals(expected2, l2.findPerpendicularLineByPoint(new Point(8, 5)), 0.001);
         assertArrayEquals(expected2, l2ByParam.findPerpendicularLineByPoint(new Point(8, 5)), 0.001);
     }
+
+    @Test
+    public void toStringWhenPointsDefined() {
+        Line l = new Line(P1, P2);
+        double[] lineParams = l.getParameters();
+        String expected = P1.toString() + " - " + P2.toString() + " distance: " + l.getLength() + ", equation: " + lineParams[0] + "x + " + lineParams[1] + "y = " + lineParams[2];
+        assertEquals(expected, l.toString());
+    }
+
+    @Test
+    public void toStringWhenPointsNotDefined() {
+        Line l = new Line(parameters1);
+        String expected = "null - null distance: NaN, equation: " + parameters1[0] + "x + " + parameters1[1] + "y = " + parameters1[2];
+        assertEquals(expected, l.toString());
+    }
+
 }

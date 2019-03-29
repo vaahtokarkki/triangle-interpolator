@@ -1,5 +1,8 @@
 package geometry;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 /**
  * Represents a triangle in 2D plane
  *
@@ -11,6 +14,7 @@ public class Triangle {
     private Point vertex1;
     private Point vertex2;
     private Point vertex3;
+    private HashSet<Point> setOfVertexes;
 
     /**
      * Creates a triangle with given vertexes
@@ -23,6 +27,10 @@ public class Triangle {
         this.vertex1 = vertex1;
         this.vertex2 = vertex2;
         this.vertex3 = vertex3;
+        this.setOfVertexes = new HashSet<>();
+        setOfVertexes.add(vertex1);
+        setOfVertexes.add(vertex2);
+        setOfVertexes.add(vertex3);
     }
 
     /**
@@ -87,6 +95,32 @@ public class Triangle {
     }
 
     /**
+     * Calculates value for given point by getting average of triangle's
+     * vertexes. That is the sum of distances from point to vertexes multiplied
+     * by the weight of vertex and the sum is divided by three (number of
+     * vertexes).
+     *
+     * Note: This method is not recommended to use if the triangle is not
+     * equilateral.
+     *
+     * @param p Point where to calculate value
+     * @return value of point or NaN if point is outside triangle
+     */
+    public double calculateAvgValue(Point p) {
+        if (!this.isPointInsideTriangle(p)) {
+            return Double.NaN;
+        }
+
+        double w1 = 1 / p.calculateDistance(vertex1);
+        double w2 = 1 / p.calculateDistance(vertex2);
+        double w3 = 1 / p.calculateDistance(vertex3);
+
+        double values = w1 * vertex1.getWeight() + w2 * vertex2.getWeight() + w3 * vertex3.getWeight();
+
+        return values / (w1 + w2 + w3);
+    }
+
+    /**
      * Returns value of given point calculated by barycentric coordinates. The
      * point must be inside of triangle to calculate weight. If the point is
      * outside of triangle method return NaN.
@@ -124,8 +158,48 @@ public class Triangle {
         return areWeightsInsideTriangle(weights);
     }
 
-    public boolean isValidDelaunay(Point[] listOfPoints) {
-        throw new UnsupportedOperationException();
+    /**
+     * Returns true if point is on some of the lines between triangles vertexes.
+     * That is, if one of the calculated brycentrinc weights is 0.
+     *
+     * @param p Point to check
+     * @return true if point is on triangles side
+     */
+    public boolean isPointOnTriangleSide(Point p) {
+        double[] weights = this.calculatebarycentricWeights(p);
+
+        if (!this.areWeightsInsideTriangle(weights)) {
+            return false;
+        }
+
+        for (double value : weights) {
+            if (value < 0.005) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if this triangle is a valid Delaunay triangle. That is if inside
+     * triangles circumcenter circle is not any other points that the triangles
+     * vertexes.
+     *
+     * @param listOfPoints list of points used in triangulation.
+     *
+     * @return true if triangle is a valid Delaunay triangle
+     */
+    public boolean isValidDelaunay(ArrayList<Point> listOfPoints) {
+        Circle circumcenter = this.getCircumcenterCircle();
+
+        if (circumcenter == null) {
+            return false;
+        }
+
+        ArrayList<Point> pointsInsideCircle = circumcenter.findPointsInside(listOfPoints, setOfVertexes);
+
+        return pointsInsideCircle.size() == 0;
     }
 
     /**
@@ -151,19 +225,87 @@ public class Triangle {
         return true;
     }
 
+    /**
+     * Returns triangle's circumcenter, that is the point where the distance to
+     * all the vertices is same.
+     *
+     * Steps how to calculate the cirumcenter:
+     * <ul>
+     * <li>Create line AB from vertex1 to vertex2 and line BC vertex2 to
+     * vertex3</li>
+     * <li>Find midpoints for those lines </li>
+     * <li>Find normals for lines AB and BC by their midpoints</li>
+     * <li>Find intersect point from previous step's lines</li>
+     * </ul>
+     *
+     * @return
+     */
     public Point findCircumcenter() {
-        //Used in isValidDelaunay()
-
         /*
         1 find first lines from vertex1 to vertex2 and vertex2 to vertex3
         2 find for step 1 lines midpoint
         3 find for step 1 lines normal by step 2 midpoints (line that is a normal
         4 to original lines and goes trough midpoint of original line)
-        5 calculate perpendicular lines by points calclulkated in step 3
+        5 calculate perpendicular lines by points calculated in step 3
         6 find point where step 4 lines intersect
-
          */
-        throw new UnsupportedOperationException();
+
+        Line AB = new Line(vertex1, vertex2);
+        Line BC = new Line(vertex2, vertex3);
+
+        Point ABmidpoint = AB.getMidPoint();
+        Point BCmidpoint = BC.getMidPoint();
+
+        double[] parametersOfNormalForAB = AB.findPerpendicularLineByPoint(ABmidpoint);
+        double[] parametersOfNormalForBC = BC.findPerpendicularLineByPoint(BCmidpoint);
+
+        Line normalOfAB = new Line(parametersOfNormalForAB);
+        Line normalOfBC = new Line(parametersOfNormalForBC);
+
+        Point intersect = normalOfAB.findIntersect(normalOfBC);
+        return intersect;
+    }
+
+    /**
+     * Returns circle representing triangle's circumcenter.
+     *
+     * @return Circle of circumcenter or null if all vrtexes are on same line.
+     */
+    public Circle getCircumcenterCircle() {
+        Point circumcenter = this.findCircumcenter();
+
+        //If all vertexes are parallel 
+        if (circumcenter == null) {
+            return null;
+        }
+
+        double radius = circumcenter.calculateDistance(vertex1);
+
+        return new Circle(circumcenter, radius);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        Triangle t = (Triangle) o;
+
+        return t.hashCode() == this.hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return vertex1.hashCode() + vertex2.hashCode() + vertex3.hashCode();
     }
 
     @Override

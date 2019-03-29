@@ -1,6 +1,8 @@
 package geometry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -104,14 +106,16 @@ public class Point {
 
     /**
      * Creates and sorts an array array of given points by their distance to
-     * this point, ordered by closest point first
+     * this point, ordered by closest point first.
+     *
+     * Note: Not used currently! Maybe no need to implement Collections.sort()
      *
      * @param listOfPoints array of points to sort
      * @return new sorted array of points
      */
-    public Point[] findClosestPoints(Point[] listOfPoints) {
-        int n = listOfPoints.length;
-        Point[] output = new Point[n];
+    public ArrayList<Point> findClosestPoints(ArrayList<Point> listOfPoints) {
+        int n = listOfPoints.size();
+        ArrayList<Point> output = new ArrayList<>();
         ArrayList<Line> listOfDistances = new ArrayList<>();
 
         for (Point p : listOfPoints) {
@@ -133,7 +137,7 @@ public class Point {
         });
 
         for (int i = 0; i < n; i++) {
-            output[i] = listOfDistances.get(i).getEnd();
+            output.add(listOfDistances.get(i).getEnd());
         }
 
         return output;
@@ -160,6 +164,19 @@ public class Point {
 
         Point p = (Point) o;
         return p.getX() == x && p.getY() == y && p.getWeight() == weight;
+    }
+
+    @Override
+    public int hashCode() {
+        /*
+        int hashCode = 0;
+        hashCode = (int) Math.pow(hashCode * 31, x);
+        hashCode = (int) Math.pow(hashCode * 31, y);
+         */
+        int hashCode = 23;
+        hashCode = hashCode * 31 + (int) x;
+        hashCode = hashCode * 31 + (int) y;
+        return hashCode;
     }
 
 }
