@@ -113,7 +113,7 @@ public class Point {
      * @param listOfPoints array of points to sort
      * @return new sorted array of points
      */
-    public ArrayList<Point> findClosestPoints(ArrayList<Point> listOfPoints) {
+    private ArrayList<Point> findClosestPoints(ArrayList<Point> listOfPoints) {
         int n = listOfPoints.size();
         ArrayList<Point> output = new ArrayList<>();
         ArrayList<Line> listOfDistances = new ArrayList<>();

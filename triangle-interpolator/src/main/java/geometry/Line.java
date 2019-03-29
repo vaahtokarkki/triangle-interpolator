@@ -1,7 +1,5 @@
 package geometry;
 
-import java.util.Arrays;
-
 /**
  * Represents a line in 2D plane.
  *
