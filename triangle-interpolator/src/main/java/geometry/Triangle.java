@@ -68,9 +68,14 @@ public class Triangle {
      * 30% of vertex 1 weight, 20% of vertex 2 weight and 50% of vertex 3 weight
      *
      * @param p Weight of {@link geometry.Point} to calculate
-     * @return an array containing percentages of vertex weights
+     * @return an array containing percentages of vertex weights, null if
+     * invalid point is given
      */
     private double[] calculatebarycentricWeights(Point p) {
+        if (p == null) {
+            return null;
+        }
+
         double P1x = vertex1.getX();
         double P1y = vertex1.getY();
         double P2x = vertex2.getX();
@@ -212,6 +217,10 @@ public class Triangle {
      * @return true if weights are inside triangle, else false
      */
     private boolean areWeightsInsideTriangle(double[] weights) {
+        if (weights == null) {
+            return false;
+        }
+
         if (weights.length < 3) {
             return false;
         }

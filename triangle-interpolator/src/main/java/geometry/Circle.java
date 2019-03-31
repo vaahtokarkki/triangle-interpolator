@@ -30,10 +30,18 @@ public class Circle {
     }
 
     public void setCentre(Point centre) {
+        if (centre == null) {
+            return;
+        }
+
         this.centre = centre;
     }
 
     public void setRadius(double radius) {
+        if (radius < 0) {
+            return;
+        }
+
         this.radius = radius;
     }
 
@@ -53,6 +61,10 @@ public class Circle {
      * @return boolean value is the point inside circle
      */
     public boolean isPointInside(Point p) {
+        if (p == null) {
+            return false;
+        }
+
         double xDelta = Math.pow(p.getX() - centre.getX(), 2);
         double yDelta = Math.pow(p.getY() - centre.getY(), 2);
         double radiusSquare = Math.pow(radius, 2);
@@ -69,11 +81,13 @@ public class Circle {
     public ArrayList<Point> findPointsInside(ArrayList<Point> listOfPoints) {
         ArrayList<Point> output = new ArrayList<>();
 
-        int index = 0;
+        if (listOfPoints == null || listOfPoints.size() == 0) {
+            return output;
+        }
+
         for (Point p : listOfPoints) {
             if (this.isPointInside(p)) {
                 output.add(p);
-                index++;
             }
         }
 
@@ -91,6 +105,10 @@ public class Circle {
     public ArrayList<Point> findPointsInside(ArrayList<Point> listOfPoints, HashSet<Point> setOfPointsToExlude) {
         ArrayList<Point> pointsInsideCircle = this.findPointsInside(listOfPoints);
 
+        if (setOfPointsToExlude == null || setOfPointsToExlude.size() == 0) {
+            return pointsInsideCircle;
+        }
+
         if (pointsInsideCircle.size() == 0) {
             return pointsInsideCircle;
         }
@@ -104,6 +122,30 @@ public class Circle {
         }
 
         return output;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        Circle c = (Circle) o;
+
+        return c.centre == this.centre && c.radius == this.radius;
+    }
+
+    @Override
+    public String toString() {
+        return "centre: " + centre + ", radius: " + radius;
     }
 
 }

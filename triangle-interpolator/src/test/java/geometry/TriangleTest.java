@@ -5,9 +5,7 @@ package geometry;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-import geometry.Point;
-import geometry.Triangle;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,6 +22,7 @@ public class TriangleTest {
     Point P1;
     Point P2;
     Point P3;
+    Point P4;
     Triangle triangle;
 
     public TriangleTest() {
@@ -42,6 +41,7 @@ public class TriangleTest {
         P1 = new Point(0, 0, 0.0);
         P2 = new Point(6, 0, 10.0);
         P3 = new Point(0, 6, 20.0);
+        P4 = new Point(99, 99);
         triangle = new Triangle(P1, P2, P3);
     }
 
@@ -68,8 +68,32 @@ public class TriangleTest {
     }
 
     @Test
+    public void testIsPointInsideTriangleWhenOutside() {
+        assertFalse(triangle.isPointInsideTriangle(P4));
+        assertFalse(triangle.isPointInsideTriangle(null));
+    }
+
+    @Test
+    public void testIsPointInsideTriangleWhenInside() {
+        assertTrue(triangle.isPointInsideTriangle(new Point(1, 1)));
+        assertTrue(triangle.isPointInsideTriangle(new Point(2.5, 2.5)));
+    }
+
+    @Test
+    public void testIsPointInsideTriangleWhenOnSide() {
+        assertTrue(triangle.isPointInsideTriangle(new Point(3, 3)));
+        assertTrue(triangle.isPointInsideTriangle(new Point(0, 3)));
+        assertTrue(triangle.isPointInsideTriangle(new Point(3, 3)));
+
+        assertTrue(triangle.isPointInsideTriangle(P1));
+        assertTrue(triangle.isPointInsideTriangle(P2));
+        assertTrue(triangle.isPointInsideTriangle(P3));
+    }
+
+    @Test
     public void testCalculatePointWeightWhenOutside() {
         assertEquals(Double.NaN, triangle.calcWeightOfPoint(new Point(999, 999, 0)), 0.001);
+        assertEquals(Double.NaN, triangle.calcWeightOfPoint(null), 0.001);
     }
 
     @Test
@@ -91,4 +115,78 @@ public class TriangleTest {
         assertEquals(10, triangle.calcWeightOfPoint(new Point(2, 2, 0)), 0.111);
         assertEquals(5, triangle.calcWeightOfPoint(new Point(1, 1, 0)), 0.111);
     }
+
+    @Test
+    public void testIsPointOnTriangleSideWhenOutisde() {
+        assertFalse(triangle.isPointOnTriangleSide(new Point(99, 99)));
+        assertFalse(triangle.isPointOnTriangleSide(null));
+    }
+
+    @Test
+    public void testIsPointOnTriangleSideWhenInside() {
+        assertFalse(triangle.isPointOnTriangleSide(new Point(1, 1)));
+        assertFalse(triangle.isPointOnTriangleSide(new Point(2.5, 2.5)));
+    }
+
+    @Test
+    public void testIsPointOnTriangleSideWhenOnSide() {
+        assertTrue(triangle.isPointOnTriangleSide(new Point(0, 3)));
+        assertTrue(triangle.isPointOnTriangleSide(new Point(3, 0)));
+        assertTrue(triangle.isPointOnTriangleSide(new Point(3, 3)));
+    }
+
+    @Test
+    public void testGetCircumcenterCircle() {
+        Triangle t2 = new Triangle(P1, P1, P1);
+        Triangle t3 = new Triangle(new Point(1, 0), new Point(0, 3), new Point(3, 0));
+
+        Circle c = triangle.getCircumcenterCircle();
+        Circle c2 = t3.getCircumcenterCircle();
+
+        assertEquals(c.getCentre(), new Point(3, 3));
+        assertEquals(c2.getCentre(), new Point(2, 2));
+        assertEquals(t2.getCircumcenterCircle(), null);
+    }
+
+    @Test
+    public void testIsValidDelaunay() {
+        Triangle t2 = new Triangle(P1, P1, P1);
+
+        ArrayList<Point> points = new ArrayList<>();
+        points.add(P1);
+        points.add(P2);
+        points.add(P3);
+
+        assertTrue(triangle.isValidDelaunay(points));
+        
+        points.add(new Point(1, 1));
+        
+        assertFalse(triangle.isValidDelaunay(points));
+        assertFalse(t2.isValidDelaunay(points));
+    }
+
+    @Test
+    public void testTriangleEquals() {
+        assertFalse(triangle.equals(null));
+        assertFalse(triangle.equals("triangle"));
+
+        assertTrue(triangle.equals(triangle));
+        assertTrue(triangle.equals(new Triangle(P3, P2, P1)));
+
+        assertFalse(triangle.equals(new Triangle(P1, P1, P1)));
+    }
+
+    @Test
+    public void testTriangleHashCode() {
+        int pointsHashCode = P1.hashCode() + P2.hashCode() + P3.hashCode();
+        assertTrue(triangle.hashCode() == pointsHashCode);
+    }
+
+    @Test
+    public void testTriangleToString() {
+        String expected = P1 + " - " + P2 + " - " + P3;
+        assertEquals(expected, triangle.toString());
+
+    }
+
 }

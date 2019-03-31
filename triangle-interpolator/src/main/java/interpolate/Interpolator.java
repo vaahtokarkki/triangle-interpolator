@@ -52,7 +52,7 @@ public class Interpolator {
      *
      * @param width width of output matrix
      * @param height height of output matrix
-     * @param listOfPoints list of points where to interpolate values
+     * @param listOfPoints list of points from to interpolate values
      * @return matrix with interpolated values
      */
     public static double[][] interpolateMatrix(int width, int height, ArrayList<Point> listOfPoints) {
@@ -90,6 +90,74 @@ public class Interpolator {
     }
 
     /**
+     * Interpolates values to a matrix by given list of points with inverse
+     * distance weight method. This method calculates values for element in
+     * matrix by taking all points inside the given search radius and calculates
+     * the value by distances to other points. General formula is something like:
+     * sum(p.weight / d(p)^p) / sum(1/d(p)^p), where d(p) is distance from
+     * current element to the point inside search radius.
+     *
+     * If there is not any points inside search radius, element gets value NaN
+     *
+     *
+     *
+     * @param width width of output matrix
+     * @param height height of output matrix
+     * @param listOfPoints list of points from to interpolate values
+     * @param serachRadius search radius, that is how far away points affect
+     * interpolation
+     * @param p distance to the power of p, usually value between 1 and 2
+     * @return matrix with interpolated values
+     */
+    public static double[][] interpolateInverseDistance(int width, int height, ArrayList<Point> listOfPoints, double serachRadius, double p) {
+        double[][] output = new double[height][width];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Point currentPosition = new Point(x, y);
+
+                double sum = 0;
+                double distances = 0;
+
+                boolean found = false;
+                for (Point point : listOfPoints) {
+                    double dist = point.calculateDistance(currentPosition);
+
+                    if (dist < 0.0001) {
+                        output[y][x] = point.getWeight();
+                        found = true;
+                        break;
+                    } else if (Math.abs(dist - serachRadius) < 0.01) {
+                        continue;
+                    }
+
+                    dist = Math.pow(dist, p);
+
+                    sum += point.getWeight() / dist;
+                    distances += 1 / dist;
+
+                }
+
+                if (found) {
+                    continue;
+                }
+
+                double result;
+                if (distances == 0) {
+                    result = Double.NaN;
+                }
+
+                result = sum / distances;
+
+                result = classifyValue(result, 0, 255, 25);
+
+                output[y][x] = result;
+            }
+        }
+
+        return output;
+    }
+
+    /**
      * Returns a equal interval classified value of input. That is done by
      * calculating a range of given minium and maximum value and divided by the
      * amount of classes.
@@ -100,7 +168,11 @@ public class Interpolator {
      * @param classes Amount of classes used in classification
      * @return Classified value
      */
-    public static double calssifyValue(double value, double minValue, double maxValue, int classes) {
+    public static double classifyValue(double value, double minValue, double maxValue, int classes) {
+        if (Double.isNaN(value)) {
+            return value;
+        }
+
         double interval = (maxValue - minValue) / classes;
 
         double currentValue = minValue;
