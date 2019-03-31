@@ -1,9 +1,9 @@
 package utils;
 
 /**
- * 
+ *
  * @author lroni
- * @param <T> 
+ * @param <T>
  */
 public class MyArrayList<T> {
 
@@ -23,9 +23,9 @@ public class MyArrayList<T> {
         if (index == array.length) {
             this.increaseSize();
         }
-
-        index++;
+        System.out.println("adding to " + index + " item: " + obj);
         array[index] = obj;
+        index++;
     }
 
     public T get(int i) {
@@ -42,10 +42,13 @@ public class MyArrayList<T> {
         if (objIndex < 0) {
             return false;
         }
-        
-        //...
-        
-        throw new UnsupportedOperationException();
+
+        this.shiftToLeft(objIndex);
+
+        index--;
+        array[index] = null;
+
+        return true;
     }
 
     public int indexOf(T obj) {
@@ -66,6 +69,30 @@ public class MyArrayList<T> {
         }
 
         array = newArray;
+    }
+
+    private void shiftToLeft(int startIndex) {
+        if (startIndex < 0) {
+            return;
+        }
+
+        for (int i = startIndex; i < index - 1; i++) {
+            array[i] = array[i + 1];
+        }
+    }
+
+    @Override
+    public String toString() {
+        String output = "[";
+        for (int i = 0; i < index; i++) {
+            output += array[i];
+            if (i < index - 1) {
+                output += ", ";
+            }
+        }
+        output += "]";
+
+        return output;
     }
 
 }
