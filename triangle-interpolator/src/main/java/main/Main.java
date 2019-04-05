@@ -15,7 +15,7 @@ import utils.MyArrayList;
 public class Main {
 
     public static void main(String[] args) {
-
+        
         CsvParse parser = new CsvParse("test_data.csv");
         MyArrayList<Point> list = parser.parsePointsFromFile(";", "x", "y", "weight");
 
