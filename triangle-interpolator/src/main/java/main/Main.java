@@ -88,6 +88,8 @@ public class Main {
         o.add(2);
         o.add(3);
         o.add(2);
+        o.add(null);
+        
 
         System.out.println(o);
         for (int i = 0; i < 100; i++) {

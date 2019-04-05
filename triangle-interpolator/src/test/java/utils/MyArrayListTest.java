@@ -83,6 +83,26 @@ public class MyArrayListTest {
     }
 
     @Test
+    public void testSetToList() {
+        addTestItemsToList(list);
+
+        assertEquals(new Integer(0), list.set(0, 99));
+        for (int i = 0; i < 10; i++) {
+            if (i == 0) {
+                assertEquals(new Integer(99), list.get(i));
+                continue;
+            }
+            assertEquals(new Integer(i), list.get(i));
+        }
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSetToListThrowsException() {
+        list.set(99, 0);
+        list.set(-5, 0);
+    }
+
+    @Test
     public void testIndexOf() {
         addTestItemsToList(list);
         list.add(null);
@@ -119,7 +139,7 @@ public class MyArrayListTest {
         list.add(1);
         list.add(2);
         list.add(3);
-        
+
         assertEquals("[1, 2, 3]", list.toString());
 
     }

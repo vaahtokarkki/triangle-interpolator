@@ -86,7 +86,7 @@ public class MyHashSet<T> {
         if (indexOfObj < 0) {
             return false;
         }
-        
+
         size--;
         return list.remove(obj);
     }
@@ -99,7 +99,7 @@ public class MyHashSet<T> {
      * @return
      */
     private MyArrayList<T> getList(T obj) {
-        int hashCode = Math.abs(obj.hashCode() % array.length);
+        int hashCode = obj == null ? 0 : Math.abs(obj.hashCode() % array.length);
 
         if (array[hashCode] == null) {
             array[hashCode] = new MyArrayList<>();
