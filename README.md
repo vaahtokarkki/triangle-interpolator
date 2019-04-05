@@ -5,6 +5,7 @@ Tiralabra 2019 IV
 ## Dokumentaatio
 
 * [Määrittelydokumentti](documentation/maarittelydokumentti.md)
+* [Toteutusdokumentti](documentation/toteutusdokumentti.md)
 
 ## Viikkoraportit
 
