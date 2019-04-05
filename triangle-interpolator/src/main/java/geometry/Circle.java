@@ -5,8 +5,9 @@
  */
 package geometry;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import utils.MyArrayList;
+import utils.MyHashSet;
 
 /**
  * Used in Triangle to check if the triangle is a valid delaunay triangle
@@ -78,14 +79,15 @@ public class Circle {
      * @param listOfPoints list of points where to search
      * @return array of points found, in none found returns empty array
      */
-    public ArrayList<Point> findPointsInside(ArrayList<Point> listOfPoints) {
-        ArrayList<Point> output = new ArrayList<>();
+    public MyArrayList<Point> findPointsInside(MyArrayList<Point> listOfPoints) {
+        MyArrayList<Point> output = new MyArrayList<>();
 
         if (listOfPoints == null || listOfPoints.size() == 0) {
             return output;
         }
 
-        for (Point p : listOfPoints) {
+        for (int i=0;i<listOfPoints.size();i++) {
+            Point p = listOfPoints.get(i);
             if (this.isPointInside(p)) {
                 output.add(p);
             }
@@ -99,11 +101,11 @@ public class Circle {
      * results if given points are found
      *
      * @param listOfPoints list of points where to search
-     * @param listOfPointsToExclude list of points which to exclude from output
+     * @param setOfPointsToExclude list of points which to exclude from output
      * @return array of points found, in none found returns empty array
      */
-    public ArrayList<Point> findPointsInside(ArrayList<Point> listOfPoints, HashSet<Point> setOfPointsToExlude) {
-        ArrayList<Point> pointsInsideCircle = this.findPointsInside(listOfPoints);
+    public MyArrayList<Point> findPointsInside(MyArrayList<Point> listOfPoints, HashSet<Point> setOfPointsToExlude) {
+        MyArrayList<Point> pointsInsideCircle = this.findPointsInside(listOfPoints);
 
         if (setOfPointsToExlude == null || setOfPointsToExlude.size() == 0) {
             return pointsInsideCircle;
@@ -113,9 +115,10 @@ public class Circle {
             return pointsInsideCircle;
         }
 
-        ArrayList<Point> output = new ArrayList<>();
+        MyArrayList<Point> output = new MyArrayList<>();
 
-        for (Point p : pointsInsideCircle) {
+        for (int i=0;i<pointsInsideCircle.size();i++) {
+            Point p = pointsInsideCircle.get(i);
             if (!setOfPointsToExlude.contains(p)) {
                 output.add(p);
             }

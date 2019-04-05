@@ -4,6 +4,7 @@ import geometry.Point;
 import geometry.Triangle;
 import java.util.ArrayList;
 import java.util.HashSet;
+import utils.MyArrayList;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Interpolator {
      * @param listOfPoints list of points where to create Delaunay triangles
      * @return set of Delaunay triangles, null if there is none
      */
-    public static HashSet<Triangle> triangulate(ArrayList<Point> listOfPoints) {
+    public static HashSet<Triangle> triangulate(MyArrayList<Point> listOfPoints) {
         HashSet<Triangle> validTriangles = new HashSet<>();
 
         for (int i = 0; i < listOfPoints.size(); i++) {
@@ -50,7 +51,7 @@ public class Interpolator {
      * @param listOfPoints list of points from to interpolate values
      * @return matrix with interpolated values
      */
-    public static double[][] interpolateMatrix(int width, int height, ArrayList<Point> listOfPoints) {
+    public static double[][] interpolateMatrix(int width, int height, MyArrayList<Point> listOfPoints) {
         double[][] output = new double[height][width];
         HashSet<Triangle> validTriangles = new HashSet<>();
 
@@ -103,7 +104,7 @@ public class Interpolator {
      * @param p distance to the power of p, usually value between 1 and 2
      * @return matrix with interpolated values
      */
-    public static double[][] interpolateInverseDistance(int width, int height, ArrayList<Point> listOfPoints, double serachRadius, double p) {
+    public static double[][] interpolateInverseDistance(int width, int height, MyArrayList<Point> listOfPoints, double serachRadius, double p) {
         double[][] output = new double[height][width];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -113,7 +114,8 @@ public class Interpolator {
                 double distances = 0;
 
                 boolean found = false;
-                for (Point point : listOfPoints) {
+                for (int i=0;i<listOfPoints.size();i++) {
+                    Point point = listOfPoints.get(i);
                     double dist = point.calculateDistance(currentPosition);
 
                     if (dist < 0.0001) {

@@ -5,13 +5,12 @@ package geometry;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.util.ArrayList;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import utils.MyArrayList;
 
 /**
  *
@@ -152,7 +151,7 @@ public class TriangleTest {
     public void testIsValidDelaunay() {
         Triangle t2 = new Triangle(P1, P1, P1);
 
-        ArrayList<Point> points = new ArrayList<>();
+        MyArrayList<Point> points = new MyArrayList<>();
         points.add(P1);
         points.add(P2);
         points.add(P3);

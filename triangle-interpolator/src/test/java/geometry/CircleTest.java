@@ -5,7 +5,7 @@
  */
 package geometry;
 
-import java.util.ArrayList;
+
 import java.util.HashSet;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import utils.MyArrayList;
 
 /**
  *
@@ -29,7 +30,7 @@ public class CircleTest {
     Circle c1;
     double radius;
 
-    ArrayList<Point> points;
+    MyArrayList<Point> points;
 
     public CircleTest() {
     }
@@ -53,7 +54,7 @@ public class CircleTest {
         radius = 10.0;
         c1 = new Circle(P1, radius);
 
-        points = new ArrayList<>();
+        points = new MyArrayList<>();
         points.add(P1);
         points.add(P2);
         points.add(P3);
@@ -123,13 +124,13 @@ public class CircleTest {
     public void testFindPointsInside() {
         Circle c2 = new Circle(P1, 5);
 
-        ArrayList<Point> result = c1.findPointsInside(points);
-        ArrayList<Point> result2 = c2.findPointsInside(points);
+        MyArrayList<Point> result = c1.findPointsInside(points);
+        MyArrayList<Point> result2 = c2.findPointsInside(points);
 
         assertEquals(4, result.size());
         assertEquals(2, result2.size());
         assertEquals(0, c1.findPointsInside(null).size());
-        assertEquals(0, c1.findPointsInside(new ArrayList<>()).size());
+        assertEquals(0, c1.findPointsInside(new MyArrayList<>()).size());
     }
 
     @Test
@@ -139,11 +140,11 @@ public class CircleTest {
         set.add(P2);
         set.add(P5);
 
-        ArrayList<Point> result = c1.findPointsInside(points, set);
-        ArrayList<Point> result2 = c1.findPointsInside(points, null);
-        ArrayList<Point> result3 = c1.findPointsInside(null, set);
-        ArrayList<Point> result4 = c1.findPointsInside(null, null);
-        ArrayList<Point> result5 = c1.findPointsInside(points, new HashSet<>());
+        MyArrayList<Point> result = c1.findPointsInside(points, set);
+        MyArrayList<Point> result2 = c1.findPointsInside(points, null);
+        MyArrayList<Point> result3 = c1.findPointsInside(null, set);
+        MyArrayList<Point> result4 = c1.findPointsInside(null, null);
+        MyArrayList<Point> result5 = c1.findPointsInside(points, new HashSet<>());
 
         assertEquals(2, result.size());
         assertEquals(4, result2.size());

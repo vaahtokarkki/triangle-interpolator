@@ -1,7 +1,7 @@
 package geometry;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import utils.MyArrayList;
 
 /**
  * Represents a triangle in 2D plane
@@ -228,14 +228,14 @@ public class Triangle {
      *
      * @return true if triangle is a valid Delaunay triangle
      */
-    public boolean isValidDelaunay(ArrayList<Point> listOfPoints) {
+    public boolean isValidDelaunay(MyArrayList<Point> listOfPoints) {
         Circle circumcenter = this.getCircumcenterCircle();
 
         if (circumcenter == null) {
             return false;
         }
 
-        ArrayList<Point> pointsInsideCircle = circumcenter.findPointsInside(listOfPoints, setOfVertexes);
+        MyArrayList<Point> pointsInsideCircle = circumcenter.findPointsInside(listOfPoints, setOfVertexes);
 
         return pointsInsideCircle.size() == 0;
     }
