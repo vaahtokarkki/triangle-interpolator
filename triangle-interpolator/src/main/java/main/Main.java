@@ -10,6 +10,7 @@ import geometry.Triangle;
 import static interpolate.Interpolator.*;
 import static imageWriter.Writer.*;
 import java.util.*;
+import utils.CsvParse;
 import utils.MyArrayList;
 import utils.MyHashSet;
 
@@ -71,33 +72,20 @@ public class Main {
         Point p1 = new Point(0, 0, 10);
         Point p2 = new Point(3, 3, 30);
         Point p3 = new Point(6, 0, 10);
-
-        Point[] tt = new Point[5];
-        tt[0] = p1;
-        tt[1] = p2;
-        tt[2] = p3;
-        tt[4] = p1;
-
-        System.out.println(utils.MyArrays.contains(tt, null));
-
-        HashSet<Integer> o = new HashSet<>();
-        MyHashSet<Integer> oma = new MyHashSet<>();
-
-        o.add(1);
-        o.add(1);
-        o.add(2);
-        o.add(3);
-        o.add(2);
-        o.add(null);
         
+        Point pp = new Point(0.1, 0.1, 0);
+        Point ppp = new Point(0.1, 0.1, Double.NaN);
+        System.out.println(ppp.equals(new Point(0.1, 0.1, Double.NaN)));
+        double d1 = Double.NaN;
+        double d2 = Double.NaN;
+        System.out.println(Double.compare(d2, d1));
+        
+        System.out.println(pp.hashCode());
+        System.out.println(ppp.hashCode());
 
-        System.out.println(o);
-        for (int i = 0; i < 100; i++) {
-            oma.add(i);
-        }
 
-        System.out.println(oma);
-
+        CsvParse parser = new CsvParse("wat.csv");
+        System.out.println(parser.parsePointsFromFile(";", "x", "y", "weight"));
 
     }
 

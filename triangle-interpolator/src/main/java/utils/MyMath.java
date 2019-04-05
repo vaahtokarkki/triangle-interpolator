@@ -6,8 +6,7 @@
 package utils;
 
 import geometry.Point;
-import java.util.ArrayList;
-
+import utils.MyArrayList;
 /**
  *
  * @author lroni
@@ -41,7 +40,7 @@ public class MyMath {
      * @return Array of points in clockwise order, that is: top left, top right,
      * bottom right, bottom left
      */
-    public static Point[] findMinimumBoundinBox(ArrayList<Point> points) {
+    public static Point[] findMinimumBoundingBox(MyArrayList<Point> points) {
         if (points.size() == 0) {
             return null;
         }
@@ -51,7 +50,10 @@ public class MyMath {
         double min_x = INF;
         double min_y = INF;
 
-        for (Point p : points) {
+        for (int i=0;i<points.size();i++) {
+            Point p = points.get(i);
+            
+            
             max_x = (p.getX() > max_x) ? p.getX() : max_x;
             max_y = (p.getY() > max_y) ? p.getY() : max_y;
 
@@ -79,24 +81,22 @@ public class MyMath {
      * @param points list of points to shift
      * @return new list of given points shifted
      */
-    public static ArrayList<Point> moveCoordinatesToOrigin(ArrayList<Point> points) {
-        Point[] boundinBox = findMinimumBoundinBox(points);
+    public static MyArrayList<Point> moveCoordinatesToOrigin(MyArrayList<Point> points) {
+        Point[] boundingBox = findMinimumBoundingBox(points);
 
-        if (boundinBox == null) {
+        if (boundingBox == null) {
             return null;
         }
 
-        ArrayList<Point> output = new ArrayList<>();
+        MyArrayList<Point> output = new MyArrayList<>();
 
-        double deltaX = boundinBox[3].getX();
-//        double deltaY = boundinBox[0].getY()-boundinBox[3].getY();
+        double deltaX = boundingBox[3].getX();
 
-        System.out.println("delta x: " + deltaX + " delta y: ");
-
-        for (Point p : points) {
-
+        for (int i=0;i<points.size();i++) {
+            Point p = points.get(i);
+            
             double newX = p.getX() - deltaX;
-            double newY = boundinBox[0].getY() - p.getY();
+            double newY = boundingBox[0].getY() - p.getY();
 
             Point shiftedPoint = new Point(newX, newY, p.getWeight());
             output.add(shiftedPoint);

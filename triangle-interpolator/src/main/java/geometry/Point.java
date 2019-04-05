@@ -163,7 +163,8 @@ public class Point {
         }
 
         Point p = (Point) o;
-        return p.getX() == x && p.getY() == y && p.getWeight() == weight;
+        return p.getX() == x && p.getY() == y
+                && Double.compare(weight, p.weight) == 0;
     }
 
     @Override
@@ -176,6 +177,9 @@ public class Point {
         int hashCode = 23;
         hashCode = hashCode * 31 + (int) x;
         hashCode = hashCode * 31 + (int) y;
+        if (!Double.isNaN(weight)) {
+            hashCode = hashCode * 31 + (int) weight;
+        }
         return hashCode;
     }
 

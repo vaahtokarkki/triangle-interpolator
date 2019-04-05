@@ -1,6 +1,10 @@
 package utils;
 
 import geometry.Point;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A csv-file parser to parse {@link geometry.Point} from csv-file.
@@ -39,43 +43,53 @@ public class CsvParse {
      * null if invalid file
      */
     public MyArrayList<Point> parsePointsFromFile(String csvSeparator, String XCoord, String YCoord, String ZValue) {
-        MyArrayList<String> lines = fileReader.Reader.readRows(fileName);
+        MyArrayList<String> lines;
+        try {
+            lines = fileReader.Reader.readRows(fileName);
+        } catch (FileNotFoundException ex) {
+            return null;
+        }
 
         //If file contains only header row
         if (lines.size() <= 1) {
             return null;
         }
-
+        
+        MyArrayList<Point> output = new MyArrayList<>();
         MyArrayList<String[]> valuesFromFile = parseValuesFromCSVLines(lines, csvSeparator);
 
         String[] headers = valuesFromFile.get(0);
         int[] columnIndexes = mapColumnsForValues(headers, XCoord, YCoord, ZValue);
 
-        MyArrayList<Point> output = new MyArrayList<>();
+        if (columnIndexes == null) {
+            return output;
+        }
+
         for (int i = 1; i < valuesFromFile.size(); i++) {
             String[] row = valuesFromFile.get(i);
-
             double X, Y, Z;
             try {
                 X = Double.parseDouble(row[columnIndexes[0]]);
             } catch (Exception e) {
+                e.printStackTrace();
                 continue;
             }
 
             try {
                 Y = Double.parseDouble(row[columnIndexes[1]]);
             } catch (Exception e) {
+                e.printStackTrace();
                 continue;
             }
 
             try {
                 Z = Double.parseDouble(row[columnIndexes[2]]);
             } catch (Exception e) {
-                continue;
+                e.printStackTrace();
+                Z = Double.NaN;
             }
 
             output.add(new Point(X, Y, Z));
-
         }
 
         return output;
@@ -125,8 +139,8 @@ public class CsvParse {
      */
     private int[] mapColumnsForValues(String[] headerRow, String XCoord, String YCoord, String ZValue) {
         if (!utils.MyArrays.contains(headerRow, XCoord)
-                || utils.MyArrays.contains(headerRow, YCoord)
-                || utils.MyArrays.contains(headerRow, ZValue)) {
+                || !utils.MyArrays.contains(headerRow, YCoord)
+                || !utils.MyArrays.contains(headerRow, ZValue)) {
             return null;
         }
 

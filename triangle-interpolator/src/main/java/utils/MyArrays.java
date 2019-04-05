@@ -21,7 +21,7 @@ public class MyArrays {
             if (v == null) {
                 found = search == null;
             } else {
-                found = search == null ? v == null : v.equals(search);
+                found = search == null ? false : v.equals(search);
             }
 
             if (found) {
