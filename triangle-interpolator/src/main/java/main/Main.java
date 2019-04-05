@@ -5,12 +5,13 @@
  */
 package main;
 
-import geometry.Line;
 import geometry.Point;
 import geometry.Triangle;
 import static interpolate.Interpolator.*;
 import static imageWriter.Writer.*;
 import java.util.*;
+import utils.MyArrayList;
+import utils.MyHashSet;
 
 /**
  *
@@ -19,23 +20,25 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-
+        /*
         ArrayList<Point> list = new ArrayList<>();
         Random rand = new Random(1337);
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 150; i++) {
             int x = rand.nextInt(900 + 1);
             int y = rand.nextInt(900 + 1);
-            int value = rand.nextInt((255 - 0) + 1) + 0;
+            int value = rand.nextInt((255 - 100) + 1) + 100;
             list.add(new Point(x, y, value));
         }
 
         HashSet<Triangle> t = triangulate(list);
-        double[][] out = interpolateInverseDistance(1000, 1000, list, 300, 1.5);
-        writeToImage(out);
-//        writeTrianglesToImage(1000, 1000, t);
+//        double[][] out = interpolateMatrix(1000, 1000, list);
+        double[][] out = interpolateInverseDistance(1000, 1000, list, 100, 1.5);
 
-        /*
+        writeToImage(out);
+        writeTrianglesToImage(1000, 1000, t);
+         */
+ /*
         ArrayList<Point> list = new ArrayList<>();
         list.add(new Point(0, 0, 0));
         list.add(new Point(10, 0, 10));
@@ -48,6 +51,52 @@ public class Main {
             System.out.println(Arrays.toString(i));
         }
          */
+//        Point P1 = new Point(30, 50, 1);
+//        Point P2 = new Point(50, 40, 2);
+//        Point P3 = new Point(90, 30, 3);
+//        Point P4 = new Point(20, 20, 4);
+//
+//        ArrayList<Point> list = new ArrayList<>();
+//        list.add(P1);
+//        list.add(P2);
+//        list.add(P3);
+//        list.add(P4);
+//        
+//        ArrayList<Point> moved = MyMath.moveCoordinatesToOrigin(list);
+//        
+//        System.out.println(Arrays.toString(MyMath.findMinimumBoundinBox(list)));
+//        System.out.println(list);
+//        System.out.println(moved);
+//        System.out.println(Arrays.toString(MyMath.findMinimumBoundinBox(moved)));
+        Point p1 = new Point(0, 0, 10);
+        Point p2 = new Point(3, 3, 30);
+        Point p3 = new Point(6, 0, 10);
+
+        Point[] tt = new Point[5];
+        tt[0] = p1;
+        tt[1] = p2;
+        tt[2] = p3;
+        tt[4] = p1;
+
+        System.out.println(utils.MyArrays.contains(tt, null));
+
+        HashSet<Integer> o = new HashSet<>();
+        MyHashSet<Integer> oma = new MyHashSet<>();
+
+        o.add(1);
+        o.add(1);
+        o.add(2);
+        o.add(3);
+        o.add(2);
+
+        System.out.println(o);
+        for (int i = 0; i < 100; i++) {
+            oma.add(i);
+        }
+
+        System.out.println(oma);
+
+
     }
 
 }

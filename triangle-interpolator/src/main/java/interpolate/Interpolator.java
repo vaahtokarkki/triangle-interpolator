@@ -69,9 +69,11 @@ public class Interpolator {
                 for (Triangle t : validTriangles) {
                     if (t.isPointInsideTriangle(currentPosition)) {
                         double value = t.calcWeightOfPoint(currentPosition);
-                        output[y][x] = value;
-//                        double classified = calssifyValue(value, 0, 255, 30);
-//                        output[y][x] = classified;
+//                        output[y][x] = value;
+                        double classified = classifyValue(value, 100, 255, 25);
+                        output[y][x] = classified;
+//                        output[y][x] = t.calculateAvgValue(currentPosition);
+//                        output[y][x] = t.inverseDist(currentPosition);
 
                         found = true;
                         break;
@@ -93,8 +95,8 @@ public class Interpolator {
      * Interpolates values to a matrix by given list of points with inverse
      * distance weight method. This method calculates values for element in
      * matrix by taking all points inside the given search radius and calculates
-     * the value by distances to other points. General formula is something like:
-     * sum(p.weight / d(p)^p) / sum(1/d(p)^p), where d(p) is distance from
+     * the value by distances to other points. General formula is something
+     * like: sum(p.weight / d(p)^p) / sum(1/d(p)^p), where d(p) is distance from
      * current element to the point inside search radius.
      *
      * If there is not any points inside search radius, element gets value NaN

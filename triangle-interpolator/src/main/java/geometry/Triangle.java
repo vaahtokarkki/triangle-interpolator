@@ -149,6 +149,33 @@ public class Triangle {
         return calculatedWeight;
     }
 
+    public double inverseDist(Point p) {
+        double d1 = p.calculateDistance(vertex1);
+        double d2 = p.calculateDistance(vertex2);
+        double d3 = p.calculateDistance(vertex3);
+
+        if (d1 < 0.01) {
+            return vertex1.getWeight();
+        }
+
+        if (d2 < 0.01) {
+            return vertex2.getWeight();
+        }
+
+        if (d3 < 0.01) {
+            return vertex3.getWeight();
+        }
+
+        d1 = Math.pow(d1, 0.8);
+        d2 = Math.pow(d2, 0.8);
+        d3 = Math.pow(d3, 0.8);
+
+        double a = (vertex1.getWeight() / d1) + (vertex2.getWeight() / d2) + (vertex3.getWeight() / d3);
+        double b = (1 / d1) + (1 / d2) + (1 / d3);
+
+        return a / b;
+    }
+
     /**
      * Checks if given point is inside triangle.
      *

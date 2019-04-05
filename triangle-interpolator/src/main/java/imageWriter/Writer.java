@@ -40,7 +40,7 @@ public class Writer {
 //                System.out.println("");
             }
 
-            File output = new File("GrayScale.jpg");
+            File output = new File("GrayScale2.jpg");
             ImageIO.write(image, "jpg", output);
         } catch (Exception e) {
             System.out.println(e);
