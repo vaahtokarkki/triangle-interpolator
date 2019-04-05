@@ -8,7 +8,6 @@ package utils;
 import geometry.Point;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -68,7 +67,16 @@ public class MyMathTest {
 
         assertEquals(v1, MyMath.abs(v2), 0.001);
         assertEquals(v3, MyMath.abs(v4), 0.001);
+    }
 
+    @Test
+    public void testRoundToInteger() {
+        assertEquals(0, MyMath.round(0.0));
+        assertEquals(1, MyMath.round(0.9));
+        assertEquals(0, MyMath.round(0.4999));
+
+        assertEquals(0, MyMath.round(-0.499));
+        assertEquals(-1, MyMath.round(-0.99));
     }
 
     @Test

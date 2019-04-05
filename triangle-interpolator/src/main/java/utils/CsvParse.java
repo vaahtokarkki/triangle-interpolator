@@ -45,7 +45,7 @@ public class CsvParse {
     public MyArrayList<Point> parsePointsFromFile(String csvSeparator, String XCoord, String YCoord, String ZValue) {
         MyArrayList<String> lines;
         try {
-            lines = fileReader.Reader.readRows(fileName);
+            lines = io.Reader.readRows(fileName);
         } catch (FileNotFoundException ex) {
             return null;
         }

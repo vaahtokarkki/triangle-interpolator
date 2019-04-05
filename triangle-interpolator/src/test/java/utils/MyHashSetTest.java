@@ -99,5 +99,12 @@ public class MyHashSetTest {
         set.add(null);
         assertTrue(set.remove(null));
     }
+    
+    @Test
+    public void testSettoString() {
+        assertEquals("[]", set.toString());
+        addItemsToSet(5);
+        assertEquals("[0, 1, 2, 3, 4]", set.toString());
+    }
 
 }

@@ -8,7 +8,7 @@ package main;
 import geometry.Point;
 import geometry.Triangle;
 import static interpolate.Interpolator.*;
-import static imageWriter.Writer.*;
+import static io.Writer.*;
 import java.util.*;
 import utils.CsvParse;
 import utils.MyArrayList;
@@ -69,24 +69,12 @@ public class Main {
 //        System.out.println(list);
 //        System.out.println(moved);
 //        System.out.println(Arrays.toString(MyMath.findMinimumBoundinBox(moved)));
-        Point p1 = new Point(0, 0, 10);
-        Point p2 = new Point(3, 3, 30);
-        Point p3 = new Point(6, 0, 10);
-        
-        Point pp = new Point(0.1, 0.1, 0);
-        Point ppp = new Point(0.1, 0.1, Double.NaN);
-        System.out.println(ppp.equals(new Point(0.1, 0.1, Double.NaN)));
-        double d1 = Double.NaN;
-        double d2 = Double.NaN;
-        System.out.println(Double.compare(d2, d1));
-        
-        System.out.println(pp.hashCode());
-        System.out.println(ppp.hashCode());
-
-
-        CsvParse parser = new CsvParse("wat.csv");
-        System.out.println(parser.parsePointsFromFile(";", "x", "y", "weight"));
-
+        for (int i = 0; i < 5; i++) {
+            int classifien = classifyValue(i, 0, 4, 1);
+            System.out.println(i + " class: " + classifien + " value: " + getGrayscaleValueForClass(classifien, 5));
+        }
+        System.out.println(utils.MyMath.round(-0.4));
+        System.out.println(utils.MyMath.round(-0.5));
     }
 
 }

@@ -162,38 +162,67 @@ public class Interpolator {
     /**
      * Returns a equal interval classified value of input. That is done by
      * calculating a range of given minium and maximum value and divided by the
-     * amount of classes.
+     * amount of classes. Output is integer between 0 and amount of classes.
      *
      * @param value Value to classify
      * @param minValue Maximum value used in set of values
      * @param maxValue Minium value used in set of values
      * @param classes Amount of classes used in classification
-     * @return Classified value
+     * @return Classified value, or -1 if value is NaN
      */
-    public static double classifyValue(double value, double minValue, double maxValue, int classes) {
+    public static int classifyValue(double value, double minValue, double maxValue, int classes) {
         if (Double.isNaN(value)) {
-            return value;
+            return -1;
         }
 
-        double interval = (maxValue - minValue) / classes;
+        double interval = ((maxValue - minValue) + 1) / classes;
 
         double currentValue = minValue;
-        int currenClass;
-        for (currenClass = 0; currenClass < classes; currenClass++) {
+        int currentClass;
+        for (currentClass = 0; currentClass < classes; currentClass++) {
             if (value >= currentValue && value < currentValue + interval) {
-                if (currenClass == 0) {
-                    return currentValue;
+                if (currentClass == 0) {
+                    return 0;
                 }
-                return currentValue + interval;
+                return currentClass;
             }
             currentValue += interval;
         }
 
-        if (value == maxValue) {
-            return currentValue;
+        return classes;
+    }
+
+    /**
+     * Returns a grayscale value for given class. Values are in range 0-255,
+     * class 0 is always value of 0 and highest class is always value of 255.
+     *
+     *
+     * @param classifiedValue class to get grayscale value for
+     * @param classes amount of classes used
+     * @return value between 0 and 255, if classes is 0 returns -1
+     */
+    public static int getGrayscaleValueForClass(int classifiedValue, int classes) {
+        if (classes <= 0) {
+            return -1;
         }
 
-        return currentValue + interval;
+        if (classifiedValue == 0 || classes == 1) {
+            return 0;
+        } else if (classifiedValue == classes - 1) {
+            return 255;
+        }
+
+        double width = 255.0 / classes;
+
+        double currentValue = width;
+        for (int i = 0; i < classes; i++) {
+            if (i == classifiedValue) {
+                return (int) currentValue;
+            }
+            currentValue += width;
+        }
+
+        return (int) currentValue;
     }
 
 }

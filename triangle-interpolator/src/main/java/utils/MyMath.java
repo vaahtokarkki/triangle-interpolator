@@ -7,6 +7,7 @@ package utils;
 
 import geometry.Point;
 import utils.MyArrayList;
+
 /**
  *
  * @author lroni
@@ -21,6 +22,31 @@ public class MyMath {
 
     public static double sqrt(double value) {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns given value rounded to nearest integer.
+     *
+     * @param value value to round
+     * @return rounded value
+     */
+    public static int round(double value) {
+        boolean negative = value < 0 ? true : false;
+
+        int integerPart = (int) abs(value);
+        double decimalPart = abs(value) - integerPart;
+
+        if (decimalPart < 0.5) {
+            if (negative) {
+                return -integerPart;
+            }
+            return integerPart;
+        }
+
+        if (negative) {
+            return -(integerPart + 1);
+        }
+        return integerPart + 1;
     }
 
     /**
@@ -50,10 +76,9 @@ public class MyMath {
         double min_x = INF;
         double min_y = INF;
 
-        for (int i=0;i<points.size();i++) {
+        for (int i = 0; i < points.size(); i++) {
             Point p = points.get(i);
-            
-            
+
             max_x = (p.getX() > max_x) ? p.getX() : max_x;
             max_y = (p.getY() > max_y) ? p.getY() : max_y;
 
@@ -92,9 +117,9 @@ public class MyMath {
 
         double deltaX = boundingBox[3].getX();
 
-        for (int i=0;i<points.size();i++) {
+        for (int i = 0; i < points.size(); i++) {
             Point p = points.get(i);
-            
+
             double newX = p.getX() - deltaX;
             double newY = boundingBox[0].getY() - p.getY();
 

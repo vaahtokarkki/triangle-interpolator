@@ -148,7 +148,8 @@ public class MyHashSet<T> {
     @Override
     public String toString() {
         String output = "[";
-
+        
+        int counter = 0;
         for (int i = 0; i < array.length; i++) {
             MyArrayList<T> list = this.array[i];
             if (list == null) {
@@ -160,7 +161,12 @@ public class MyHashSet<T> {
             }
 
             for (int z = 0; z < list.size(); z++) {
-                output += list.get(z) + ", ";
+                output += list.get(z);
+                counter++;
+            }
+            
+            if(counter < this.size) {
+                output += ", ";
             }
         }
 

@@ -1,4 +1,4 @@
-package fileReader;
+package io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +32,6 @@ public class Reader {
         }
 
         return output;
-
     }
 
 }
