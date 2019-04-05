@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package interpolate;
 
 import geometry.Point;
@@ -69,12 +64,9 @@ public class Interpolator {
                 for (Triangle t : validTriangles) {
                     if (t.isPointInsideTriangle(currentPosition)) {
                         double value = t.calcWeightOfPoint(currentPosition);
-//                        output[y][x] = value;
-                        double classified = classifyValue(value, 100, 255, 25);
-                        output[y][x] = classified;
-//                        output[y][x] = t.calculateAvgValue(currentPosition);
-//                        output[y][x] = t.inverseDist(currentPosition);
-
+//                        double classified = classifyValue(value, 100, 255, 25);
+//                        output[y][x] = classified;
+                        output[y][x] = value;
                         found = true;
                         break;
                     }
@@ -150,7 +142,8 @@ public class Interpolator {
 
                 result = sum / distances;
 
-                result = classifyValue(result, 0, 255, 25);
+                result = classifyValue(result, 100, 255, 25);
+                result = getGrayscaleValueForClass(result, 25);
 
                 output[y][x] = result;
             }
@@ -201,7 +194,7 @@ public class Interpolator {
      * @param classes amount of classes used
      * @return value between 0 and 255, if classes is 0 returns -1
      */
-    public static int getGrayscaleValueForClass(int classifiedValue, int classes) {
+    public static double getGrayscaleValueForClass(double classifiedValue, int classes) {
         if (classes <= 0) {
             return -1;
         }
@@ -222,7 +215,7 @@ public class Interpolator {
             currentValue += width;
         }
 
-        return (int) currentValue;
+        return currentValue;
     }
 
 }

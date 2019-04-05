@@ -149,6 +149,12 @@ public class Triangle {
         return calculatedWeight;
     }
 
+    /**
+     * Not used currently! Only for testing.
+     *
+     * @param p
+     * @return
+     */
     public double inverseDist(Point p) {
         double d1 = p.calculateDistance(vertex1);
         double d2 = p.calculateDistance(vertex2);
