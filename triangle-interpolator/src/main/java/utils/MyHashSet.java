@@ -1,11 +1,13 @@
 package utils;
 
+import java.util.Iterator;
+
 /**
  * Resizable HashSet implementation using {@link utils.MyArrayList}
  *
  * @author lroni
  */
-public class MyHashSet<T> {
+public class MyHashSet<T> implements Iterable<T> {
 
     private MyArrayList<T>[] array;
     private int size;
@@ -148,7 +150,7 @@ public class MyHashSet<T> {
     @Override
     public String toString() {
         String output = "[";
-        
+
         int counter = 0;
         for (int i = 0; i < array.length; i++) {
             MyArrayList<T> list = this.array[i];
@@ -164,14 +166,46 @@ public class MyHashSet<T> {
                 output += list.get(z);
                 counter++;
             }
-            
-            if(counter < this.size) {
+
+            if (counter < this.size) {
                 output += ", ";
             }
         }
 
         output += "]";
         return output;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        Iterator<T> it = new Iterator<T>() {
+            int currentIndex = 0;
+            int currentListIndex = 0;
+            int iteratedItems = 0;
+
+            @Override
+            public boolean hasNext() {
+                return iteratedItems < size;
+            }
+
+            @Override
+            public T next() {
+                while (true) {
+                    while (array[currentIndex] == null) {
+                        currentIndex++;
+                    }
+                    if (currentListIndex < array[currentIndex].size()) {
+                        T output = array[currentIndex].get(currentListIndex);
+                        iteratedItems++;
+                        currentListIndex++;
+                        return output;
+                    }
+                    currentListIndex = 0;
+                    currentIndex++;
+                }
+            }
+        };
+        return it;
     }
 
 }

@@ -7,6 +7,7 @@ import static io.Writer.*;
 import java.util.*;
 import utils.CsvParse;
 import utils.MyArrayList;
+import utils.MyHashSet;
 import utils.MyMath;
 
 /**
@@ -16,6 +17,16 @@ import utils.MyMath;
 public class Main {
 
     public static void main(String[] args) {
+        MyHashSet<Integer> set = new MyHashSet<>();
+        for(int i=0;i<100;i++) {
+            set.add(i);
+        }
+        System.out.println(set);
+        for(int i:set) {
+            System.out.println(i);
+        }
+        
+        /*
         CsvParse parser = new CsvParse("hki.csv");
         MyArrayList<Point> list = parser.parsePointsFromFile(";", "x", "y", "weight");
         list = MyMath.moveCoordinatesToOrigin(list);
@@ -36,6 +47,7 @@ public class Main {
         writeToGrayscaleImage(idwInterpolation, "idw_test.jpg");
         writeTrianglesToImage(1000, 1000, t, "triangles.jpg");
         System.out.println("writing triangles");
+         */
 
     }
 
