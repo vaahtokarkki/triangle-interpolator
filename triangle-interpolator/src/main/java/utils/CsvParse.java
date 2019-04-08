@@ -47,6 +47,7 @@ public class CsvParse {
         try {
             lines = io.Reader.readRows(fileName);
         } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
             return null;
         }
 
@@ -146,7 +147,7 @@ public class CsvParse {
 
         int[] output = new int[3];
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < headerRow.length; i++) {
             if (headerRow[i].equals(XCoord)) {
                 output[0] = i;
             }

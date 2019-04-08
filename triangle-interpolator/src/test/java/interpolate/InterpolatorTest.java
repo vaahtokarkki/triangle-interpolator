@@ -39,14 +39,16 @@ public class InterpolatorTest {
 
     @Test
     public void testClassifyValue() {
-        assertEquals(-1, interpolate.Interpolator.classifyValue(Double.NaN, 0, 0, 0));
-
+        double[] minAndMax = new double[2];
+        assertEquals(-1, interpolate.Interpolator.classifyValue(Double.NaN, minAndMax, 0));
+        
+        minAndMax[1] = 4;
         for (int i = 0; i < 5; i++) {
-            assertEquals(i, interpolate.Interpolator.classifyValue(i, 0, 4, 5), 0.001);
+            assertEquals(i, interpolate.Interpolator.classifyValue(i, minAndMax, 5), 0.001);
         }
 
         for (int i = 0; i < 5; i++) {
-            assertEquals(0, interpolate.Interpolator.classifyValue(i, 0, 4, 0), 0.001);
+            assertEquals(0, interpolate.Interpolator.classifyValue(i, minAndMax, 0), 0.001);
         }
     }
 

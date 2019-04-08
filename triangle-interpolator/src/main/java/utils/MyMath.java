@@ -8,7 +8,7 @@ import geometry.Point;
  */
 public class MyMath {
 
-    final static int INF = 9999999;
+    final static int INF = 999999999;
 
     public static double pow(double value, double exp) {
         throw new UnsupportedOperationException();
@@ -16,6 +16,20 @@ public class MyMath {
 
     public static double sqrt(double value) {
         throw new UnsupportedOperationException();
+    }
+
+    public static double max(double a, double b) {
+        if (a > b) {
+            return a;
+        }
+        return b;
+    }
+
+    public static double min(double a, double b) {
+        if (a < b) {
+            return a;
+        }
+        return b;
     }
 
     /**
@@ -122,6 +136,75 @@ public class MyMath {
         }
 
         return output;
+    }
+
+    /**
+     * Returns a new list of points scaled to given width and height. That is
+     * the points are scaled to fill the given width and height matrix.
+     *
+     * @param width
+     * @param height
+     * @param points
+     * @return
+     */
+    public static MyArrayList<Point> scaleCoordinates(int width, int height, MyArrayList<Point> points) {
+        double max_x = -INF;
+        double max_y = -INF;
+        double min_x = INF;
+        double min_y = INF;
+
+        for (int i = 0; i < points.size(); i++) {
+            Point p = points.get(i);
+
+            max_x = (p.getX() > max_x) ? p.getX() : max_x;
+            max_y = (p.getY() > max_y) ? p.getY() : max_y;
+
+            min_x = (p.getX() < min_x) ? p.getX() : min_x;
+            min_y = (p.getY() < min_y) ? p.getY() : min_y;
+        }
+
+        //Scaling factors
+        double Sx = width / (max_x - min_x);
+        double Sy = height / (max_y - min_y);
+
+        MyArrayList<Point> output = new MyArrayList<>();
+        for (int i = 0; i < points.size(); i++) {
+            Point p = points.get(i);
+
+            double x = (p.getX() - min_x) * Sx;
+            double y = (p.getY() - min_y) * Sy;
+
+            Point scaledPoint = new Point(x, y, p.getWeight());
+            output.add(scaledPoint);
+        }
+
+        return output;
+    }
+
+    /**
+     * Returns max and min weights from given list of points.
+     *
+     * @param points list of points
+     * @return an array as [min, max]
+     */
+    public static double[] getMaxAndMinValues(MyArrayList<Point> points) {
+        if (points.size() == 0) {
+            return null;
+        }
+
+        double max_weight = -INF;
+        double min_weight = INF;
+
+        for (int i = 0; i < points.size(); i++) {
+            Point p = points.get(i);
+            max_weight = max(max_weight, p.getWeight());
+            min_weight = min(min_weight, p.getWeight());
+        }
+
+        double[] output = {min_weight, max_weight};
+
+        return output;
+
     }
 
 }

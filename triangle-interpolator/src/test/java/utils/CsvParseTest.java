@@ -66,7 +66,7 @@ public class CsvParseTest {
         expected.add(new Point(1, 1, 2));
         expected.add(new Point(3, 3, 3));
         expected.add(new Point(5, 5, 4));
-
+        
         assertEquals(4, results.size());
         for (int i = 0; i < results.size(); i++) {
             Point p = results.get(i);

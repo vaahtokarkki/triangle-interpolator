@@ -19,6 +19,8 @@ public class Writer {
      * Writes values from matrix to a grayscale jpg image. Dimensions of image
      * is same as dimensions of matrix. Values of matrix should be in range of
      * 0-255.
+     * 
+     * Note: Writes currently images with values mapped to colour ¯\_(ツ)_/¯
      *
      * @param values matrix to interpolate
      * @param filename filename of created image, for example "grayscale.jpg"
@@ -30,14 +32,16 @@ public class Writer {
             for (int y = 0; y < values.length; y++) {
                 for (int x = 0; x < values[0].length; x++) {
                     double value = values[y][x];
+                    Color newColor;
                     int rgb;
                     if (Double.isNaN(value) || value > 255 || value < 0) {
                         rgb = 0;
+                        newColor = new Color(rgb, rgb, rgb);
                     } else {
                         rgb = MyMath.round(value);
+                        newColor = getRGBForValue(rgb, 0, 255);
                     }
 
-                    Color newColor = new Color(rgb, rgb, rgb);
                     image.setRGB(x, y, newColor.getRGB());
                 }
             }
@@ -75,4 +79,21 @@ public class Writer {
         }
     }
 
+    /**
+     * Maps a value in given range to a rgb value. Used to colorize classified
+     * gray scale values
+     *
+     * @param value value to map a rgb value
+     * @param min minimum value used
+     * @param max maximum value used
+     * @return
+     */
+    public static Color getRGBForValue(int value, double min, double max) {
+        double ratio = 2 * (value - min) / (max - min);
+        int b = (int) Math.max(0, 255 * (1 - ratio));
+        int r = (int) Math.max(0, 255 * (ratio - 1));
+        int g = 255 - b - r;
+
+        return new Color(r, g, b);
+    }
 }
