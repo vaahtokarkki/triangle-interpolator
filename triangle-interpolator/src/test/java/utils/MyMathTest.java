@@ -80,6 +80,43 @@ public class MyMathTest {
     }
 
     @Test
+    public void testMax() {
+        assertEquals(0, MyMath.max(0, 0), 0.001);
+        assertEquals(1, MyMath.max(0, 1), 0.001);
+        assertEquals(1, MyMath.max(1, 0), 0.001);
+        assertEquals(101, MyMath.max(100, 101), 0.001);
+        assertEquals(0, MyMath.max(0, -10), 0.001);
+        assertEquals(-8, MyMath.max(-10, -8), 0.001);
+    }
+
+    @Test
+    public void testMin() {
+        assertEquals(0, MyMath.min(0, 0), 0.001);
+        assertEquals(0, MyMath.min(0, 1), 0.001);
+        assertEquals(0, MyMath.min(1, 0), 0.001);
+        assertEquals(100, MyMath.min(100, 101), 0.001);
+        assertEquals(-10, MyMath.min(0, -10), 0.001);
+        assertEquals(-10, MyMath.min(-10, -8), 0.001);
+    }
+
+    @Test
+    public void testGetMaxAndMinValues() {
+        MyArrayList<Point> list2 = new MyArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list1.add(new Point(i, i, i));
+            list2.add(new Point(i, i, i * -1.0));
+        }
+        double[] expected1 = {0.0, 9.0};
+        double[] expected2 = {-9.0, 0.0};
+
+        assertArrayEquals(expected1, MyMath.getMaxAndMinValues(list1), 0.001);
+        assertArrayEquals(expected2, MyMath.getMaxAndMinValues(list2), 0.001);
+        assertEquals(null, MyMath.getMaxAndMinValues(new MyArrayList<Point>()));
+        assertEquals(null, MyMath.getMaxAndMinValues(null));
+
+    }
+
+    @Test
     public void testFindMinimumBoundinBox() {
         MyArrayList<Point> list2 = new MyArrayList<>();
 

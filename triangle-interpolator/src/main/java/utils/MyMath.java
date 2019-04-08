@@ -188,7 +188,7 @@ public class MyMath {
      * @return an array as [min, max]
      */
     public static double[] getMaxAndMinValues(MyArrayList<Point> points) {
-        if (points.size() == 0) {
+        if (points == null || points.size() == 0) {
             return null;
         }
 

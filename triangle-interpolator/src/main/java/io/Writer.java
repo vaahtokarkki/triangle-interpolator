@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashSet;
 import javax.imageio.ImageIO;
+import utils.MyHashSet;
 import utils.MyMath;
 
 /**
@@ -61,7 +61,7 @@ public class Writer {
      * @param triangles set of triangles
      * @param filename filename of created image, for example "triangles.jpg"
      */
-    public static void writeTrianglesToImage(int width, int height, HashSet<Triangle> triangles, String filename) {
+    public static void writeTrianglesToImage(int width, int height, MyHashSet<Triangle> triangles, String filename) {
         try {
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D g2d = image.createGraphics();

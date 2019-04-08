@@ -142,7 +142,10 @@ public class MyHashSet<T> implements Iterable<T> {
             if (newArray[hasCode] == null) {
                 newArray[hasCode] = new MyArrayList<>();
             }
-
+            
+            if(newArray[index] == null) {
+                newArray[index] = new MyArrayList<>();
+            }
             newArray[index].add(obj);
         }
     }

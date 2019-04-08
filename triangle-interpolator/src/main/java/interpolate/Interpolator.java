@@ -2,9 +2,8 @@ package interpolate;
 
 import geometry.Point;
 import geometry.Triangle;
-import java.util.Arrays;
-import java.util.HashSet;
 import utils.MyArrayList;
+import utils.MyHashSet;
 import utils.MyMath;
 
 /**
@@ -20,8 +19,8 @@ public class Interpolator {
      * @param listOfPoints list of points where to create Delaunay triangles
      * @return set of Delaunay triangles, null if there is none
      */
-    public static HashSet<Triangle> triangulate(MyArrayList<Point> listOfPoints) {
-        HashSet<Triangle> validTriangles = new HashSet<>();
+    public static MyHashSet<Triangle> triangulate(MyArrayList<Point> listOfPoints) {
+        MyHashSet<Triangle> validTriangles = new MyHashSet<>();
 
         for (int i = 0; i < listOfPoints.size(); i++) {
             for (int z = 0; z < listOfPoints.size(); z++) {
@@ -56,9 +55,7 @@ public class Interpolator {
      */
     public static double[][] interpolateMatrix(int width, int height, MyArrayList<Point> listOfPoints, int classes) {
         double[][] output = new double[height][width];
-        HashSet<Triangle> validTriangles = new HashSet<>();
-
-        validTriangles = triangulate(listOfPoints);
+        MyHashSet<Triangle> validTriangles = triangulate(listOfPoints);
 
         double[] minAndMaxValues = MyMath.getMaxAndMinValues(listOfPoints);
 

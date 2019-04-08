@@ -62,7 +62,7 @@ public class MyHashSetTest {
     public void testSetAdd() {
         set.add(1);
         set.add(1);
-        
+
         assertTrue(set.contains(1));
         assertEquals(1, set.size());
     }
@@ -99,7 +99,17 @@ public class MyHashSetTest {
         set.add(null);
         assertTrue(set.remove(null));
     }
-    
+
+    @Test
+    public void testIterator() {
+        addItemsToSet(10);
+        int i = 0;
+        for(int value:set) {
+            assertEquals(value, i);
+            i++;
+        }
+    }
+
     @Test
     public void testSettoString() {
         assertEquals("[]", set.toString());
