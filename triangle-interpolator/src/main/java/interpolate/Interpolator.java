@@ -22,16 +22,20 @@ public class Interpolator {
     public static MyHashSet<Triangle> triangulate(MyArrayList<Point> listOfPoints) {
         MyHashSet<Triangle> validTriangles = new MyHashSet<>();
 
-        for (int i = 0; i < listOfPoints.size(); i++) {
-            for (int z = 0; z < listOfPoints.size(); z++) {
-                for (int n = 0; n < listOfPoints.size(); n++) {
-                    Point p1 = listOfPoints.get(i);
-                    Point p2 = listOfPoints.get(z);
-                    Point p3 = listOfPoints.get(n);
+        try (ProgressBar pb = new ProgressBar("Generating Delaunay triangles", listOfPoints.size() * listOfPoints.size() * listOfPoints.size(), 100, System.out, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
+            for (int i = 0; i < listOfPoints.size(); i++) {
+                for (int z = 0; z < listOfPoints.size(); z++) {
+                    for (int n = 0; n < listOfPoints.size(); n++) {
+                        pb.step();
 
-                    Triangle t = new Triangle(p1, p2, p3);
-                    if (t.isValidDelaunay(listOfPoints)) {
-                        validTriangles.add(t);
+                        Point p1 = listOfPoints.get(i);
+                        Point p2 = listOfPoints.get(z);
+                        Point p3 = listOfPoints.get(n);
+
+                        Triangle t = new Triangle(p1, p2, p3);
+                        if (t.isValidDelaunay(listOfPoints)) {
+                            validTriangles.add(t);
+                        }
                     }
                 }
             }
@@ -53,9 +57,11 @@ public class Interpolator {
      * classified, usually between 10-50
      * @return matrix with interpolated values
      */
-    public static double[][] interpolateMatrix(int width, int height, MyArrayList<Point> listOfPoints, int classes) {
+    public static double[][] interpolateMatrix(int width, int height, MyArrayList<Point> listOfPoints, MyHashSet<Triangle> triangles, int classes) {
         double[][] output = new double[height][width];
-        MyHashSet<Triangle> validTriangles = triangulate(listOfPoints);
+        if (triangles == null) {
+            triangles = triangulate(listOfPoints);
+        }
 
         double[] minAndMaxValues = MyMath.getMaxAndMinValues(listOfPoints);
 
@@ -66,7 +72,7 @@ public class Interpolator {
                     pb.step();
 
                     boolean found = false;
-                    for (Triangle t : validTriangles) {
+                    for (Triangle t : triangles) {
                         if (t.isPointInsideTriangle(currentPosition)) {
                             double value = t.calcWeightOfPoint(currentPosition);
                             double classified = classifyValue(value, minAndMaxValues, classes);

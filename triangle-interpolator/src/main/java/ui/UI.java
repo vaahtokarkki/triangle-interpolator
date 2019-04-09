@@ -76,7 +76,7 @@ public class UI {
 
         System.out.println("Generating Delaunay triangles");
         MyHashSet<Triangle> t = triangulate(list);
-        double[][] barycentricInterpolation = interpolateMatrix(width, height, list, 25);
+        double[][] barycentricInterpolation = interpolateMatrix(width, height, list, t, 25);
         double[][] idwInterpolation = interpolateInverseDistance(width, height, list, 300, 2, 15);
 
         System.out.println("Writing barycentric");
