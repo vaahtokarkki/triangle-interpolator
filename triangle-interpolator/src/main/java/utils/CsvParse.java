@@ -86,6 +86,11 @@ public class CsvParse {
 
         for (int i = 1; i < valuesFromFile.size(); i++) {
             String[] row = valuesFromFile.get(i);
+            
+            if(row.length < 3) {
+                continue;
+            }
+            
             double X, Y, Z;
             try {
                 X = Double.parseDouble(row[XCoord]);

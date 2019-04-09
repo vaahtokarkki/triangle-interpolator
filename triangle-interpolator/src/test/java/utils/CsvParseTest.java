@@ -22,9 +22,9 @@ public class CsvParseTest {
 
     CsvParse parser;
     String csvSeparator;
-    String XCoord;
-    String YCoord;
-    String ZCoord;
+    int XCoord;
+    int YCoord;
+    int ZCoord;
     MyArrayList<Point> emptyList;
     
     String pathToTestResources;
@@ -43,9 +43,9 @@ public class CsvParseTest {
     @Before
     public void setUp() {
         csvSeparator = ";";
-        XCoord = "x";
-        YCoord = "y";
-        ZCoord = "weight";
+        XCoord = 0;
+        YCoord = 1;
+        ZCoord = 2;
         pathToTestResources = "src/test/resources/";
         emptyList = new MyArrayList<>();
         
@@ -68,6 +68,8 @@ public class CsvParseTest {
         expected.add(new Point(5, 5, 4));
         
         assertEquals(4, results.size());
+        
+        System.out.println(results);
         for (int i = 0; i < results.size(); i++) {
             Point p = results.get(i);
             assertTrue(expected.indexOf(p) >= 0);
@@ -88,9 +90,7 @@ public class CsvParseTest {
     @Test
     public void testParsePointsFromFileInvalidValues() {
         String file1 = pathToTestResources+"invalid_values.csv";
-        String file2 = pathToTestResources+"no_header.csv";
-        String file3 = pathToTestResources+"invalid_header1.csv";
-        String file4 = pathToTestResources+"invalid_header2.csv";
+        String file2 = pathToTestResources+"invalid_columns.csv";
         String file5 = pathToTestResources+"empty_csv.csv";
         String file6 = pathToTestResources+"empty_file.csv";
 
@@ -107,12 +107,6 @@ public class CsvParseTest {
         }
 
         parser.setFileName(file2);
-        assertEquals(0, parser.parsePointsFromFile(csvSeparator, XCoord, YCoord, ZCoord).size());
-
-        parser.setFileName(file3);
-        assertEquals(0, parser.parsePointsFromFile(csvSeparator, XCoord, YCoord, ZCoord).size());
-
-        parser.setFileName(file4);
         assertEquals(0, parser.parsePointsFromFile(csvSeparator, XCoord, YCoord, ZCoord).size());
 
         parser.setFileName(file5);
