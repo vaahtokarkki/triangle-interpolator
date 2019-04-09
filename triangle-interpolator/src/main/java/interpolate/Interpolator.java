@@ -6,10 +6,10 @@ import utils.MyArrayList;
 import utils.MyHashSet;
 import utils.MyMath;
 
-/**
- *
- * @author lroni
- */
+//UI
+import me.tongfei.progressbar.ProgressBar;
+import me.tongfei.progressbar.ProgressBarStyle;
+
 public class Interpolator {
 
     /**
@@ -59,28 +59,31 @@ public class Interpolator {
 
         double[] minAndMaxValues = MyMath.getMaxAndMinValues(listOfPoints);
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                Point currentPosition = new Point(x, y);
+        try (ProgressBar pb = new ProgressBar("Interpolating with triangles", width * height, 100, System.out, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    Point currentPosition = new Point(x, y);
+                    pb.step();
 
-                boolean found = false;
-                for (Triangle t : validTriangles) {
-                    if (t.isPointInsideTriangle(currentPosition)) {
-                        double value = t.calcWeightOfPoint(currentPosition);
-                        double classified = classifyValue(value, minAndMaxValues, classes);
-                        classified = getGrayscaleValueForClass(classified, classes);
-                        output[y][x] = classified;
-                        found = true;
-                        break;
+                    boolean found = false;
+                    for (Triangle t : validTriangles) {
+                        if (t.isPointInsideTriangle(currentPosition)) {
+                            double value = t.calcWeightOfPoint(currentPosition);
+                            double classified = classifyValue(value, minAndMaxValues, classes);
+                            classified = getGrayscaleValueForClass(classified, classes);
+                            output[y][x] = classified;
+                            found = true;
+                            break;
+                        }
+
                     }
 
-                }
+                    if (found) {
+                        continue;
+                    }
 
-                if (found) {
-                    continue;
+                    output[y][x] = Double.NaN;
                 }
-
-                output[y][x] = Double.NaN;
             }
         }
         return output;
@@ -112,39 +115,43 @@ public class Interpolator {
         double[][] output = new double[height][width];
         double[] minAndMaxValues = MyMath.getMaxAndMinValues(listOfPoints);
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                Point currentPosition = new Point(x, y);
+        //UI Progressbar
+        try (ProgressBar pb = new ProgressBar("Interpolating IDW", width * height, 100, System.out, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    Point currentPosition = new Point(x, y);
+                    pb.step();
 
-                double sum = 0;
-                double distances = 0;
+                    double sum = 0;
+                    double distances = 0;
 
-                for (int i = 0; i < listOfPoints.size(); i++) {
-                    Point point = listOfPoints.get(i);
-                    double dist = point.calculateDistance(currentPosition);
+                    for (int i = 0; i < listOfPoints.size(); i++) {
+                        Point point = listOfPoints.get(i);
+                        double dist = point.calculateDistance(currentPosition);
 
-                    if (MyMath.abs(dist - serachRadius) < 0.1) {
+                        if (MyMath.abs(dist - serachRadius) < 0.1) {
+                            continue;
+                        }
+
+                        dist = Math.pow(dist, p);
+
+                        sum += point.getWeight() / dist;
+                        distances += 1 / dist;
+
+                    }
+
+                    if (distances == 0) {
+                        output[y][x] = Double.NaN;
                         continue;
                     }
 
-                    dist = Math.pow(dist, p);
+                    double result = sum / distances;
 
-                    sum += point.getWeight() / dist;
-                    distances += 1 / dist;
+                    result = classifyValue(result, minAndMaxValues, classes);
+                    result = getGrayscaleValueForClass(result, classes);
 
+                    output[y][x] = result;
                 }
-
-                if (distances == 0) {
-                    output[y][x] = Double.NaN;
-                    continue;
-                }
-
-                double result = sum / distances;
-
-                result = classifyValue(result, minAndMaxValues, classes);
-                result = getGrayscaleValueForClass(result, classes);
-
-                output[y][x] = result;
             }
         }
 
