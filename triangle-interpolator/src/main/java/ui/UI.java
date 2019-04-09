@@ -55,9 +55,9 @@ public class UI {
             }
         });
 
-        printFiles(listOfFiles);
+        UITools.printFiles(listOfFiles);
 
-        int fileId = readNumber(1, listOfFiles.length);
+        int fileId = UITools.readNumber(sc, 1, listOfFiles.length);
 
         fileName = listOfFiles[fileId - 1].getName();
 
@@ -66,52 +66,7 @@ public class UI {
         parser = new CsvParse(fileName);
     }
 
-    private void printFiles(File[] files) {
-        for (int i = 0; i < files.length; i++) {
-            System.out.println("[" + (i + 1) + "] " + files[i].getName());
-        }
-    }
-
-    private int readNumber(int min, int max, int defaultValue) {
-        int output;
-        while (true) {
-
-            String line = sc.nextLine();
-            line = line.trim();
-            if (line.isEmpty()) {
-                return defaultValue;
-            }
-
-            try {
-                output = Integer.parseInt(line);
-                if (output < min || output > max) {
-                    System.out.println("Number must be in range " + min + "-" + max);
-                    continue;
-                }
-                break;
-            } catch (Exception e) {
-                System.out.println("Please give a number");
-            }
-        }
-        return output;
-    }
-
-    private int readNumber(int min, int max) {
-        int output;
-        while (true) {
-            try {
-                output = Integer.parseInt(sc.nextLine());
-                if (output < min || output > max) {
-                    System.out.println("Number must be in range " + min + "-" + max);
-                    continue;
-                }
-                break;
-            } catch (Exception e) {
-                System.out.println("Please give a number");
-            }
-        }
-        return output;
-    }
+    
 
     private void runInterpolation() {
         CsvParse parser = new CsvParse(fileName);
@@ -135,16 +90,16 @@ public class UI {
 
     private void selectHeadersForFile() {
         String[] headers = parser.getCsvHeaders(csvSeparator);
-        printColumns(headers);
+        UITools.printColumns(headers);
 
         System.out.println("Select column for x-coordinate (1-" + headers.length + ")");
-        XCoord = readNumber(1, headers.length) - 1;
+        XCoord = UITools.readNumber(sc, 1, headers.length) - 1;
 
         System.out.println("Select column for y-coordinate (1-" + headers.length + ")");
-        YCoord = readNumber(1, headers.length) - 1;
+        YCoord = UITools.readNumber(sc, 1, headers.length) - 1;
 
         System.out.println("Select column for value to interpolate (1-" + headers.length + ")");
-        ZCoord = readNumber(1, headers.length) - 1;
+        ZCoord = UITools.readNumber(sc, 1, headers.length) - 1;
     }
 
     private void getCsvSeparator() {
@@ -166,23 +121,17 @@ public class UI {
         this.csvSeparator = separator;
     }
 
-    private void printColumns(String[] headers) {
-        String output = "";
-        for (int i = 0; i < headers.length; i++) {
-            output += "[" + (i + 1) + "] " + headers[i] + " ";
-        }
-        System.out.println(output);
-    }
+    
 
     private void selectDimensions() {
         System.out.println("Give width of output image in pixels [1000]");
-        width = readNumber(1, 2000, 1000);
+        width = UITools.readNumber(sc, 1, 2000, 1000);
         System.out.println("Give height of output image in pixels [1000]");
-        height = readNumber(1, 2000, 1000);
+        height = UITools.readNumber(sc, 1, 2000, 1000);
     }
 
     private void printFileStats() {
-        System.out.println("Found from file "+fileName+" "+(parser.rowsInFile()-1)+" rows");
+        System.out.println("Found from file " + fileName + " " + (parser.rowsInFile() - 1) + " rows");
     }
 
 }
