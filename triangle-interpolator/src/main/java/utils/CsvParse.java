@@ -45,7 +45,7 @@ public class CsvParse {
     }
 
     private void readFile() {
-        if (fileName.trim().isEmpty()) {
+        if (fileName == null || fileName.trim().isEmpty()) {
             return;
         }
 
@@ -53,7 +53,7 @@ public class CsvParse {
             linesFromFile = io.Reader.readRows(fileName);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
-            return;
+            linesFromFile = new MyArrayList<>();
         }
     }
 
@@ -72,25 +72,26 @@ public class CsvParse {
      * null if invalid file
      */
     public MyArrayList<Point> parsePointsFromFile(String csvSeparator, int XCoord, int YCoord, int ZValue) {
+        MyArrayList<Point> output = new MyArrayList<>();
+
         if (linesFromFile.size() == 0) {
             readFile();
         }
 
         //If file contains only header row
         if (linesFromFile.size() <= 1) {
-            return null;
+            return output;
         }
 
-        MyArrayList<Point> output = new MyArrayList<>();
         MyArrayList<String[]> valuesFromFile = parseValuesFromCSVLines(csvSeparator);
 
         for (int i = 1; i < valuesFromFile.size(); i++) {
             String[] row = valuesFromFile.get(i);
-            
-            if(row.length < 3) {
+
+            if (row.length < 3) {
                 continue;
             }
-            
+
             double X, Y, Z;
             try {
                 X = Double.parseDouble(row[XCoord]);

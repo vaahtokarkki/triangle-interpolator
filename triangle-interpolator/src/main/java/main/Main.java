@@ -18,10 +18,11 @@ import utils.MyMath;
 public class Main {
 
     public static void main(String[] args) {
-       
+       CsvParse p = new CsvParse(null);
+       p.parsePointsFromFile(";", 0, 0, 0);
          
-        UI ui = new UI();
-        ui.start();
+//        UI ui = new UI();
+//        ui.start();
 
     }
 
