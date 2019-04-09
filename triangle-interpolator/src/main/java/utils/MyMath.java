@@ -148,6 +148,14 @@ public class MyMath {
      * @return
      */
     public static MyArrayList<Point> scaleCoordinates(int width, int height, MyArrayList<Point> points) {
+        if (points == null) {
+            return null;
+        }
+
+        if ((width == 0 && height == 0) || points.size() == 0) {
+            return points;
+        }
+        
         double max_x = -INF;
         double max_y = -INF;
         double min_x = INF;

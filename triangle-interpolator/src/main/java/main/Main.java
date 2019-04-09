@@ -18,7 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        
+        /*
         CsvParse parser = new CsvParse("hki.csv");
         MyArrayList<Point> list = parser.parsePointsFromFile(";", "x", "y", "weight");
         list = MyMath.moveCoordinatesToOrigin(list);
@@ -39,7 +39,8 @@ public class Main {
         writeToGrayscaleImage(idwInterpolation, "idw_test.jpg");
         writeTrianglesToImage(1000, 1000, t, "triangles.jpg");
         System.out.println("writing triangles");
-         
+         */
+
 
     }
 

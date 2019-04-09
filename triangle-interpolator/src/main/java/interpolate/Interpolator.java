@@ -147,7 +147,6 @@ public class Interpolator {
                 output[y][x] = result;
             }
         }
-        
 
         return output;
     }
@@ -164,7 +163,7 @@ public class Interpolator {
      * @return Classified value, or -1 if value is NaN
      */
     public static int classifyValue(double value, double[] minAndMaxValues, int classes) {
-        if (Double.isNaN(value) || minAndMaxValues.length < 2) {
+        if (Double.isNaN(value) || minAndMaxValues == null || minAndMaxValues.length < 2) {
             return -1;
         }
 
