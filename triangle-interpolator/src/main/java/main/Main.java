@@ -18,26 +18,10 @@ import utils.MyMath;
 public class Main {
 
     public static void main(String[] args) {
-
-        CsvParse parser = new CsvParse("hki.csv");
-        MyArrayList<Point> list = parser.parsePointsFromFile(";", "x", "y", "weight");
-        list = MyMath.moveCoordinatesToOrigin(list);
-        list = MyMath.scaleCoordinates(1000, 1000, list);
-
-        System.out.println("Generating Delaunay triangles");
-        MyHashSet<Triangle> t = triangulate(list);
-        System.out.println(t);
-        double[][] barycentricInterpolation = interpolateMatrix(1000, 1000, list, 25);
-        double[][] idwInterpolation = interpolateInverseDistance(1000, 1000, list, 300, 2, 35);
-
-        System.out.println("Writing barycentric");
-        writeToGrayscaleImage(barycentricInterpolation, "barycentric_test.jpg");
-        System.out.println("Writing idw");
-
-        writeToGrayscaleImage(idwInterpolation, "idw_test.jpg");
-        writeTrianglesToImage(1000, 1000, t, "triangles.jpg");
-        System.out.println("writing triangles");
-
+       
+         
+        UI ui = new UI();
+        ui.start();
 
     }
 
