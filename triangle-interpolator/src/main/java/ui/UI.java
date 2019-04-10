@@ -76,6 +76,9 @@ public class UI {
         CsvParse parser = new CsvParse(inputFileName);
         MyArrayList<geometry.Point> list = parser.parsePointsFromFile(csvSeparator, XCoord, YCoord, ZCoord);
         list = MyMath.moveCoordinatesToOrigin(list);
+
+        // TODO: Scale coordinates and keep constrain proportions!!
+        // Currently messes up aspect ratio (see airquality_photoshoped.png)
         list = MyMath.scaleCoordinates(width, height, list);
 
         System.out.println("Generating Delaunay triangles");
