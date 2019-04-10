@@ -1,11 +1,14 @@
 package io;
 
+import geometry.Point;
 import geometry.Triangle;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import utils.MyArrayList;
 import utils.MyHashSet;
 import utils.MyMath;
 
@@ -16,14 +19,18 @@ import utils.MyMath;
 public class Writer {
 
     /**
-     * Writes values from matrix to a grayscale jpg image. Dimensions of image
+     * Writes values from matrix to a grayscale png image. Dimensions of image
      * is same as dimensions of matrix. Values of matrix should be in range of
      * 0-255.
-     * 
+     *
      * Note: Writes currently images with values mapped to colour ¯\_(ツ)_/¯
      *
-     * @param values matrix to interpolate
-     * @param filename filename of created image, for example "grayscale.jpg"
+     * TODO: get rid of value range 0-255, accept any values and find out their
+     * min and max for mapping to colour
+     *
+     *
+     * @param values matrix to write
+     * @param filename filename of created image, for example "grayscale.png"
      */
     public static void writeToGrayscaleImage(double[][] values, String filename) {
         try {
@@ -47,7 +54,75 @@ public class Writer {
             }
 
             File output = new File(filename);
-            ImageIO.write(image, "jpg", output);
+            ImageIO.write(image, "png", output);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * Writes values from matrix to a grayscale png image. Adds points and
+     * weights of them as overlay to written matrix. Dimensions of image is same
+     * as dimensions of matrix. Values of matrix should be in range of 0-255.
+     *
+     * Note: Writes currently images with values mapped to colour ¯\_(ツ)_/¯
+     *
+     * TODO: get rid of value range 0-255, accept any values and find out their
+     * min and max for mapping to colour
+     *
+     * @param values matrix to write
+     * @param points list of points to add
+     * @param filename filename of created image, for example "grayscale.png"
+     */
+    public static void writeToGrayscaleImage(double[][] values, MyArrayList<Point> points, String filename) {
+        int width = values[0].length;
+
+        try {
+            BufferedImage image = new BufferedImage(values[0].length + 1, values.length, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = image.createGraphics();
+
+            for (int y = 0; y < values.length; y++) {
+                for (int x = 0; x < values[0].length; x++) {
+
+                    double value = values[y][x];
+                    Color newColor;
+                    int rgb;
+                    if (Double.isNaN(value) || value > 255 || value < 0) {
+                        rgb = 0;
+                        newColor = new Color(rgb, rgb, rgb);
+                    } else {
+                        rgb = MyMath.round(value);
+                        newColor = getRGBForValue(rgb, 0, 255);
+                    }
+
+                    image.setRGB(x, y, newColor.getRGB());
+                }
+            }
+
+            RenderingHints rh = new RenderingHints(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+
+            rh.put(RenderingHints.KEY_RENDERING,
+                    RenderingHints.VALUE_RENDER_QUALITY);
+
+            g2d.setRenderingHints(rh);
+            g2d.setPaint(new Color(0, 0, 0));
+            for (int i = 0; i < points.size(); i++) {
+                Point p = points.get(i);
+                int pointX = MyMath.round(p.getX());
+                int pointY = MyMath.round(p.getY());
+
+                g2d.fillOval(pointX - 6, pointY - 6, 12, 12);
+
+                pointX = pointX + 10 > width - 20 ? pointX - 50 : pointX;
+                pointY = pointY - 10 < 10 ? pointY + 30 : pointY;
+
+                g2d.drawString(p.getWeight() + "", pointX + 10, pointY - 10);
+            }
+
+            File output = new File(filename);
+            ImageIO.write(image, "png", output);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -59,9 +134,9 @@ public class Writer {
      * @param width width of created image
      * @param height height of created image
      * @param triangles set of triangles
-     * @param filename filename of created image, for example "triangles.jpg"
+     * @param fileName filename of created image, for example "triangles.png"
      */
-    public static void writeTrianglesToImage(int width, int height, MyHashSet<Triangle> triangles, String filename) {
+    public static void writeTrianglesToImage(int width, int height, MyHashSet<Triangle> triangles, String fileName) {
         try {
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D g2d = image.createGraphics();
@@ -72,8 +147,8 @@ public class Writer {
                 g2d.drawLine((int) t.getVertex1().getX(), (int) t.getVertex1().getY(), (int) t.getVertex3().getX(), (int) t.getVertex3().getY());
             }
 
-            File output = new File(filename);
-            ImageIO.write(image, "jpg", output);
+            File output = new File(fileName);
+            ImageIO.write(image, "png", output);
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ui;
 
 import java.io.File;
 import java.util.Scanner;
 
 /**
- *
- * @author lroni
+ * Tools used for building UI. Mostly reading and validating inputs from user.
  */
 public class UITools {
 
@@ -53,6 +47,33 @@ public class UITools {
             }
         }
         return output;
+    }
+
+    public static String readString(Scanner sc, String defaultValue) {
+        String output = sc.nextLine();
+
+        if (output.trim().isEmpty()) {
+            return defaultValue;
+        }
+
+        return output;
+    }
+
+    public static boolean readBoolean(Scanner sc, boolean defaultValue) {
+        while (true) {
+            String output = sc.nextLine();
+            output = output.trim().toLowerCase();
+
+            if (output.isEmpty()) {
+                return defaultValue;
+            } else if (output.equals("n") || output.equals("no")) {
+                return false;
+            } else if (output.equals("y") || output.equals("yes")) {
+                return true;
+            }
+
+            System.out.println("Please give y/n");
+        }
     }
 
     public static void printColumns(String[] headers) {

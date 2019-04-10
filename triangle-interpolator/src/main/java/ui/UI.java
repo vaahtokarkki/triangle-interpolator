@@ -8,6 +8,7 @@ import static io.Writer.writeToGrayscaleImage;
 import static io.Writer.writeTrianglesToImage;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
 import java.util.Scanner;
 import utils.CsvParse;
 import utils.MyArrayList;
@@ -19,9 +20,10 @@ public class UI {
     private Scanner sc;
     CsvParse parser;
 
-    private String fileName;
-    private String csvSeparator;
+    private String inputFileName, outputFileName;
+    private boolean drawLabels;
 
+    private String csvSeparator;
     private int XCoord, YCoord, ZCoord;
 
     private int width;
@@ -30,7 +32,9 @@ public class UI {
     public UI() {
         sc = new Scanner(System.in);
 
-        fileName = "";
+        inputFileName = "";
+        outputFileName = "";
+        drawLabels = true;
         width = 0;
         height = 0;
     }
@@ -39,6 +43,8 @@ public class UI {
         selectFile();
         selectHeadersForFile();
         selectDimensions();
+        selectDrawLables();
+        selectOutput();
         System.out.println("*****************************");
         printFileStats();
         runInterpolation();
@@ -59,20 +65,18 @@ public class UI {
 
         int fileId = UITools.readNumber(sc, 1, listOfFiles.length);
 
-        fileName = listOfFiles[fileId - 1].getName();
+        inputFileName = listOfFiles[fileId - 1].getName();
 
         getCsvSeparator();
 
-        parser = new CsvParse(fileName);
+        parser = new CsvParse(inputFileName);
     }
 
-    
-
     private void runInterpolation() {
-        CsvParse parser = new CsvParse(fileName);
+        CsvParse parser = new CsvParse(inputFileName);
         MyArrayList<geometry.Point> list = parser.parsePointsFromFile(csvSeparator, XCoord, YCoord, ZCoord);
         list = MyMath.moveCoordinatesToOrigin(list);
-        list = MyMath.scaleCoordinates(1000, 1000, list);
+        list = MyMath.scaleCoordinates(width, height, list);
 
         System.out.println("Generating Delaunay triangles");
         MyHashSet<Triangle> t = triangulate(list);
@@ -80,12 +84,23 @@ public class UI {
         double[][] idwInterpolation = interpolateInverseDistance(width, height, list, 300, 2, 15);
 
         System.out.println("Writing barycentric");
-        writeToGrayscaleImage(barycentricInterpolation, "barycentric_test.jpg");
-        System.out.println("Writing idw");
+        if (drawLabels) {
+            writeToGrayscaleImage(barycentricInterpolation, list, "barycentric_" + outputFileName);
 
-        writeToGrayscaleImage(idwInterpolation, "idw_test.jpg");
-        writeTrianglesToImage(width, height, t, "triangles.jpg");
+        } else {
+            writeToGrayscaleImage(barycentricInterpolation, "barycentric_" + outputFileName);
+        }
+
+        System.out.println("Writing idw");
+        if (drawLabels) {
+            writeToGrayscaleImage(idwInterpolation, list, "idw_" + outputFileName);
+
+        } else {
+            writeToGrayscaleImage(idwInterpolation, "idw_" + outputFileName);
+        }
+
         System.out.println("writing triangles");
+        writeTrianglesToImage(width, height, t, "triangles_" + outputFileName);
     }
 
     private void selectHeadersForFile() {
@@ -121,8 +136,6 @@ public class UI {
         this.csvSeparator = separator;
     }
 
-    
-
     private void selectDimensions() {
         System.out.println("Give width of output image in pixels [1000]");
         width = UITools.readNumber(sc, 1, 2000, 1000);
@@ -131,7 +144,18 @@ public class UI {
     }
 
     private void printFileStats() {
-        System.out.println("Found from file " + fileName + " " + (parser.rowsInFile() - 1) + " rows");
+        System.out.println("Found from file " + inputFileName + " " + (parser.rowsInFile() - 1) + " rows");
+    }
+
+    private void selectOutput() {
+        String[] defaultOutputName = inputFileName.split("\\.");
+        System.out.println("Give file name without extension where to write output images [" + defaultOutputName[0] + ".png]");
+        outputFileName = UITools.readString(sc, defaultOutputName[0] + ".png");
+    }
+
+    private void selectDrawLables() {
+        System.out.println("Write point lables on output image y/n [yes]");
+        drawLabels = UITools.readBoolean(sc, true);
     }
 
 }
