@@ -100,32 +100,6 @@ public class Triangle {
     }
 
     /**
-     * Calculates value for given point by getting average of triangle's
-     * vertexes. That is the sum of distances from point to vertexes multiplied
-     * by the weight of vertex and the sum is divided by three (number of
-     * vertexes).
-     *
-     * Note: This method is not recommended to use if the triangle is not
-     * equilateral.
-     *
-     * @param p Point where to calculate value
-     * @return value of point or NaN if point is outside triangle
-     */
-    public double calculateAvgValue(Point p) {
-        if (!this.isPointInsideTriangle(p)) {
-            return Double.NaN;
-        }
-
-        double w1 = 1 / p.calculateDistance(vertex1);
-        double w2 = 1 / p.calculateDistance(vertex2);
-        double w3 = 1 / p.calculateDistance(vertex3);
-
-        double values = w1 * vertex1.getWeight() + w2 * vertex2.getWeight() + w3 * vertex3.getWeight();
-
-        return values / (w1 + w2 + w3);
-    }
-
-    /**
      * Returns value of given point calculated by barycentric coordinates. The
      * point must be inside of triangle to calculate weight. If the point is
      * outside of triangle method return NaN.
@@ -147,39 +121,6 @@ public class Triangle {
                 + vertex3.getWeight() * weights[2];
 
         return calculatedWeight;
-    }
-
-    /**
-     * Not used currently! Only for testing.
-     *
-     * @param p
-     * @return
-     */
-    public double inverseDist(Point p) {
-        double d1 = p.calculateDistance(vertex1);
-        double d2 = p.calculateDistance(vertex2);
-        double d3 = p.calculateDistance(vertex3);
-
-        if (d1 < 0.01) {
-            return vertex1.getWeight();
-        }
-
-        if (d2 < 0.01) {
-            return vertex2.getWeight();
-        }
-
-        if (d3 < 0.01) {
-            return vertex3.getWeight();
-        }
-
-        d1 = Math.pow(d1, 0.8);
-        d2 = Math.pow(d2, 0.8);
-        d3 = Math.pow(d3, 0.8);
-
-        double a = (vertex1.getWeight() / d1) + (vertex2.getWeight() / d2) + (vertex3.getWeight() / d3);
-        double b = (1 / d1) + (1 / d2) + (1 / d3);
-
-        return a / b;
     }
 
     /**
