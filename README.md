@@ -20,3 +20,4 @@ mvn exec:java -Dexec.mainClass="main.Main"
 * [Viikko 2](documentation/viikkoraportit/viikko2.md)
 * [Viikko 3](documentation/viikkoraportit/viikko3.md)
 * [Viikko 4](documentation/viikkoraportit/viikko4.md)
+* [Viikko 5](documentation/viikkoraportit/viikko5.md)
