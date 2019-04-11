@@ -1,15 +1,10 @@
 package utils;
 
 import geometry.Point;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A csv-file parser to parse {@link geometry.Point} from csv-file.
  *
- * @author lroni
  */
 public class CsvParse {
 
@@ -42,19 +37,6 @@ public class CsvParse {
         }
 
         return linesFromFile.size();
-    }
-
-    private void readFile() {
-        if (fileName == null || fileName.trim().isEmpty()) {
-            return;
-        }
-
-        try {
-            linesFromFile = io.Reader.readRows(fileName);
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-            linesFromFile = new MyArrayList<>();
-        }
     }
 
     /**
@@ -166,6 +148,19 @@ public class CsvParse {
         }
 
         return output;
+    }
+
+    private void readFile() {
+        if (fileName == null || fileName.trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            linesFromFile = io.Reader.readRows(fileName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            linesFromFile = new MyArrayList<>();
+        }
     }
 
     /**

@@ -7,7 +7,6 @@ import utils.MyArrayList;
  * Represents a triangle in 2D plane
  *
  * @see geometry.Point
- * @author lroni
  */
 public class Triangle {
 

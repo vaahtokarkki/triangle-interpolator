@@ -3,8 +3,7 @@ package utils;
 import geometry.Point;
 
 /**
- *
- * @author lroni
+ * Math functions
  */
 public class MyMath {
 
@@ -18,6 +17,13 @@ public class MyMath {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Returns maximum of given two values
+     *
+     * @param a value 1
+     * @param b value 2
+     * @return maximum of a and b
+     */
     public static double max(double a, double b) {
         if (a > b) {
             return a;
@@ -25,6 +31,13 @@ public class MyMath {
         return b;
     }
 
+    /**
+     * Returns minimum of given two values
+     *
+     * @param a value 1
+     * @param b value 2
+     * @return minimum of a and b
+     */
     public static double min(double a, double b) {
         if (a < b) {
             return a;
@@ -155,7 +168,7 @@ public class MyMath {
         if ((width == 0 && height == 0) || points.size() == 0) {
             return points;
         }
-        
+
         double max_x = -INF;
         double max_y = -INF;
         double min_x = INF;
@@ -171,16 +184,18 @@ public class MyMath {
             min_y = (p.getY() < min_y) ? p.getY() : min_y;
         }
 
-        //Scaling factors
-        double Sx = width / (max_x - min_x);
-        double Sy = height / (max_y - min_y);
+        //Original width and height
+        double width2 = max_x - min_x;
+        double height2 = max_y - min_y;
+        
+        double scalingFactor = MyMath.min((width/width2), (height/height2));
 
         MyArrayList<Point> output = new MyArrayList<>();
         for (int i = 0; i < points.size(); i++) {
             Point p = points.get(i);
 
-            double x = (p.getX() - min_x) * Sx;
-            double y = (p.getY() - min_y) * Sy;
+            double x = (p.getX() - min_x) * scalingFactor;
+            double y = (p.getY() - min_y) * scalingFactor;
 
             Point scaledPoint = new Point(x, y, p.getWeight());
             output.add(scaledPoint);

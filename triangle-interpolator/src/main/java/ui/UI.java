@@ -8,7 +8,6 @@ import static io.Writer.writeToGrayscaleImage;
 import static io.Writer.writeTrianglesToImage;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Arrays;
 import java.util.Scanner;
 import utils.CsvParse;
 import utils.MyArrayList;

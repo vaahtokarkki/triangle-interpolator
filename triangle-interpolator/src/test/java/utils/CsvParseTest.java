@@ -155,10 +155,10 @@ public class CsvParseTest {
         assertEquals(5, parser.rowsInFile());
         parser.setFileName(file2);
         assertEquals(101, parser.rowsInFile());
-        
+
         parser.setFileName("FileNotFound");
         assertEquals(0, parser.rowsInFile());
-        
+
         parser.setFileName(null);
         assertEquals(0, parser.rowsInFile());
     }
