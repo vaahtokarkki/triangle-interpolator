@@ -6,6 +6,7 @@
 package io;
 
 import geometry.Point;
+import geometry.Triangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import utils.MyArrayList;
+import utils.MyHashSet;
 
 /**
  *
@@ -27,6 +29,7 @@ public class WriterTest {
 
     double[][] matrix;
     MyArrayList<Point> points;
+    MyHashSet<Triangle> setOfTriangles;
     String fileName;
 
     public WriterTest() {
@@ -53,9 +56,22 @@ public class WriterTest {
         matrix = new double[100][100];
         fileName = "test-run/test-write.png";
         points = new MyArrayList<>();
-        points.add(new Point(0, 0));
-        points.add(new Point(10, 10));
-        points.add(new Point(50, 50));
+        setOfTriangles = new MyHashSet<>();
+
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(10, 10);
+        Point p3 = new Point(50, 50);
+        Point p4 = new Point(99, 99);
+
+        points.add(p1);
+        points.add(p2);
+        points.add(p3);
+        points.add(p4);
+
+        Triangle t1 = new Triangle(p1, p2, p3);
+        Triangle t2 = new Triangle(p2, p3, p4);
+        setOfTriangles.add(t1);
+        setOfTriangles.add(t2);
     }
 
     @After
@@ -190,6 +206,23 @@ public class WriterTest {
 
         assertEquals(matrix[0].length, testImage.getWidth());
         assertEquals(matrix.length, testImage.getHeight());
+    }
 
+    @Test
+    public void testWriteTrianglesToImage() throws IOException {
+        int width = 100;
+        int height = 100;
+        
+        Writer.writeTrianglesToImage(width, height, setOfTriangles, fileName);
+        File dir = new File("test-run");
+        File[] files = dir.listFiles();
+
+        assertEquals(1, files.length);
+        assertEquals(fileName, files[0].toString());
+
+        BufferedImage testImage = ImageIO.read(new File(fileName));
+
+        assertEquals(width, testImage.getWidth());
+        assertEquals(height, testImage.getHeight());
     }
 }
