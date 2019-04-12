@@ -8,7 +8,7 @@ Olen tehnyt ohjelman käyttöliittymän perusidealtaan valmiiksi, pientä parant
 
 # Miten ohjelma on edistynyt?
 
-Olen tehnyt hieman parantelua ja erityisesti lopputuloksen oikeellisuuden tarkastelua. Pieniä bugeja löytyi, mutta ne liittyivät pisteiden ja koordinaattien käsittelyyn ja on ratkaistavissa melko simppelisti. Olen myös löytänyt hieman oikeaa testidataa (ilmanlaatu) ja tehnyt sillä testiajoja sekä vertaillut sitä karttaan miten pisteet asettuvat. Tästä huomasinkin bugin, että pisteet pysyvät oikeilla paikoilla suhteessa toisiinsa, mutta kun ne skaalataan sopimaan lopulliseen kuvaan, niiden mittasuhteet vääristyvät (aspect ratio). 
+Olen tehnyt hieman parantelua ja erityisesti lopputuloksen oikeellisuuden tarkastelua. Pieniä bugeja löytyi, mutta ne liittyivät pisteiden ja koordinaattien käsittelyyn ja on ratkaistavissa melko simppelisti. Olen myös löytänyt hieman oikeaa testidataa (ilmanlaatu) ja tehnyt sillä testiajoja sekä vertaillut sitä karttaan miten pisteet asettuvat. Tästä huomasinkin bugin, että pisteet pysyvät oikeilla paikoilla suhteessa toisiinsa, mutta kun ne skaalataan sopimaan lopulliseen kuvaan, niiden mittasuhteet vääristyvät (aspect ratio). kts [kuva](../../triangle-interpolator/airquality_photoshopped.png).
 
 Muutamiin ohjelmaluokkiin täyty myös laittaa importit käyttöliittymässä käytettävän progresbar luokan vuoksi, mutta nämä on merkattu ja tätä käytetään seuraamaan for-looppien edistymistä.
 
