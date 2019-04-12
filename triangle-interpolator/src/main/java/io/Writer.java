@@ -34,7 +34,7 @@ public class Writer {
      */
     public static void writeToGrayscaleImage(double[][] values, String filename) {
         try {
-            BufferedImage image = new BufferedImage(values[0].length + 1, values.length, BufferedImage.TYPE_INT_RGB);
+            BufferedImage image = new BufferedImage(values[0].length, values.length, BufferedImage.TYPE_INT_RGB);
 
             for (int y = 0; y < values.length; y++) {
                 for (int x = 0; x < values[0].length; x++) {
@@ -78,7 +78,7 @@ public class Writer {
         int width = values[0].length;
 
         try {
-            BufferedImage image = new BufferedImage(values[0].length + 1, values.length, BufferedImage.TYPE_INT_RGB);
+            BufferedImage image = new BufferedImage(values[0].length, values.length, BufferedImage.TYPE_INT_RGB);
             Graphics2D g2d = image.createGraphics();
 
             for (int y = 0; y < values.length; y++) {
