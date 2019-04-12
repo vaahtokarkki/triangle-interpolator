@@ -1,10 +1,10 @@
 # Viikko 5
 
-Käytetyt tunnit: 22
+Käytetyt tunnit: 23
 
 # Mitä olen tehnyt tällä viikolla?
 
-Olen tehnyt ohjelman käyttöliittymän perusidealtaan valmiiksi, pientä parantelua vaatii vielä, mutta sain sen kuitenkin käytettävään kuntoon. Testejä on myös paranneltu.
+Olen tehnyt ohjelman käyttöliittymän perusidealtaan valmiiksi, pientä parantelua vaatii vielä, mutta sain sen kuitenkin käytettävään kuntoon. Testejä on myös paranneltu. Testikattavuus nyt noin 90% tasolla kokonaisuudessaan (poislukien käyttöliittymä). Olen saanut tällä viikolla myös otettua kokonaan omat tietorakenteet käyttöön.
 
 # Miten ohjelma on edistynyt?
 
@@ -19,6 +19,8 @@ Javan BufferedImage ja Graphics2D luokista.
 # Mikä jäi epäselväksi tai tuottanut vaikeuksia
 
 Tiedostonkirjoitusluokan testaus on vielä hieman epäselvää. Riittääkö testaukseksi, että tarkistetaan vain tulee kansioon oikealla nimellä tiedosto ja mahdollisesti leveys/korkeus täsmää? Varsinaisen kuvan sisällön testaaminen ei liene aivan tarkoituksenmukaista? 
+
+HashSet-luokkani toteuttaa tällä hetkellä Iterable-rajapinnan, onko tämä sallittua? Algoritmissa on tarve käydä HashSet:in kaikki alkiot läpi ja luulen, että Iterator:in toteuttaminen on siihen järkevin tapa. Periaatteessahan tämän voisi myös korvata toArray tms. metodilla.
 
 # Mitä teen seuraavaksi?
 
