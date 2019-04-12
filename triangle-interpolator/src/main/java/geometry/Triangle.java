@@ -1,7 +1,7 @@
 package geometry;
 
-import java.util.HashSet;
 import utils.MyArrayList;
+import utils.MyHashSet;
 
 /**
  * Represents a triangle in 2D plane
@@ -13,7 +13,7 @@ public class Triangle {
     private Point vertex1;
     private Point vertex2;
     private Point vertex3;
-    private HashSet<Point> setOfVertexes;
+    private MyHashSet<Point> setOfVertexes;
 
     /**
      * Creates a triangle with given vertexes
@@ -26,7 +26,7 @@ public class Triangle {
         this.vertex1 = vertex1;
         this.vertex2 = vertex2;
         this.vertex3 = vertex3;
-        this.setOfVertexes = new HashSet<>();
+        this.setOfVertexes = new MyHashSet<>();
         setOfVertexes.add(vertex1);
         setOfVertexes.add(vertex2);
         setOfVertexes.add(vertex3);

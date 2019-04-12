@@ -6,7 +6,6 @@
 package geometry;
 
 
-import java.util.HashSet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import utils.MyArrayList;
+import utils.MyHashSet;
 
 /**
  *
@@ -135,7 +135,7 @@ public class CircleTest {
 
     @Test
     public void testFindPointsInsideWithExclude() {
-        HashSet<Point> set = new HashSet<>();
+        MyHashSet<Point> set = new MyHashSet<>();
         set.add(P1);
         set.add(P2);
         set.add(P5);
@@ -144,7 +144,7 @@ public class CircleTest {
         MyArrayList<Point> result2 = c1.findPointsInside(points, null);
         MyArrayList<Point> result3 = c1.findPointsInside(null, set);
         MyArrayList<Point> result4 = c1.findPointsInside(null, null);
-        MyArrayList<Point> result5 = c1.findPointsInside(points, new HashSet<>());
+        MyArrayList<Point> result5 = c1.findPointsInside(points, new MyHashSet<>());
 
         assertEquals(2, result.size());
         assertEquals(4, result2.size());
@@ -155,7 +155,7 @@ public class CircleTest {
 
     @Test
     public void testEquals() {
-        assertFalse(c1.equals(null));
+        assertFalse(c1 == null);
         assertFalse(c1.equals("circle"));
 
         assertTrue(c1.equals(c1));

@@ -5,7 +5,6 @@
  */
 package geometry;
 
-import java.util.HashSet;
 import utils.MyArrayList;
 import utils.MyHashSet;
 
@@ -104,7 +103,7 @@ public class Circle {
      * @param setOfPointsToExclude list of points which to exclude from output
      * @return array of points found, in none found returns empty array
      */
-    public MyArrayList<Point> findPointsInside(MyArrayList<Point> listOfPoints, HashSet<Point> setOfPointsToExlude) {
+    public MyArrayList<Point> findPointsInside(MyArrayList<Point> listOfPoints, MyHashSet<Point> setOfPointsToExlude) {
         MyArrayList<Point> pointsInsideCircle = this.findPointsInside(listOfPoints);
 
         if (setOfPointsToExlude == null || setOfPointsToExlude.size() == 0) {
