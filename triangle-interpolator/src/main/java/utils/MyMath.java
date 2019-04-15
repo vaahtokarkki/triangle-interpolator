@@ -16,6 +16,22 @@ public class MyMath {
     public static double sqrt(double value) {
         throw new UnsupportedOperationException();
     }
+    
+    public static double toRadians(double a) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public static double sin(double a) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public static double cos(double a) {
+        throw new UnsupportedOperationException();
+    }
+    
+    public static double asin(double a) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Returns maximum of given two values
@@ -98,8 +114,6 @@ public class MyMath {
         double yMax = minAndMaxCoordinates[2];
         double xMin = minAndMaxCoordinates[1];
         double yMin = minAndMaxCoordinates[3];
-
-        System.out.println("xMax: " + xMax + " yMax " + yMax + " xMin " + xMin + " ymin " + yMin);
 
         Point topLeft = new Point(xMin, yMax);
         Point topRight = new Point(xMax, yMax);
