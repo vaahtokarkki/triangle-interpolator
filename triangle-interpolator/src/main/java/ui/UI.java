@@ -1,5 +1,6 @@
 package ui;
 
+import geometry.Point;
 import geometry.Triangle;
 import static interpolate.Interpolator.interpolateInverseDistance;
 import static interpolate.Interpolator.interpolateMatrix;
@@ -73,8 +74,8 @@ public class UI {
 
     private void runInterpolation() {
         CsvParse parser = new CsvParse(inputFileName);
-        MyArrayList<geometry.Point> list = parser.parsePointsFromFile(csvSeparator, xCoord, yCoord, zCoord);
-        list = MyMath.moveCoordinatesToOrigin(list);
+        MyArrayList<Point> list = parser.parsePointsFromFile(csvSeparator, xCoord, yCoord, zCoord);
+        MyArrayList<Point> list2 = MyMath.moveCoordinatesToOrigin(list);
 
         // TODO: Scale coordinates and keep constrain proportions!!
         // Currently messes up aspect ratio (see airquality_photoshoped.png)
@@ -83,7 +84,7 @@ public class UI {
         System.out.println("Generating Delaunay triangles");
         MyHashSet<Triangle> t = triangulate(list);
         double[][] barycentricInterpolation = interpolateMatrix(width, height, list, t, 25);
-        double[][] idwInterpolation = interpolateInverseDistance(width, height, list, 300, 2, 15);
+        double[][] idwInterpolation = interpolateInverseDistance(width, height, list, 500, 2, 25);
 
         System.out.println("Writing barycentric");
         if (drawLabels) {

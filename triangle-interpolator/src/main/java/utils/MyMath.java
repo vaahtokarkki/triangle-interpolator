@@ -99,33 +99,14 @@ public class MyMath {
         double xMin = minAndMaxCoordinates[1];
         double yMin = minAndMaxCoordinates[3];
 
+        System.out.println("xMax: " + xMax + " yMax " + yMax + " xMin " + xMin + " ymin " + yMin);
+
         Point topLeft = new Point(xMin, yMax);
         Point topRight = new Point(xMax, yMax);
         Point bottomRight = new Point(xMax, yMin);
         Point bottomLeft = new Point(xMin, yMin);
 
         Point[] output = {topLeft, topRight, bottomRight, bottomLeft};
-
-        return output;
-    }
-
-    private static double[] findMinAndMaxCoordinates(MyArrayList<Point> points) {
-        double xMax = -INF;
-        double yMax = -INF;
-        double xMin = INF;
-        double yMin = INF;
-
-        for (int i = 0; i < points.size(); i++) {
-            Point p = points.get(i);
-
-            xMax = (p.getX() > xMax) ? p.getX() : xMax;
-            yMax = (p.getY() > yMax) ? p.getY() : yMax;
-
-            xMin = (p.getX() < xMin) ? p.getX() : xMin;
-            yMin = (p.getY() < yMin) ? p.getY() : yMin;
-        }
-
-        double[] output = {xMax, xMin, yMax, yMin};
 
         return output;
     }
@@ -189,18 +170,42 @@ public class MyMath {
         double xMin = minAndMaxCoordinates[1];
         double yMin = minAndMaxCoordinates[3];
 
-        //Original width and height
-        double width2 = xMax - xMin;
-        double height2 = yMax - yMin;
+        Point p1 = new Point(xMin, yMin);
+        Point p2 = new Point(xMax, yMin);
+        Point p3 = new Point(xMin, yMax);
+
+        //Original width and height in km
+        double distanceX = p1.calculateHaversineDistance(p2);
+        double distanceY = p1.calculateHaversineDistance(p3);
+
+        double coefficientX, coefficientY;
+        if (distanceX > distanceY) {
+            coefficientX = distanceX / distanceY;
+            coefficientY = 1;
+        } else {
+            coefficientY = distanceY / distanceX;
+            coefficientX = 1;
+        }
+        
+        MyArrayList<Point> pointsMovedToOrigin = moveCoordinatesToOrigin(points);
+        minAndMaxCoordinates = findMinAndMaxCoordinates(pointsMovedToOrigin);
+
+        xMax = minAndMaxCoordinates[0];
+        yMax = minAndMaxCoordinates[2];
+        xMin = minAndMaxCoordinates[1];
+        yMin = minAndMaxCoordinates[3];
+
+        double width2 = (xMax - xMin) * coefficientX;
+        double height2 = (yMax - yMin) * coefficientY;
 
         double scalingFactor = MyMath.min((width / width2), (height / height2));
 
         MyArrayList<Point> output = new MyArrayList<>();
-        for (int i = 0; i < points.size(); i++) {
-            Point p = points.get(i);
+        for (int i = 0; i < pointsMovedToOrigin.size(); i++) {
+            Point p = pointsMovedToOrigin.get(i);
 
-            double x = (p.getX() - xMin) * scalingFactor;
-            double y = (p.getY() - yMin) * scalingFactor;
+            double x = p.getX() * (scalingFactor * coefficientX);
+            double y = p.getY() * (scalingFactor * coefficientY);
 
             Point scaledPoint = new Point(x, y, p.getWeight());
             output.add(scaledPoint);
@@ -232,7 +237,27 @@ public class MyMath {
         double[] output = {minWeight, maxWeight};
 
         return output;
+    }
 
+    private static double[] findMinAndMaxCoordinates(MyArrayList<Point> points) {
+        double xMax = -INF;
+        double yMax = -INF;
+        double xMin = INF;
+        double yMin = INF;
+
+        for (int i = 0; i < points.size(); i++) {
+            Point p = points.get(i);
+
+            xMax = (p.getX() > xMax) ? p.getX() : xMax;
+            yMax = (p.getY() > yMax) ? p.getY() : yMax;
+
+            xMin = (p.getX() < xMin) ? p.getX() : xMin;
+            yMin = (p.getY() < yMin) ? p.getY() : yMin;
+        }
+
+        double[] output = {xMax, xMin, yMax, yMin};
+
+        return output;
     }
 
 }

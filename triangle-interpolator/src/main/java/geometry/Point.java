@@ -99,6 +99,30 @@ public class Point {
         return distance;
     }
 
+    /**
+     * Calculates distance in km from this point to given point by Haversine
+     * formula, that is great-circle distance between points.
+     *
+     * Note: Used only when using geographical coordinates, i.e. coordinates
+     * with WGS84 datum.
+     *
+     * @param p Point where to calculate distance from this point
+     * @return distance in km
+     */
+    public double calculateHaversineDistance(Point p) {
+        double R = 6372.8; //Radius of Earth in km
+
+        double dLat = Math.toRadians(this.y - p.y);
+        double dLon = Math.toRadians(this.x - p.x);
+
+        double lat1 = Math.toRadians(this.y);
+        double lat2 = Math.toRadians(p.y);
+
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        return R * c;
+    }
+
     @Override
     public String toString() {
         return "x: " + this.x + " y: " + this.y + ", weight: " + this.weight;
