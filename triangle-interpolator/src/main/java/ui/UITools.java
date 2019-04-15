@@ -11,10 +11,8 @@ public class UITools {
     public static int readNumber(Scanner sc, int min, int max, int defaultValue) {
         int output;
         while (true) {
-
             String line = sc.nextLine();
-            line = line.trim();
-            if (line.isEmpty()) {
+            if (line.trim().isEmpty()) {
                 return defaultValue;
             }
 

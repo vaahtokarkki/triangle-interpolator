@@ -142,8 +142,8 @@ public class MyHashSet<T> implements Iterable<T> {
             if (newArray[hasCode] == null) {
                 newArray[hasCode] = new MyArrayList<>();
             }
-            
-            if(newArray[index] == null) {
+
+            if (newArray[index] == null) {
                 newArray[index] = new MyArrayList<>();
             }
             newArray[index].add(obj);
@@ -153,15 +153,10 @@ public class MyHashSet<T> implements Iterable<T> {
     @Override
     public String toString() {
         String output = "[";
-
         int counter = 0;
         for (int i = 0; i < array.length; i++) {
             MyArrayList<T> list = this.array[i];
-            if (list == null) {
-                continue;
-            }
-
-            if (list.size() == 0) {
+            if (list == null || list.size() == 0) {
                 continue;
             }
 
@@ -174,7 +169,6 @@ public class MyHashSet<T> implements Iterable<T> {
                 output += ", ";
             }
         }
-
         output += "]";
         return output;
     }

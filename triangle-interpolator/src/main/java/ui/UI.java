@@ -23,7 +23,7 @@ public class UI {
     private boolean drawLabels;
 
     private String csvSeparator;
-    private int XCoord, YCoord, ZCoord;
+    private int xCoord, yCoord, zCoord;
 
     private int width;
     private int height;
@@ -73,7 +73,7 @@ public class UI {
 
     private void runInterpolation() {
         CsvParse parser = new CsvParse(inputFileName);
-        MyArrayList<geometry.Point> list = parser.parsePointsFromFile(csvSeparator, XCoord, YCoord, ZCoord);
+        MyArrayList<geometry.Point> list = parser.parsePointsFromFile(csvSeparator, xCoord, yCoord, zCoord);
         list = MyMath.moveCoordinatesToOrigin(list);
 
         // TODO: Scale coordinates and keep constrain proportions!!
@@ -88,7 +88,6 @@ public class UI {
         System.out.println("Writing barycentric");
         if (drawLabels) {
             writeToGrayscaleImage(barycentricInterpolation, list, "barycentric_" + outputFileName);
-
         } else {
             writeToGrayscaleImage(barycentricInterpolation, "barycentric_" + outputFileName);
         }
@@ -96,7 +95,6 @@ public class UI {
         System.out.println("Writing idw");
         if (drawLabels) {
             writeToGrayscaleImage(idwInterpolation, list, "idw_" + outputFileName);
-
         } else {
             writeToGrayscaleImage(idwInterpolation, "idw_" + outputFileName);
         }
@@ -110,13 +108,13 @@ public class UI {
         UITools.printColumns(headers);
 
         System.out.println("Select column for x-coordinate (1-" + headers.length + ")");
-        XCoord = UITools.readNumber(sc, 1, headers.length) - 1;
+        xCoord = UITools.readNumber(sc, 1, headers.length) - 1;
 
         System.out.println("Select column for y-coordinate (1-" + headers.length + ")");
-        YCoord = UITools.readNumber(sc, 1, headers.length) - 1;
+        yCoord = UITools.readNumber(sc, 1, headers.length) - 1;
 
         System.out.println("Select column for value to interpolate (1-" + headers.length + ")");
-        ZCoord = UITools.readNumber(sc, 1, headers.length) - 1;
+        zCoord = UITools.readNumber(sc, 1, headers.length) - 1;
     }
 
     private void getCsvSeparator() {

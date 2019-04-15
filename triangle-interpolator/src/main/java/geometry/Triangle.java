@@ -75,21 +75,21 @@ public class Triangle {
             return null;
         }
 
-        double P1x = vertex1.getX();
-        double P1y = vertex1.getY();
-        double P2x = vertex2.getX();
-        double P2y = vertex2.getY();
-        double P3x = vertex3.getX();
-        double P3y = vertex3.getY();
+        double p1x = vertex1.getX();
+        double p1y = vertex1.getY();
+        double p2x = vertex2.getX();
+        double p2y = vertex2.getY();
+        double p3x = vertex3.getX();
+        double p3y = vertex3.getY();
 
         double x = p.getX();
         double y = p.getY();
 
-        double weightP1 = ((P2y - P3y) * (x - P3x) + (P3x - P2x) * (y - P3y))
-                / ((P2y - P3y) * (P1x - P3x) + (P3x - P2x) * (P1y - P3y));
+        double weightP1 = ((p2y - p3y) * (x - p3x) + (p3x - p2x) * (y - p3y))
+                / ((p2y - p3y) * (p1x - p3x) + (p3x - p2x) * (p1y - p3y));
 
-        double weightP2 = ((P3y - P1y) * (x - P3x) + (P1x - P3x) * (y - P3y))
-                / ((P2y - P3y) * (P1x - P3x) + (P3x - P2x) * (P1y - P3y));
+        double weightP2 = ((p3y - p1y) * (x - p3x) + (p1x - p3x) * (y - p3y))
+                / ((p2y - p3y) * (p1x - p3x) + (p3x - p2x) * (p1y - p3y));
 
         double weightP3 = 1 - weightP1 - weightP2 * 1.0;
 
@@ -232,14 +232,14 @@ public class Triangle {
         6 find point where step 4 lines intersect
          */
 
-        Line AB = new Line(vertex1, vertex2);
-        Line BC = new Line(vertex2, vertex3);
+        Line ab = new Line(vertex1, vertex2);
+        Line bc = new Line(vertex2, vertex3);
 
-        Point ABmidpoint = AB.getMidPoint();
-        Point BCmidpoint = BC.getMidPoint();
+        Point abMidpoint = ab.getMidPoint();
+        Point bcMidpoint = bc.getMidPoint();
 
-        double[] parametersOfNormalForAB = AB.findPerpendicularLineByPoint(ABmidpoint);
-        double[] parametersOfNormalForBC = BC.findPerpendicularLineByPoint(BCmidpoint);
+        double[] parametersOfNormalForAB = ab.findPerpendicularLineByPoint(abMidpoint);
+        double[] parametersOfNormalForBC = bc.findPerpendicularLineByPoint(bcMidpoint);
 
         Line normalOfAB = new Line(parametersOfNormalForAB);
         Line normalOfBC = new Line(parametersOfNormalForBC);

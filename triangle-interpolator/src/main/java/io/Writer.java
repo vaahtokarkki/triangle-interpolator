@@ -35,24 +35,19 @@ public class Writer {
     public static void writeToGrayscaleImage(double[][] values, String filename) {
         try {
             BufferedImage image = new BufferedImage(values[0].length, values.length, BufferedImage.TYPE_INT_RGB);
-
             for (int y = 0; y < values.length; y++) {
                 for (int x = 0; x < values[0].length; x++) {
                     double value = values[y][x];
                     Color newColor;
-                    int rgb;
                     if (Double.isNaN(value) || value > 255 || value < 0) {
-                        rgb = 0;
-                        newColor = new Color(rgb, rgb, rgb);
+                        newColor = new Color(0, 0, 0);
                     } else {
-                        rgb = MyMath.round(value);
-                        newColor = getRGBForValue(rgb, 0, 255);
+                        int roundedValue = MyMath.round(value);
+                        newColor = getRGBForValue(roundedValue, 0, 255);
                     }
-
                     image.setRGB(x, y, newColor.getRGB());
                 }
             }
-
             File output = new File(filename);
             ImageIO.write(image, "png", output);
         } catch (Exception e) {
@@ -76,14 +71,21 @@ public class Writer {
      */
     public static void writeToGrayscaleImage(double[][] values, MyArrayList<Point> points, String filename) {
         int width = values[0].length;
+        int height = values.length;
 
         try {
-            BufferedImage image = new BufferedImage(values[0].length, values.length, BufferedImage.TYPE_INT_RGB);
+            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D g2d = image.createGraphics();
+            RenderingHints rh = new RenderingHints(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
 
-            for (int y = 0; y < values.length; y++) {
-                for (int x = 0; x < values[0].length; x++) {
+            rh.put(RenderingHints.KEY_RENDERING,
+                    RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHints(rh);
 
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
                     double value = values[y][x];
                     Color newColor;
                     int rgb;
@@ -94,32 +96,10 @@ public class Writer {
                         rgb = MyMath.round(value);
                         newColor = getRGBForValue(rgb, 0, 255);
                     }
-
                     image.setRGB(x, y, newColor.getRGB());
                 }
             }
-
-            RenderingHints rh = new RenderingHints(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-
-            rh.put(RenderingHints.KEY_RENDERING,
-                    RenderingHints.VALUE_RENDER_QUALITY);
-
-            g2d.setRenderingHints(rh);
-            g2d.setPaint(new Color(0, 0, 0));
-            for (int i = 0; i < points.size(); i++) {
-                Point p = points.get(i);
-                int pointX = MyMath.round(p.getX());
-                int pointY = MyMath.round(p.getY());
-
-                g2d.fillOval(pointX - 6, pointY - 6, 12, 12);
-
-                pointX = pointX + 10 > width - 20 ? pointX - 50 : pointX;
-                pointY = pointY - 10 < 10 ? pointY + 30 : pointY;
-
-                g2d.drawString(p.getWeight() + "", pointX + 10, pointY - 10);
-            }
+            drawPointsToGraphics(g2d, points, width);
 
             File output = new File(filename);
             ImageIO.write(image, "png", output);
@@ -170,5 +150,29 @@ public class Writer {
         int g = 255 - b - r;
 
         return new Color(r, g, b);
+    }
+
+    /**
+     * Draw points from list to Graphics2D object.
+     *
+     * @param g2d Graphics2D object
+     * @param points List of points
+     * @param width width of image, used to check that points labels are inside
+     * image
+     */
+    private static void drawPointsToGraphics(Graphics2D g2d, MyArrayList<Point> points, int width) {
+        g2d.setPaint(new Color(0, 0, 0));
+        for (int i = 0; i < points.size(); i++) {
+            Point p = points.get(i);
+            int pointX = MyMath.round(p.getX());
+            int pointY = MyMath.round(p.getY());
+
+            g2d.fillOval(pointX - 6, pointY - 6, 12, 12);
+
+            pointX = pointX + 10 > width - 20 ? pointX - 50 : pointX;
+            pointY = pointY - 10 < 10 ? pointY + 30 : pointY;
+
+            g2d.drawString(p.getWeight() + "", pointX + 10, pointY - 10);
+        }
     }
 }

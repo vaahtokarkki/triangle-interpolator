@@ -92,27 +92,40 @@ public class MyMath {
             return null;
         }
 
-        double max_x = -INF;
-        double max_y = -INF;
-        double min_x = INF;
-        double min_y = INF;
+        double[] minAndMaxCoordinates = findMinAndMaxCoordinates(points);
+
+        double xMax = minAndMaxCoordinates[0];
+        double yMax = minAndMaxCoordinates[2];
+        double xMin = minAndMaxCoordinates[1];
+        double yMin = minAndMaxCoordinates[3];
+
+        Point topLeft = new Point(xMin, yMax);
+        Point topRight = new Point(xMax, yMax);
+        Point bottomRight = new Point(xMax, yMin);
+        Point bottomLeft = new Point(xMin, yMin);
+
+        Point[] output = {topLeft, topRight, bottomRight, bottomLeft};
+
+        return output;
+    }
+
+    private static double[] findMinAndMaxCoordinates(MyArrayList<Point> points) {
+        double xMax = -INF;
+        double yMax = -INF;
+        double xMin = INF;
+        double yMin = INF;
 
         for (int i = 0; i < points.size(); i++) {
             Point p = points.get(i);
 
-            max_x = (p.getX() > max_x) ? p.getX() : max_x;
-            max_y = (p.getY() > max_y) ? p.getY() : max_y;
+            xMax = (p.getX() > xMax) ? p.getX() : xMax;
+            yMax = (p.getY() > yMax) ? p.getY() : yMax;
 
-            min_x = (p.getX() < min_x) ? p.getX() : min_x;
-            min_y = (p.getY() < min_y) ? p.getY() : min_y;
+            xMin = (p.getX() < xMin) ? p.getX() : xMin;
+            yMin = (p.getY() < yMin) ? p.getY() : yMin;
         }
 
-        Point topLeft = new Point(min_x, max_y);
-        Point topRight = new Point(max_x, max_y);
-        Point bottomRight = new Point(max_x, min_y);
-        Point bottomLeft = new Point(min_x, min_y);
-
-        Point[] output = {topLeft, topRight, bottomRight, bottomLeft};
+        double[] output = {xMax, xMin, yMax, yMin};
 
         return output;
     }
@@ -169,33 +182,25 @@ public class MyMath {
             return points;
         }
 
-        double max_x = -INF;
-        double max_y = -INF;
-        double min_x = INF;
-        double min_y = INF;
+        double[] minAndMaxCoordinates = findMinAndMaxCoordinates(points);
 
-        for (int i = 0; i < points.size(); i++) {
-            Point p = points.get(i);
-
-            max_x = (p.getX() > max_x) ? p.getX() : max_x;
-            max_y = (p.getY() > max_y) ? p.getY() : max_y;
-
-            min_x = (p.getX() < min_x) ? p.getX() : min_x;
-            min_y = (p.getY() < min_y) ? p.getY() : min_y;
-        }
+        double xMax = minAndMaxCoordinates[0];
+        double yMax = minAndMaxCoordinates[2];
+        double xMin = minAndMaxCoordinates[1];
+        double yMin = minAndMaxCoordinates[3];
 
         //Original width and height
-        double width2 = max_x - min_x;
-        double height2 = max_y - min_y;
-        
-        double scalingFactor = MyMath.min((width/width2), (height/height2));
+        double width2 = xMax - xMin;
+        double height2 = yMax - yMin;
+
+        double scalingFactor = MyMath.min((width / width2), (height / height2));
 
         MyArrayList<Point> output = new MyArrayList<>();
         for (int i = 0; i < points.size(); i++) {
             Point p = points.get(i);
 
-            double x = (p.getX() - min_x) * scalingFactor;
-            double y = (p.getY() - min_y) * scalingFactor;
+            double x = (p.getX() - xMin) * scalingFactor;
+            double y = (p.getY() - yMin) * scalingFactor;
 
             Point scaledPoint = new Point(x, y, p.getWeight());
             output.add(scaledPoint);
@@ -215,16 +220,16 @@ public class MyMath {
             return null;
         }
 
-        double max_weight = -INF;
-        double min_weight = INF;
+        double maxWeight = -INF;
+        double minWeight = INF;
 
         for (int i = 0; i < points.size(); i++) {
             Point p = points.get(i);
-            max_weight = max(max_weight, p.getWeight());
-            min_weight = min(min_weight, p.getWeight());
+            maxWeight = max(maxWeight, p.getWeight());
+            minWeight = min(minWeight, p.getWeight());
         }
 
-        double[] output = {min_weight, max_weight};
+        double[] output = {minWeight, maxWeight};
 
         return output;
 

@@ -85,7 +85,7 @@ public class Circle {
             return output;
         }
 
-        for (int i=0;i<listOfPoints.size();i++) {
+        for (int i = 0; i < listOfPoints.size(); i++) {
             Point p = listOfPoints.get(i);
             if (this.isPointInside(p)) {
                 output.add(p);
@@ -116,7 +116,7 @@ public class Circle {
 
         MyArrayList<Point> output = new MyArrayList<>();
 
-        for (int i=0;i<pointsInsideCircle.size();i++) {
+        for (int i = 0; i < pointsInsideCircle.size(); i++) {
             Point p = pointsInsideCircle.get(i);
             if (!setOfPointsToExlude.contains(p)) {
                 output.add(p);

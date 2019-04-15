@@ -46,14 +46,14 @@ public class CsvParse {
      * Csv file must have column names on first row, other columns are ignored.
      *
      * @param csvSeparator Separator used in csv file (usually ";" )
-     * @param XCoord column name for X-coordinate
-     * @param YCoord column name for Y-coordinate
-     * @param ZValue column name for value to interpolate, the weight or
+     * @param xCoord column name for X-coordinate
+     * @param yCoord column name for Y-coordinate
+     * @param zValue column name for value to interpolate, the weight or
      * Z-coordinate of point.
      * @return {@link utils.MyArrayList} of parsed {@link geometry.Point} or
      * null if invalid file
      */
-    public MyArrayList<Point> parsePointsFromFile(String csvSeparator, int XCoord, int YCoord, int ZValue) {
+    public MyArrayList<Point> parsePointsFromFile(String csvSeparator, int xCoord, int yCoord, int zValue) {
         MyArrayList<Point> output = new MyArrayList<>();
 
         if (linesFromFile.size() == 0) {
@@ -74,29 +74,29 @@ public class CsvParse {
                 continue;
             }
 
-            double X, Y, Z;
+            double x, y, z;
             try {
-                X = Double.parseDouble(row[XCoord]);
+                x = Double.parseDouble(row[xCoord]);
             } catch (Exception e) {
                 e.printStackTrace();
                 continue;
             }
 
             try {
-                Y = Double.parseDouble(row[YCoord]);
+                y = Double.parseDouble(row[yCoord]);
             } catch (Exception e) {
                 e.printStackTrace();
                 continue;
             }
 
             try {
-                Z = Double.parseDouble(row[ZValue]);
+                z = Double.parseDouble(row[zValue]);
             } catch (Exception e) {
                 e.printStackTrace();
-                Z = Double.NaN;
+                z = Double.NaN;
             }
 
-            output.add(new Point(X, Y, Z));
+            output.add(new Point(x, y, z));
         }
 
         return output;
@@ -172,30 +172,30 @@ public class CsvParse {
      * Note: Not used anymore!
      *
      * @param headerRow array of values in header row
-     * @param XCoord name of X-coordinate column
-     * @param YCoord name of Y-coordinate column
-     * @param ZValue name of Z-coordinate or weight column
+     * @param xCoord name of X-coordinate column
+     * @param yCoord name of Y-coordinate column
+     * @param zValue name of Z-coordinate or weight column
      * @return
      */
-    private int[] mapColumnsForValues(String[] headerRow, String XCoord, String YCoord, String ZValue) {
-        if (!utils.MyArrays.contains(headerRow, XCoord)
-                || !utils.MyArrays.contains(headerRow, YCoord)
-                || !utils.MyArrays.contains(headerRow, ZValue)) {
+    private int[] mapColumnsForValues(String[] headerRow, String xCoord, String yCoord, String zValue) {
+        if (!utils.MyArrays.contains(headerRow, xCoord)
+                || !utils.MyArrays.contains(headerRow, yCoord)
+                || !utils.MyArrays.contains(headerRow, zValue)) {
             return null;
         }
 
         int[] output = new int[3];
 
         for (int i = 0; i < headerRow.length; i++) {
-            if (headerRow[i].equals(XCoord)) {
+            if (headerRow[i].equals(xCoord)) {
                 output[0] = i;
             }
 
-            if (headerRow[i].equals(YCoord)) {
+            if (headerRow[i].equals(yCoord)) {
                 output[1] = i;
             }
 
-            if (headerRow[i].equals(ZValue)) {
+            if (headerRow[i].equals(zValue)) {
                 output[2] = i;
             }
         }
