@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import utils.MyArrayList;
+import utils.MyColors;
 import utils.MyHashSet;
 import utils.MyMath;
 
@@ -19,17 +20,16 @@ import utils.MyMath;
 public class Writer {
 
     /**
-     * Writes values from matrix to a grayscale png image. Dimensions of image
-     * is same as dimensions of matrix. Values of matrix should be in range of
-     * 0-255.
+     * Writes values from matrix to a grayscale png image. Dimensions of image is
+     * same as dimensions of matrix. Values of matrix should be in range of 0-255.
      *
      * Note: Writes currently images with values mapped to colour ¯\_(ツ)_/¯
      *
-     * TODO: get rid of value range 0-255, accept any values and find out their
-     * min and max for mapping to colour
+     * TODO: get rid of value range 0-255, accept any values and find out their min
+     * and max for mapping to colour
      *
      *
-     * @param values matrix to write
+     * @param values   matrix to write
      * @param filename filename of created image, for example "grayscale.png"
      */
     public static void writeToGrayscaleImage(double[][] values, String filename) {
@@ -42,8 +42,9 @@ public class Writer {
                     if (Double.isNaN(value) || value > 255 || value < 0) {
                         newColor = new Color(0, 0, 0);
                     } else {
-                        int roundedValue = MyMath.round(value);
-                        newColor = getRGBForValue(roundedValue, 0, 255);
+                        // int roundedValue = MyMath.round(value);
+                        // newColor = getRGBForValue(roundedValue, 0, 255);
+                        newColor = getColorForClass(value);
                     }
                     image.setRGB(x, y, newColor.getRGB());
                 }
@@ -56,17 +57,17 @@ public class Writer {
     }
 
     /**
-     * Writes values from matrix to a grayscale png image. Adds points and
-     * weights of them as overlay to written matrix. Dimensions of image is same
-     * as dimensions of matrix. Values of matrix should be in range of 0-255.
+     * Writes values from matrix to a grayscale png image. Adds points and weights
+     * of them as overlay to written matrix. Dimensions of image is same as
+     * dimensions of matrix. Values of matrix should be in range of 0-255.
      *
      * Note: Writes currently images with values mapped to colour ¯\_(ツ)_/¯
      *
-     * TODO: get rid of value range 0-255, accept any values and find out their
-     * min and max for mapping to colour
+     * TODO: get rid of value range 0-255, accept any values and find out their min
+     * and max for mapping to colour
      *
-     * @param values matrix to write
-     * @param points list of points to add
+     * @param values   matrix to write
+     * @param points   list of points to add
      * @param filename filename of created image, for example "grayscale.png"
      */
     public static void writeToGrayscaleImage(double[][] values, MyArrayList<Point> points, String filename) {
@@ -76,12 +77,9 @@ public class Writer {
         try {
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D g2d = image.createGraphics();
-            RenderingHints rh = new RenderingHints(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
+            RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            rh.put(RenderingHints.KEY_RENDERING,
-                    RenderingHints.VALUE_RENDER_QUALITY);
+            rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHints(rh);
 
             for (int y = 0; y < height; y++) {
@@ -90,11 +88,12 @@ public class Writer {
                     Color newColor;
                     int rgb;
                     if (Double.isNaN(value) || value > 255 || value < 0) {
-                        rgb = 0;
-                        newColor = new Color(rgb, rgb, rgb);
+                        newColor = new Color(0, 0, 0);
                     } else {
-                        rgb = MyMath.round(value);
-                        newColor = getRGBForValue(rgb, 0, 255);
+                        // rgb = MyMath.round(value);
+                        // newColor = getRGBForValue(rgb, 0, 255);
+                        // newColor = getColorForClass(value);
+                        newColor = MyColors.getSequentialColorForClass(value, 25);
                     }
                     image.setRGB(x, y, newColor.getRGB());
                 }
@@ -109,12 +108,12 @@ public class Writer {
     }
 
     /**
-     * Draws given set of {@link  geometry.Triangle} to a image.
+     * Draws given set of {@link geometry.Triangle} to a image.
      *
-     * @param width width of created image
-     * @param height height of created image
+     * @param width     width of created image
+     * @param height    height of created image
      * @param triangles set of triangles
-     * @param fileName filename of created image, for example "triangles.png"
+     * @param fileName  filename of created image, for example "triangles.png"
      */
     public static void writeTrianglesToImage(int width, int height, MyHashSet<Triangle> triangles, String fileName) {
         try {
@@ -122,9 +121,12 @@ public class Writer {
             Graphics2D g2d = image.createGraphics();
 
             for (Triangle t : triangles) {
-                g2d.drawLine((int) t.getVertex1().getX(), (int) t.getVertex1().getY(), (int) t.getVertex2().getX(), (int) t.getVertex2().getY());
-                g2d.drawLine((int) t.getVertex2().getX(), (int) t.getVertex2().getY(), (int) t.getVertex3().getX(), (int) t.getVertex3().getY());
-                g2d.drawLine((int) t.getVertex1().getX(), (int) t.getVertex1().getY(), (int) t.getVertex3().getX(), (int) t.getVertex3().getY());
+                g2d.drawLine((int) t.getVertex1().getX(), (int) t.getVertex1().getY(), (int) t.getVertex2().getX(),
+                        (int) t.getVertex2().getY());
+                g2d.drawLine((int) t.getVertex2().getX(), (int) t.getVertex2().getY(), (int) t.getVertex3().getX(),
+                        (int) t.getVertex3().getY());
+                g2d.drawLine((int) t.getVertex1().getX(), (int) t.getVertex1().getY(), (int) t.getVertex3().getX(),
+                        (int) t.getVertex3().getY());
             }
 
             File output = new File(fileName);
@@ -135,12 +137,12 @@ public class Writer {
     }
 
     /**
-     * Maps a value in given range to a rgb value. Used to colorize classified
-     * gray scale values
+     * Maps a value in given range to a rgb value. Used to colorize classified gray
+     * scale values
      *
      * @param value value to map a rgb value
-     * @param min minimum value used
-     * @param max maximum value used
+     * @param min   minimum value used
+     * @param max   maximum value used
      * @return
      */
     public static Color getRGBForValue(int value, double min, double max) {
@@ -152,13 +154,31 @@ public class Writer {
         return new Color(r, g, b);
     }
 
+    public static Color getColorForClass(double value) {
+        Color[] colors = new Color[10];
+
+        colors[9] = new Color(127, 0, 0);
+        colors[8] = new Color(173, 0, 0);
+        colors[7] = new Color(207, 37, 24);
+        colors[6] = new Color(231, 83, 58);
+        colors[5] = new Color(246, 123, 81);
+        colors[4] = new Color(252, 161, 108);
+        colors[3] = new Color(253, 195, 141);
+        colors[2] = new Color(253, 216, 167);
+        colors[1] = new Color(254, 234, 204);
+        colors[0] = new Color(255, 247, 236);
+
+        int index = MyMath.round(value);
+        return colors[index];
+    }
+
     /**
      * Draw points from list to Graphics2D object.
      *
-     * @param g2d Graphics2D object
+     * @param g2d    Graphics2D object
      * @param points List of points
-     * @param width width of image, used to check that points labels are inside
-     * image
+     * @param width  width of image, used to check that points labels are inside
+     *               image
      */
     private static void drawPointsToGraphics(Graphics2D g2d, MyArrayList<Point> points, int width) {
         g2d.setPaint(new Color(0, 0, 0));

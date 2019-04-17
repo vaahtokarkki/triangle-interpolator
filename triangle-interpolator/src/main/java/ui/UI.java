@@ -43,6 +43,7 @@ public class UI {
         selectFile();
         selectHeadersForFile();
         selectDimensions();
+        // TODO: Ask for IDW interpolation parameters
         selectDrawLables();
         selectOutput();
         System.out.println("*****************************");
@@ -81,7 +82,7 @@ public class UI {
         System.out.println("Generating Delaunay triangles");
         MyHashSet<Triangle> t = triangulate(list);
         double[][] barycentricInterpolation = interpolateMatrix(width, height, list, t, 25);
-        double[][] idwInterpolation = interpolateInverseDistance(width, height, list, 800, 2, 25);
+        double[][] idwInterpolation = interpolateInverseDistance(width, height, list, 2000, 2, 25);
 
         System.out.println("Writing barycentric");
         if (drawLabels) {
@@ -147,7 +148,8 @@ public class UI {
 
     private void selectOutput() {
         String[] defaultOutputName = inputFileName.split("\\.");
-        System.out.println("Give file name without extension where to write output images [" + defaultOutputName[0] + ".png]");
+        System.out.println(
+                "Give file name without extension where to write output images [" + defaultOutputName[0] + ".png]");
         outputFileName = UITools.readString(sc, defaultOutputName[0] + ".png");
     }
 

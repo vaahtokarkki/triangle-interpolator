@@ -1,5 +1,9 @@
 /triangle-interpolator/.nb-gradle/
 /triangle-interpolator/build/
+.settings
+.vscode
+.classpath
+.project
 # Compiled class file
 *.class
 

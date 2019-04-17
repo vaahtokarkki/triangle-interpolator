@@ -76,7 +76,7 @@ public class Interpolator {
                         if (t.isPointInsideTriangle(currentPosition)) {
                             double value = t.calcWeightOfPoint(currentPosition);
                             double classified = classifyValue(value, minAndMaxValues, classes);
-                            classified = getGrayscaleValueForClass(classified, classes);
+//                            classified = getGrayscaleValueForClass(classified, classes);
                             output[y][x] = classified;
                             found = true;
                             break;
@@ -137,6 +137,8 @@ public class Interpolator {
 
                         if (MyMath.abs(dist - serachRadius) < 0.1) {
                             continue;
+                        } else if(dist > serachRadius) {
+                            continue;
                         }
 
                         dist = Math.pow(dist, p);
@@ -154,7 +156,7 @@ public class Interpolator {
                     double result = sum / distances;
 
                     result = classifyValue(result, minAndMaxValues, classes);
-                    result = getGrayscaleValueForClass(result, classes);
+//                    result = getGrayscaleValueForClass(result, classes);
 
                     output[y][x] = result;
                 }

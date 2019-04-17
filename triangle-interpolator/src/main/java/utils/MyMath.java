@@ -8,6 +8,7 @@ import geometry.Point;
 public class MyMath {
 
     final static int INF = 999999999;
+    final static double PI = 3.141592653589793;
 
     public static double pow(double value, double exp) {
         throw new UnsupportedOperationException();
@@ -16,19 +17,19 @@ public class MyMath {
     public static double sqrt(double value) {
         throw new UnsupportedOperationException();
     }
-    
+
     public static double toRadians(double a) {
-        throw new UnsupportedOperationException();
+        return a * PI / 180;
     }
-    
+
     public static double sin(double a) {
         throw new UnsupportedOperationException();
     }
-    
+
     public static double cos(double a) {
         throw new UnsupportedOperationException();
     }
-    
+
     public static double asin(double a) {
         throw new UnsupportedOperationException();
     }
@@ -200,7 +201,7 @@ public class MyMath {
             coefficientY = distanceY / distanceX;
             coefficientX = 1;
         }
-        
+
         MyArrayList<Point> pointsMovedToOrigin = moveCoordinatesToOrigin(points);
         minAndMaxCoordinates = findMinAndMaxCoordinates(pointsMovedToOrigin);
 
@@ -214,12 +215,17 @@ public class MyMath {
 
         double scalingFactor = MyMath.min((width / width2), (height / height2));
 
+        double translateX = MyMath.abs((xMax * scalingFactor * coefficientX)
+                - (xMin * scalingFactor * coefficientX) - width) / 2;
+        double translateY = MyMath.abs((yMax * scalingFactor * coefficientY)
+                - (yMin * scalingFactor * coefficientY) - height) / 2;
+
         MyArrayList<Point> output = new MyArrayList<>();
         for (int i = 0; i < pointsMovedToOrigin.size(); i++) {
             Point p = pointsMovedToOrigin.get(i);
 
-            double x = p.getX() * (scalingFactor * coefficientX);
-            double y = p.getY() * (scalingFactor * coefficientY);
+            double x = p.getX() * (scalingFactor * coefficientX) + translateX;
+            double y = p.getY() * (scalingFactor * coefficientY) + translateY;
 
             Point scaledPoint = new Point(x, y, p.getWeight());
             output.add(scaledPoint);
