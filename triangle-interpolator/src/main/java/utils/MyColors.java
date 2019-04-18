@@ -33,6 +33,8 @@ public class MyColors {
             new Color(108, 196, 165), new Color(85, 175, 173), new Color(63, 151, 183), new Color(57, 127, 185),
             new Color(76, 103, 173), new Color(94, 79, 162) };
 
+    public static final Color DEFAULT = new Color(0, 0, 0);
+
     /**
      * Get a color from sequential color scheme, mapped to given class when
      * specified amount of classes.
@@ -42,6 +44,10 @@ public class MyColors {
      * @return
      */
     public static Color getSequentialColorForClass(double currentClass, int classes) {
+        if (Double.isNaN(currentClass)) {
+            return DEFAULT;
+        }
+
         if (classes > SEQUENTIAL.length) {
             classes = SEQUENTIAL.length;
         }
@@ -68,6 +74,10 @@ public class MyColors {
      * @return
      */
     public static Color getDivergingColor(double currentClass, int classes) {
+        if (Double.isNaN(currentClass)) {
+            return DEFAULT;
+        }
+
         if (classes > DIVERGING.length) {
             classes = DIVERGING.length;
         }

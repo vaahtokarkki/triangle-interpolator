@@ -8,6 +8,8 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+
+import utils.ColorScheme;
 import utils.MyArrayList;
 import utils.MyColors;
 import utils.MyHashSet;
@@ -28,21 +30,12 @@ public class Writer {
      * @param values   matrix to write
      * @param filename filename of created image, for example "grayscale.png"
      */
-    public static void writeToGrayscaleImage(double[][] values, String filename, int classes) {
+    public static void writeToGrayscaleImage(double[][] values, String filename, int classes, ColorScheme color) {
         try {
             BufferedImage image = new BufferedImage(values[0].length, values.length, BufferedImage.TYPE_INT_RGB);
-            for (int y = 0; y < values.length; y++) {
-                for (int x = 0; x < values[0].length; x++) {
-                    double value = values[y][x];
-                    Color newColor;
-                    if (Double.isNaN(value) || value > classes || value < 0) {
-                        newColor = new Color(0, 0, 0);
-                    } else {
-                        newColor = MyColors.getSequentialColorForClass(value, 10);
-                    }
-                    image.setRGB(x, y, newColor.getRGB());
-                }
-            }
+
+            renderDataToImage(image, values, classes, color);
+
             File output = new File(filename);
             ImageIO.write(image, "png", output);
         } catch (Exception e) {
@@ -61,8 +54,8 @@ public class Writer {
      * @param points   list of points to add
      * @param filename filename of created image, for example "grayscale.png"
      */
-    public static void writeToGrayscaleImage(double[][] values, MyArrayList<Point> points, String filename,
-            int classes) {
+    public static void writeToGrayscaleImage(double[][] values, MyArrayList<Point> points, String filename, int classes,
+            ColorScheme color) {
         int width = values[0].length;
         int height = values.length;
 
@@ -74,18 +67,7 @@ public class Writer {
             rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHints(rh);
 
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    double value = values[y][x];
-                    Color newColor;
-                    if (Double.isNaN(value) || value > classes || value < 0) {
-                        newColor = new Color(0, 0, 0);
-                    } else {
-                        newColor = MyColors.getSequentialColorForClass(value, classes);
-                    }
-                    image.setRGB(x, y, newColor.getRGB());
-                }
-            }
+            renderDataToImage(image, values, classes, color);
             drawPointsToGraphics(g2d, points, width);
 
             File output = new File(filename);
@@ -125,15 +107,59 @@ public class Writer {
     }
 
     /**
+     * Renders data from given matrix to given BufferedImage object.
+     * 
+     * @param image   BufferedImage object
+     * @param values  value matrix
+     * @param classes amount of classes used in output image
+     * @param color   used color scheme
+     */
+    private static void renderDataToImage(BufferedImage image, double[][] values, int classes, ColorScheme color) {
+        for (int y = 0; y < values.length; y++) {
+            for (int x = 0; x < values[0].length; x++) {
+                double value = values[y][x];
+                if (value > classes || value < 0) {
+                    value = Double.NaN;
+                }
+
+                Color newColor = getColorForColorScheme(color, value, classes);
+                image.setRGB(x, y, newColor.getRGB());
+            }
+        }
+    }
+
+    /**
+     * Get color for given value from given color scheme.
+     * 
+     * @param color   used color scheme @see{ColorScheme}
+     * @param value   value to get color for
+     * @param classes amount of classes used, that is amount of different colors
+     *                wanted in output image
+     * @return Color for value, or drfault color if no proper color scheme given
+     */
+    private static Color getColorForColorScheme(ColorScheme color, double value, int classes) {
+        switch (color) {
+        case SEQUENTIAL:
+            return MyColors.getSequentialColorForClass(value, classes);
+        case DIVERGING:
+            return MyColors.getDivergingColor(value, classes);
+        default:
+            return MyColors.DEFAULT;
+        }
+    }
+
+    /**
      * Maps a value in given range to a rgb value. Used to colorize classified gray
      * scale values
+     * 
+     * Note: Not used anymore!
      *
      * @param value value to map a rgb value
      * @param min   minimum value used
      * @param max   maximum value used
      * @return
      */
-    public static Color getRGBForValue(int value, double min, double max) {
+    private static Color getRGBForValue(int value, double min, double max) {
         double ratio = 2 * (value - min) / (max - min);
         int b = (int) Math.max(0, 255 * (1 - ratio));
         int r = (int) Math.max(0, 255 * (ratio - 1));

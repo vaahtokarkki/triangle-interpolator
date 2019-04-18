@@ -49,7 +49,7 @@ public class CsvParseTest {
         XCoord = 0;
         YCoord = 1;
         ZCoord = 2;
-        pathToTestResources = "triangle-interpolator/src/test/resources/";
+        pathToTestResources = "src/test/resources/";
         emptyList = new MyArrayList<>();
 
     }

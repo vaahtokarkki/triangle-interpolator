@@ -3,6 +3,8 @@ package ui;
 import java.io.File;
 import java.util.Scanner;
 
+import utils.ColorScheme;
+
 /**
  * Tools used for building UI. Mostly reading and validating inputs from user.
  */
@@ -93,6 +95,23 @@ public class UITools {
             }
 
             System.out.println("Please give y/n");
+        }
+    }
+
+    public static ColorScheme readColorScheme(Scanner sc, String defaultValue) {
+        while (true) {
+            String input = sc.nextLine();
+            input = input.trim().toUpperCase();
+            if (input.isEmpty()) {
+                return ColorScheme.valueOf(defaultValue.toUpperCase());
+            }
+
+            try {
+                ColorScheme output = ColorScheme.valueOf(input);
+                return output;
+            } catch (Exception e) {
+                System.out.println("Please give valid color scheme name");
+            }
         }
     }
 

@@ -10,6 +10,8 @@ import static io.Writer.writeTrianglesToImage;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Scanner;
+
+import utils.ColorScheme;
 import utils.CsvParse;
 import utils.MyArrayList;
 import utils.MyHashSet;
@@ -29,6 +31,7 @@ public class UI {
     private int width, height, classes;
 
     private double p = 2, searchRadius = 1000;
+    private ColorScheme color = ColorScheme.SEQUENTIAL;
 
     public UI() {
         sc = new Scanner(System.in);
@@ -64,6 +67,9 @@ public class UI {
             System.out.println("Give serach radius in distance or points [1000]");
             searchRadius = UITools.readDouble(sc, 1, 9999, 1000);
         }
+
+        System.out.println("Select color scheme for output image [Seqential]");
+        color = UITools.readColorScheme(sc, "sequential");
     }
 
     public void selectFile() {
@@ -101,16 +107,16 @@ public class UI {
 
         System.out.println("Writing barycentric");
         if (drawLabels) {
-            writeToGrayscaleImage(barycentricInterpolation, list, "barycentric_" + outputFileName, classes);
+            writeToGrayscaleImage(barycentricInterpolation, list, "barycentric_" + outputFileName, classes, color);
         } else {
-            writeToGrayscaleImage(barycentricInterpolation, "barycentric_" + outputFileName, classes);
+            writeToGrayscaleImage(barycentricInterpolation, "barycentric_" + outputFileName, classes, color);
         }
 
         System.out.println("Writing idw");
         if (drawLabels) {
-            writeToGrayscaleImage(idwInterpolation, list, "idw_" + outputFileName, classes);
+            writeToGrayscaleImage(idwInterpolation, list, "idw_" + outputFileName, classes, color);
         } else {
-            writeToGrayscaleImage(idwInterpolation, "idw_" + outputFileName, classes);
+            writeToGrayscaleImage(idwInterpolation, "idw_" + outputFileName, classes, color);
         }
 
         System.out.println("writing triangles");
