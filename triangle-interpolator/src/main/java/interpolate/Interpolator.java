@@ -1,5 +1,7 @@
 package interpolate;
 
+import java.util.Arrays;
+
 import geometry.Point;
 import geometry.Triangle;
 import utils.MyArrayList;
@@ -13,8 +15,8 @@ import me.tongfei.progressbar.ProgressBarStyle;
 public class Interpolator {
 
     /**
-     * Creates a set of valid Delaunay triangles based on given list of points.
-     * This algorithm runs in O(n^3) time.
+     * Creates a set of valid Delaunay triangles based on given list of points. This
+     * algorithm runs in O(n^3) time.
      *
      * @param listOfPoints list of points where to create Delaunay triangles
      * @return set of Delaunay triangles, null if there is none
@@ -22,7 +24,9 @@ public class Interpolator {
     public static MyHashSet<Triangle> triangulate(MyArrayList<Point> listOfPoints) {
         MyHashSet<Triangle> validTriangles = new MyHashSet<>();
 
-        try (ProgressBar pb = new ProgressBar("Generating Delaunay triangles", listOfPoints.size() * listOfPoints.size() * listOfPoints.size(), 100, System.out, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
+        try (ProgressBar pb = new ProgressBar("Generating Delaunay triangles",
+                listOfPoints.size() * listOfPoints.size() * listOfPoints.size(), 100, System.out,
+                ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
             for (int i = 0; i < listOfPoints.size(); i++) {
                 for (int z = 0; z < listOfPoints.size(); z++) {
                     for (int n = 0; n < listOfPoints.size(); n++) {
@@ -50,14 +54,15 @@ public class Interpolator {
      * element in matrix. If the pixel is outside of any triangle it gets value
      * "NaN". After interpolation this matrix can be processed to a image file.
      *
-     * @param width width of output matrix
-     * @param height height of output matrix
+     * @param width        width of output matrix
+     * @param height       height of output matrix
      * @param listOfPoints list of points from to interpolate values
-     * @param classes in how many different values interpolated values are
-     * classified, usually between 10-50
+     * @param classes      in how many different values interpolated values are
+     *                     classified, usually between 10-50
      * @return matrix with interpolated values
      */
-    public static double[][] interpolateMatrix(int width, int height, MyArrayList<Point> listOfPoints, MyHashSet<Triangle> triangles, int classes) {
+    public static double[][] interpolateMatrix(int width, int height, MyArrayList<Point> listOfPoints,
+            MyHashSet<Triangle> triangles, int classes) {
         double[][] output = new double[height][width];
         if (triangles == null) {
             triangles = triangulate(listOfPoints);
@@ -65,7 +70,8 @@ public class Interpolator {
 
         double[] minAndMaxValues = MyMath.getMaxAndMinValues(listOfPoints);
 
-        try (ProgressBar pb = new ProgressBar("Interpolating with triangles", width * height, 100, System.out, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
+        try (ProgressBar pb = new ProgressBar("Interpolating with triangles", width * height, 100, System.out,
+                ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     Point currentPosition = new Point(x, y);
@@ -76,7 +82,7 @@ public class Interpolator {
                         if (t.isPointInsideTriangle(currentPosition)) {
                             double value = t.calcWeightOfPoint(currentPosition);
                             double classified = classifyValue(value, minAndMaxValues, classes);
-//                            classified = getGrayscaleValueForClass(classified, classes);
+                            // classified = getGrayscaleValueForClass(classified, classes);
                             output[y][x] = classified;
                             found = true;
                             break;
@@ -96,33 +102,35 @@ public class Interpolator {
     }
 
     /**
-     * Interpolates values to a matrix by given list of points with inverse
-     * distance weight method. This method calculates values for element in
-     * matrix by taking all points inside the given search radius and calculates
-     * the value by distances to other points. General formula is something
-     * like: sum(p.weight / d(p)^p) / sum(1/d(p)^p), where d(p) is distance from
-     * current element to the point inside search radius.
+     * Interpolates values to a matrix by given list of points with inverse distance
+     * weight method. This method calculates values for element in matrix by taking
+     * all points inside the given search radius and calculates the value by
+     * distances to other points. General formula is something like: sum(p.weight /
+     * d(p)^p) / sum(1/d(p)^p), where d(p) is distance from current element to the
+     * point inside search radius.
      *
      * If there is not any points inside search radius, element gets value NaN
      *
      *
      *
-     * @param width width of output matrix
-     * @param height height of output matrix
+     * @param width        width of output matrix
+     * @param height       height of output matrix
      * @param listOfPoints list of points from to interpolate values
      * @param serachRadius search radius, that is how far away points affect
-     * interpolation
-     * @param p distance to the power of p, usually value between 1 and 2
-     * @param classes in how many different values interpolated values are
-     * classified, usually between 10-50
+     *                     interpolation
+     * @param p            distance to the power of p, usually value between 1 and 2
+     * @param classes      in how many different values interpolated values are
+     *                     classified, usually between 10-50
      * @return matrix with interpolated values
      */
-    public static double[][] interpolateInverseDistance(int width, int height, MyArrayList<Point> listOfPoints, double serachRadius, double p, int classes) {
+    public static double[][] interpolateInverseDistance(int width, int height, MyArrayList<Point> listOfPoints,
+            double serachRadius, double p, int classes) {
         double[][] output = new double[height][width];
         double[] minAndMaxValues = MyMath.getMaxAndMinValues(listOfPoints);
 
-        //UI Progressbar
-        try (ProgressBar pb = new ProgressBar("Interpolating IDW", width * height, 100, System.out, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
+        // UI Progressbar
+        try (ProgressBar pb = new ProgressBar("Interpolating IDW", width * height, 100, System.out,
+                ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "px", 1)) {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     Point currentPosition = new Point(x, y);
@@ -137,7 +145,7 @@ public class Interpolator {
 
                         if (MyMath.abs(dist - serachRadius) < 0.1) {
                             continue;
-                        } else if(dist > serachRadius) {
+                        } else if (dist > serachRadius) {
                             continue;
                         }
 
@@ -156,7 +164,6 @@ public class Interpolator {
                     double result = sum / distances;
 
                     result = classifyValue(result, minAndMaxValues, classes);
-//                    result = getGrayscaleValueForClass(result, classes);
 
                     output[y][x] = result;
                 }
@@ -171,10 +178,11 @@ public class Interpolator {
      * calculating a range of given minium and maximum value and divided by the
      * amount of classes. Output is integer between 0 and amount of classes.
      *
-     * @param value Value to classify
-     * @param minAndMaxValues arrays of min and max values used in
-     * interpolation, see {@link MyMath#getMaxAndMinValues(utils.MyArrayList)}
-     * @param classes Amount of classes used in classification
+     * @param value           Value to classify
+     * @param minAndMaxValues arrays of min and max values used in interpolation,
+     *                        see
+     *                        {@link MyMath#getMaxAndMinValues(utils.MyArrayList)}
+     * @param classes         Amount of classes used in classification
      * @return Classified value, or -1 if value is NaN
      */
     public static int classifyValue(double value, double[] minAndMaxValues, int classes) {
@@ -203,12 +211,12 @@ public class Interpolator {
     }
 
     /**
-     * Returns a grayscale value for given class. Values are in range 0-255,
-     * class 0 is always value of 0 and highest class is always value of 255.
+     * Returns a grayscale value for given class. Values are in range 0-255, class 0
+     * is always value of 0 and highest class is always value of 255.
      *
      *
      * @param classifiedValue class to get grayscale value for
-     * @param classes amount of classes used
+     * @param classes         amount of classes used
      * @return value between 0 and 255, if classes is 0 returns -1
      */
     public static double getGrayscaleValueForClass(double classifiedValue, int classes) {

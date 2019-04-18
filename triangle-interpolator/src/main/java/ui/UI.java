@@ -26,8 +26,9 @@ public class UI {
     private String csvSeparator;
     private int xCoord, yCoord, zCoord;
 
-    private int width;
-    private int height;
+    private int width, height, classes;
+
+    private double p = 2, searchRadius = 1000;
 
     public UI() {
         sc = new Scanner(System.in);
@@ -43,12 +44,26 @@ public class UI {
         selectFile();
         selectHeadersForFile();
         selectDimensions();
-        // TODO: Ask for IDW interpolation parameters
+        selectInterpolationParameters();
         selectDrawLables();
         selectOutput();
         System.out.println("*****************************");
         printFileStats();
         runInterpolation();
+    }
+
+    private void selectInterpolationParameters() {
+        System.out.println("Select classes (1-25) used in output (how may colors) [10]");
+        classes = UITools.readNumber(sc, 1, 25, 10);
+
+        System.out.println("Use default IDW parameters? p=2, variable serach radius of 1000 points [yes]");
+
+        if (!UITools.readBoolean(sc, true)) {
+            System.out.println("Give p value [2]");
+            p = UITools.readDouble(sc, 0, 10, 2);
+            System.out.println("Give serach radius in distance or points [1000]");
+            searchRadius = UITools.readDouble(sc, 1, 9999, 1000);
+        }
     }
 
     public void selectFile() {
@@ -81,21 +96,21 @@ public class UI {
 
         System.out.println("Generating Delaunay triangles");
         MyHashSet<Triangle> t = triangulate(list);
-        double[][] barycentricInterpolation = interpolateMatrix(width, height, list, t, 25);
-        double[][] idwInterpolation = interpolateInverseDistance(width, height, list, 2000, 2, 25);
+        double[][] barycentricInterpolation = interpolateMatrix(width, height, list, t, classes);
+        double[][] idwInterpolation = interpolateInverseDistance(width, height, list, searchRadius, p, classes);
 
         System.out.println("Writing barycentric");
         if (drawLabels) {
-            writeToGrayscaleImage(barycentricInterpolation, list, "barycentric_" + outputFileName);
+            writeToGrayscaleImage(barycentricInterpolation, list, "barycentric_" + outputFileName, classes);
         } else {
-            writeToGrayscaleImage(barycentricInterpolation, "barycentric_" + outputFileName);
+            writeToGrayscaleImage(barycentricInterpolation, "barycentric_" + outputFileName, classes);
         }
 
         System.out.println("Writing idw");
         if (drawLabels) {
-            writeToGrayscaleImage(idwInterpolation, list, "idw_" + outputFileName);
+            writeToGrayscaleImage(idwInterpolation, list, "idw_" + outputFileName, classes);
         } else {
-            writeToGrayscaleImage(idwInterpolation, "idw_" + outputFileName);
+            writeToGrayscaleImage(idwInterpolation, "idw_" + outputFileName, classes);
         }
 
         System.out.println("writing triangles");

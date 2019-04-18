@@ -19,27 +19,27 @@ public class Line {
     private double[] parameters;
 
     /**
-     * Creates a line with given start and end {@link geometry.Point} and
-     * calculates line's distance
+     * Creates a line with given start and end {@link geometry.Point} and calculates
+     * line's distance
      *
      *
      * @param start Start point
-     * @param end End point
+     * @param end   End point
      */
     public Line(Point start, Point end) {
         this.start = start;
         this.end = end;
-        this.length = start.calculateDistance(end);
+        this.length = start.calculateHaversineDistance(end);
         this.parameters = this.solveLine();
     }
 
     /**
-     * Creates a line with given parameters. Notice that without start and end
-     * point some feature are unavailable.
+     * Creates a line with given parameters. Notice that without start and end point
+     * some feature are unavailable.
      *
-     * @param parameters Line's equation in form ax + bx = c, where a is the
-     * first element in array, b is the second element and c is the third
-     * element
+     * @param parameters Line's equation in form ax + bx = c, where a is the first
+     *                   element in array, b is the second element and c is the
+     *                   third element
      */
     public Line(double[] parameters) {
         this.parameters = parameters;
@@ -83,8 +83,8 @@ public class Line {
      * Returns the midpoint of this line, that is average of the start and end
      * points
      *
-     * @return Point representing midpoint of this line or null if start and end
-     * is not defined.
+     * @return Point representing midpoint of this line or null if start and end is
+     *         not defined.
      */
     public Point getMidPoint() {
         if (start == null || end == null) {
@@ -98,11 +98,11 @@ public class Line {
     }
 
     /**
-     * Returns parameters for line which passes trough start and end point in
-     * this object
+     * Returns parameters for line which passes trough start and end point in this
+     * object
      *
-     * @return line in format ax + by = c, where a is the first element in
-     * output array, b is the second element and c is the third element
+     * @return line in format ax + by = c, where a is the first element in output
+     *         array, b is the second element and c is the third element
      */
     public double[] solveLine() {
         if (start == null || end == null) {
@@ -113,7 +113,7 @@ public class Line {
         double b = start.getX() - end.getX();
         double c = a * (start.getX()) + b * (start.getY());
 
-        double[] output = {a, b, c};
+        double[] output = { a, b, c };
 
         return output;
     }
@@ -121,15 +121,15 @@ public class Line {
     /**
      * Returns line in perpendicular, that is -bx + ay = c
      *
-     * @return line in format ax + by = c, where a is the first element in
-     * output array, b is the second element and c is the third element
+     * @return line in format ax + by = c, where a is the first element in output
+     *         array, b is the second element and c is the third element
      */
     public double[] findPerpendicularLine() {
         double a = -parameters[1];
         double b = parameters[0];
         double c = parameters[2];
 
-        double[] output = {a, b, c};
+        double[] output = { a, b, c };
 
         return output;
     }
@@ -139,14 +139,14 @@ public class Line {
      *
      * @param p Point by the perpendicular line should go
      * @return parameters for line in format ax + by = c, where a is the first
-     * element in output array, b is the second element and c is the third
-     * element
+     *         element in output array, b is the second element and c is the third
+     *         element
      */
     public double[] findPerpendicularLineByPoint(Point p) {
         double[] values = this.findPerpendicularLine();
         double c = values[0] * p.getX() + values[1] * p.getY();
 
-        double[] output = {values[0], values[1], c};
+        double[] output = { values[0], values[1], c };
 
         return output;
     }
@@ -174,7 +174,8 @@ public class Line {
 
     @Override
     public String toString() {
-        return start + " - " + end + " distance: " + length + ", equation: " + parameters[0] + "x + " + parameters[1] + "y = " + parameters[2];
+        return start + " - " + end + " distance: " + length + ", equation: " + parameters[0] + "x + " + parameters[1]
+                + "y = " + parameters[2];
     }
 
 }

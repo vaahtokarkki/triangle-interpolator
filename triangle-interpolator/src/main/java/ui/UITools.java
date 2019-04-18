@@ -47,6 +47,28 @@ public class UITools {
         return output;
     }
 
+    public static double readDouble(Scanner sc, double min, double max, double defaultValue) {
+        double output;
+        while (true) {
+            String line = sc.nextLine();
+            if (line.trim().isEmpty()) {
+                return defaultValue;
+            }
+
+            try {
+                output = Double.parseDouble(line);
+                if (output < min || output > max) {
+                    System.out.println("Number must be in range " + min + "-" + max);
+                    continue;
+                }
+                break;
+            } catch (Exception e) {
+                System.out.println("Please give a number");
+            }
+        }
+        return output;
+    }
+
     public static String readString(Scanner sc, String defaultValue) {
         String output = sc.nextLine();
 

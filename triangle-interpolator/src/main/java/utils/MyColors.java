@@ -89,7 +89,7 @@ public class MyColors {
 
         int startIndex = MyMath.round(currentClass * width);
 
-        int avg = 0;total of 25 colors.
+        int avg = 0;
         for (int i = startIndex; i < startIndex + width; i++) {
             avg += i;
         }

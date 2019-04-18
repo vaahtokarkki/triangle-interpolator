@@ -1,5 +1,8 @@
 package geometry;
 
+import utils.MyArrayList;
+import utils.MyMath;
+
 /**
  *
  * Represents a point in 2D plane
@@ -14,8 +17,8 @@ public class Point {
     /**
      * Creates a point with x and y coordinates and specified weight
      *
-     * @param x x-coordinate
-     * @param y y-coordinate
+     * @param x      x-coordinate
+     * @param y      y-coordinate
      * @param weight weight or value assigned to point
      */
     public Point(double x, double y, double weight) {
@@ -103,14 +106,14 @@ public class Point {
      * Calculates distance in km from this point to given point by Haversine
      * formula, that is great-circle distance between points.
      *
-     * Note: Used only when using geographical coordinates, i.e. coordinates
-     * with WGS84 datum.
+     * Note: Used only when using geographical coordinates, i.e. coordinates with
+     * WGS84 datum.
      *
      * @param p Point where to calculate distance from this point
      * @return distance in km
      */
     public double calculateHaversineDistance(Point p) {
-        double R = 6372.8; //Radius of Earth in km
+        double R = 6372.8; // Radius of Earth in km
 
         double dLat = Math.toRadians(this.y - p.y);
         double dLon = Math.toRadians(this.x - p.x);
@@ -118,7 +121,8 @@ public class Point {
         double lat1 = Math.toRadians(this.y);
         double lat2 = Math.toRadians(p.y);
 
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         double c = 2 * Math.asin(Math.sqrt(a));
         return R * c;
     }
@@ -143,16 +147,14 @@ public class Point {
         }
 
         Point p = (Point) o;
-        return p.getX() == x && p.getY() == y
-                && Double.compare(weight, p.weight) == 0;
+        return p.getX() == x && p.getY() == y && Double.compare(weight, p.weight) == 0;
     }
 
     @Override
     public int hashCode() {
         /*
-        int hashCode = 0;
-        hashCode = (int) Math.pow(hashCode * 31, x);
-        hashCode = (int) Math.pow(hashCode * 31, y);
+         * int hashCode = 0; hashCode = (int) Math.pow(hashCode * 31, x); hashCode =
+         * (int) Math.pow(hashCode * 31, y);
          */
         int hashCode = 23;
         hashCode = hashCode * 31 + (int) x;

@@ -32,7 +32,7 @@ public class Writer {
      * @param values   matrix to write
      * @param filename filename of created image, for example "grayscale.png"
      */
-    public static void writeToGrayscaleImage(double[][] values, String filename) {
+    public static void writeToGrayscaleImage(double[][] values, String filename, int classes) {
         try {
             BufferedImage image = new BufferedImage(values[0].length, values.length, BufferedImage.TYPE_INT_RGB);
             for (int y = 0; y < values.length; y++) {
@@ -44,7 +44,7 @@ public class Writer {
                     } else {
                         // int roundedValue = MyMath.round(value);
                         // newColor = getRGBForValue(roundedValue, 0, 255);
-                        newColor = getColorForClass(value);
+                        newColor = MyColors.getSequentialColorForClass(value, 10);
                     }
                     image.setRGB(x, y, newColor.getRGB());
                 }
@@ -70,7 +70,8 @@ public class Writer {
      * @param points   list of points to add
      * @param filename filename of created image, for example "grayscale.png"
      */
-    public static void writeToGrayscaleImage(double[][] values, MyArrayList<Point> points, String filename) {
+    public static void writeToGrayscaleImage(double[][] values, MyArrayList<Point> points, String filename,
+            int classes) {
         int width = values[0].length;
         int height = values.length;
 
@@ -93,7 +94,7 @@ public class Writer {
                         // rgb = MyMath.round(value);
                         // newColor = getRGBForValue(rgb, 0, 255);
                         // newColor = getColorForClass(value);
-                        newColor = MyColors.getSequentialColorForClass(value, 25);
+                        newColor = MyColors.getSequentialColorForClass(value, classes);
                     }
                     image.setRGB(x, y, newColor.getRGB());
                 }
@@ -154,24 +155,6 @@ public class Writer {
         return new Color(r, g, b);
     }
 
-    public static Color getColorForClass(double value) {
-        Color[] colors = new Color[10];
-
-        colors[9] = new Color(127, 0, 0);
-        colors[8] = new Color(173, 0, 0);
-        colors[7] = new Color(207, 37, 24);
-        colors[6] = new Color(231, 83, 58);
-        colors[5] = new Color(246, 123, 81);
-        colors[4] = new Color(252, 161, 108);
-        colors[3] = new Color(253, 195, 141);
-        colors[2] = new Color(253, 216, 167);
-        colors[1] = new Color(254, 234, 204);
-        colors[0] = new Color(255, 247, 236);
-
-        int index = MyMath.round(value);
-        return colors[index];
-    }
-
     /**
      * Draw points from list to Graphics2D object.
      *
@@ -187,7 +170,7 @@ public class Writer {
             int pointX = MyMath.round(p.getX());
             int pointY = MyMath.round(p.getY());
 
-            g2d.fillOval(pointX - 6, pointY - 6, 12, 12);
+            g2d.fillOval(pointX - 6, pointY - 6, 6, 6);
 
             pointX = pointX + 10 > width - 20 ? pointX - 50 : pointX;
             pointY = pointY - 10 < 10 ? pointY + 30 : pointY;

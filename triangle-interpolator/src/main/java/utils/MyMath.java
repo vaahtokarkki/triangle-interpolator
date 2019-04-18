@@ -7,8 +7,8 @@ import geometry.Point;
  */
 public class MyMath {
 
-    final static int INF = 999999999;
-    final static double PI = 3.141592653589793;
+    public final static int INF = 999999999;
+    public final static double PI = 3.141592653589793;
 
     public static double pow(double value, double exp) {
         throw new UnsupportedOperationException();
@@ -102,7 +102,7 @@ public class MyMath {
      *
      * @param points
      * @return Array of points in clockwise order, that is: top left, top right,
-     * bottom right, bottom left
+     *         bottom right, bottom left
      */
     public static Point[] findMinimumBoundingBox(MyArrayList<Point> points) {
         if (points.size() == 0) {
@@ -121,17 +121,17 @@ public class MyMath {
         Point bottomRight = new Point(xMax, yMin);
         Point bottomLeft = new Point(xMin, yMin);
 
-        Point[] output = {topLeft, topRight, bottomRight, bottomLeft};
+        Point[] output = { topLeft, topRight, bottomRight, bottomLeft };
 
         return output;
     }
 
     /**
-     * Returns list of points which minimum bounding box is moved to origin.
-     * This is done calculating first minimum bounding box for given list of
-     * points and the calculating the delta of x and y coordinates. Origin is
-     * assumed to be top left, so the calculated bounding box's top left point
-     * is mapped to point (0,0).
+     * Returns list of points which minimum bounding box is moved to origin. This is
+     * done calculating first minimum bounding box for given list of points and the
+     * calculating the delta of x and y coordinates. Origin is assumed to be top
+     * left, so the calculated bounding box's top left point is mapped to point
+     * (0,0).
      *
      * @param points list of points to shift
      * @return new list of given points shifted
@@ -161,8 +161,8 @@ public class MyMath {
     }
 
     /**
-     * Returns a new list of points scaled to given width and height. That is
-     * the points are scaled to fill the given width and height matrix.
+     * Returns a new list of points scaled to given width and height. That is the
+     * points are scaled to fill the given width and height matrix.
      *
      * @param width
      * @param height
@@ -189,7 +189,7 @@ public class MyMath {
         Point p2 = new Point(xMax, yMin);
         Point p3 = new Point(xMin, yMax);
 
-        //Original width and height in km
+        // Original width and height in km
         double distanceX = p1.calculateHaversineDistance(p2);
         double distanceY = p1.calculateHaversineDistance(p3);
 
@@ -215,10 +215,10 @@ public class MyMath {
 
         double scalingFactor = MyMath.min((width / width2), (height / height2));
 
-        double translateX = MyMath.abs((xMax * scalingFactor * coefficientX)
-                - (xMin * scalingFactor * coefficientX) - width) / 2;
-        double translateY = MyMath.abs((yMax * scalingFactor * coefficientY)
-                - (yMin * scalingFactor * coefficientY) - height) / 2;
+        double translateX = MyMath
+                .abs((xMax * scalingFactor * coefficientX) - (xMin * scalingFactor * coefficientX) - width) / 2;
+        double translateY = MyMath
+                .abs((yMax * scalingFactor * coefficientY) - (yMin * scalingFactor * coefficientY) - height) / 2;
 
         MyArrayList<Point> output = new MyArrayList<>();
         for (int i = 0; i < pointsMovedToOrigin.size(); i++) {
@@ -254,7 +254,7 @@ public class MyMath {
             minWeight = min(minWeight, p.getWeight());
         }
 
-        double[] output = {minWeight, maxWeight};
+        double[] output = { minWeight, maxWeight };
 
         return output;
     }
@@ -275,7 +275,7 @@ public class MyMath {
             yMin = (p.getY() < yMin) ? p.getY() : yMin;
         }
 
-        double[] output = {xMax, xMin, yMax, yMin};
+        double[] output = { xMax, xMin, yMax, yMin };
 
         return output;
     }
