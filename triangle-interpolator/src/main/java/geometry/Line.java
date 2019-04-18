@@ -29,7 +29,7 @@ public class Line {
     public Line(Point start, Point end) {
         this.start = start;
         this.end = end;
-        this.length = start.calculateHaversineDistance(end);
+        this.length = start.calculateDistance(end);
         this.parameters = this.solveLine();
     }
 

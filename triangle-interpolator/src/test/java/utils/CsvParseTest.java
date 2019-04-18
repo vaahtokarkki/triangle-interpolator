@@ -7,6 +7,7 @@ package utils;
 
 import geometry.Point;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,7 +49,7 @@ public class CsvParseTest {
         XCoord = 0;
         YCoord = 1;
         ZCoord = 2;
-        pathToTestResources = "src/test/resources/";
+        pathToTestResources = "triangle-interpolator/src/test/resources/";
         emptyList = new MyArrayList<>();
 
     }
@@ -134,7 +135,7 @@ public class CsvParseTest {
         parser.setFileName(file1);
 
         String[] result = parser.getCsvHeaders(csvSeparator);
-        String[] expected = {"x", "y", "weight"};
+        String[] expected = { "x", "y", "weight" };
         assertArrayEquals(expected, result);
 
         parser.setFileName(null);

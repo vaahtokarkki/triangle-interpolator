@@ -25,10 +25,6 @@ public class Writer {
      *
      * Note: Writes currently images with values mapped to colour ¯\_(ツ)_/¯
      *
-     * TODO: get rid of value range 0-255, accept any values and find out their min
-     * and max for mapping to colour
-     *
-     *
      * @param values   matrix to write
      * @param filename filename of created image, for example "grayscale.png"
      */
@@ -39,11 +35,9 @@ public class Writer {
                 for (int x = 0; x < values[0].length; x++) {
                     double value = values[y][x];
                     Color newColor;
-                    if (Double.isNaN(value) || value > 255 || value < 0) {
+                    if (Double.isNaN(value) || value > classes || value < 0) {
                         newColor = new Color(0, 0, 0);
                     } else {
-                        // int roundedValue = MyMath.round(value);
-                        // newColor = getRGBForValue(roundedValue, 0, 255);
                         newColor = MyColors.getSequentialColorForClass(value, 10);
                     }
                     image.setRGB(x, y, newColor.getRGB());
@@ -62,10 +56,7 @@ public class Writer {
      * dimensions of matrix. Values of matrix should be in range of 0-255.
      *
      * Note: Writes currently images with values mapped to colour ¯\_(ツ)_/¯
-     *
-     * TODO: get rid of value range 0-255, accept any values and find out their min
-     * and max for mapping to colour
-     *
+     * 
      * @param values   matrix to write
      * @param points   list of points to add
      * @param filename filename of created image, for example "grayscale.png"
@@ -87,13 +78,9 @@ public class Writer {
                 for (int x = 0; x < width; x++) {
                     double value = values[y][x];
                     Color newColor;
-                    int rgb;
-                    if (Double.isNaN(value) || value > 255 || value < 0) {
+                    if (Double.isNaN(value) || value > classes || value < 0) {
                         newColor = new Color(0, 0, 0);
                     } else {
-                        // rgb = MyMath.round(value);
-                        // newColor = getRGBForValue(rgb, 0, 255);
-                        // newColor = getColorForClass(value);
                         newColor = MyColors.getSequentialColorForClass(value, classes);
                     }
                     image.setRGB(x, y, newColor.getRGB());

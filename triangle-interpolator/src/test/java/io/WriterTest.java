@@ -81,7 +81,7 @@ public class WriterTest {
 
     @Test
     public void testWriteToGrayscaleImage() throws IOException {
-        Writer.writeToGrayscaleImage(matrix, fileName);
+        Writer.writeToGrayscaleImage(matrix, fileName, 10);
 
         File dir = new File("test-run");
         File[] files = dir.listFiles();
@@ -97,7 +97,7 @@ public class WriterTest {
 
     @Test
     public void testWriteToGrayscaleImageWithPoints() throws IOException {
-        Writer.writeToGrayscaleImage(matrix, points, fileName);
+        Writer.writeToGrayscaleImage(matrix, points, fileName, 10);
 
         File dir = new File("test-run");
         File[] files = dir.listFiles();
@@ -113,14 +113,14 @@ public class WriterTest {
 
     @Test
     public void testWriteToGrayscaleImageInvalidValues() throws IOException {
-        //When NaN values
+        // When NaN values
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix[0].length; x++) {
                 matrix[y][x] = Double.NaN;
             }
         }
 
-        Writer.writeToGrayscaleImage(matrix, fileName);
+        Writer.writeToGrayscaleImage(matrix, fileName, 10);
 
         File dir = new File("test-run");
         File[] files = dir.listFiles();
@@ -133,7 +133,7 @@ public class WriterTest {
         assertEquals(matrix[0].length, testImage.getWidth());
         assertEquals(matrix.length, testImage.getHeight());
 
-        //When values over 255 or less 0
+        // When values over 255 or less 0
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix[0].length; x++) {
                 double value = -999;
@@ -145,7 +145,7 @@ public class WriterTest {
             }
         }
 
-        Writer.writeToGrayscaleImage(matrix, fileName);
+        Writer.writeToGrayscaleImage(matrix, fileName, 10);
 
         dir = new File("test-run");
         files = dir.listFiles();
@@ -162,14 +162,14 @@ public class WriterTest {
 
     @Test
     public void testWriteToGrayscaleImageWithPointsInvalidValues() throws IOException {
-        //When NaN values
+        // When NaN values
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix[0].length; x++) {
                 matrix[y][x] = Double.NaN;
             }
         }
 
-        Writer.writeToGrayscaleImage(matrix, points, fileName);
+        Writer.writeToGrayscaleImage(matrix, points, fileName, 10);
 
         File dir = new File("test-run");
         File[] files = dir.listFiles();
@@ -182,7 +182,7 @@ public class WriterTest {
         assertEquals(matrix[0].length, testImage.getWidth());
         assertEquals(matrix.length, testImage.getHeight());
 
-        //When values over 255 or less 0
+        // When values over 255 or less 0
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix[0].length; x++) {
                 double value = -999;
@@ -194,7 +194,7 @@ public class WriterTest {
             }
         }
 
-        Writer.writeToGrayscaleImage(matrix, points, fileName);
+        Writer.writeToGrayscaleImage(matrix, points, fileName, 10);
 
         dir = new File("test-run");
         files = dir.listFiles();
@@ -212,7 +212,7 @@ public class WriterTest {
     public void testWriteTrianglesToImage() throws IOException {
         int width = 100;
         int height = 100;
-        
+
         Writer.writeTrianglesToImage(width, height, setOfTriangles, fileName);
         File dir = new File("test-run");
         File[] files = dir.listFiles();
