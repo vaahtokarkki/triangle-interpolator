@@ -10,7 +10,6 @@ import geometry.Triangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import javax.imageio.ImageIO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,6 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import utils.ColorScheme;
 import utils.MyArrayList;
 import utils.MyHashSet;
 
@@ -81,7 +81,7 @@ public class WriterTest {
 
     @Test
     public void testWriteToGrayscaleImage() throws IOException {
-        Writer.writeToGrayscaleImage(matrix, fileName, 10);
+        Writer.writeToGrayscaleImage(matrix, fileName, 10, ColorScheme.DIVERGING);
 
         File dir = new File("test-run");
         File[] files = dir.listFiles();
@@ -97,7 +97,7 @@ public class WriterTest {
 
     @Test
     public void testWriteToGrayscaleImageWithPoints() throws IOException {
-        Writer.writeToGrayscaleImage(matrix, points, fileName, 10);
+        Writer.writeToGrayscaleImage(matrix, points, fileName, 10, ColorScheme.DIVERGING);
 
         File dir = new File("test-run");
         File[] files = dir.listFiles();
@@ -120,7 +120,7 @@ public class WriterTest {
             }
         }
 
-        Writer.writeToGrayscaleImage(matrix, fileName, 10);
+        Writer.writeToGrayscaleImage(matrix, fileName, 10, ColorScheme.DIVERGING);
 
         File dir = new File("test-run");
         File[] files = dir.listFiles();
@@ -145,7 +145,7 @@ public class WriterTest {
             }
         }
 
-        Writer.writeToGrayscaleImage(matrix, fileName, 10);
+        Writer.writeToGrayscaleImage(matrix, fileName, 10, ColorScheme.DIVERGING);
 
         dir = new File("test-run");
         files = dir.listFiles();
@@ -169,7 +169,7 @@ public class WriterTest {
             }
         }
 
-        Writer.writeToGrayscaleImage(matrix, points, fileName, 10);
+        Writer.writeToGrayscaleImage(matrix, points, fileName, 10, ColorScheme.DIVERGING);
 
         File dir = new File("test-run");
         File[] files = dir.listFiles();
@@ -194,7 +194,7 @@ public class WriterTest {
             }
         }
 
-        Writer.writeToGrayscaleImage(matrix, points, fileName, 10);
+        Writer.writeToGrayscaleImage(matrix, points, fileName, 10, ColorScheme.DIVERGING);
 
         dir = new File("test-run");
         files = dir.listFiles();
