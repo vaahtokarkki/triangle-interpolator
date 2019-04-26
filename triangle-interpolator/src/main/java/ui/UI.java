@@ -30,7 +30,7 @@ public class UI {
 
     private int width, height, classes;
 
-    private double p = 2, searchRadius = 1000;
+    private double p = 2, searchRadius = 500;
     private ColorScheme color = ColorScheme.SEQUENTIAL;
 
     public UI() {
@@ -59,13 +59,13 @@ public class UI {
         System.out.println("Select classes (1-25) used in output (how may colors) [10]");
         classes = UITools.readNumber(sc, 1, 25, 10);
 
-        System.out.println("Use default IDW parameters? p=2, variable serach radius of 1000 points [yes]");
+        System.out.println("Use default IDW parameters? p=2, variable serach radius of 1000 pixels [yes]");
 
         if (!UITools.readBoolean(sc, true)) {
             System.out.println("Give p value [2]");
             p = UITools.readDouble(sc, 0, 10, 2);
-            System.out.println("Give serach radius in distance or points [1000]");
-            searchRadius = UITools.readDouble(sc, 1, 9999, 1000);
+            System.out.println("Give serach radius in distance ["+searchRadius+"]");
+            searchRadius = UITools.readDouble(sc, 1, 9999, searchRadius);
         }
 
         System.out.println("Select color scheme for output image [Seqential]");
@@ -73,7 +73,7 @@ public class UI {
     }
 
     public void selectFile() {
-        System.out.println("Select file where to read points default folder is '../data'");
+        System.out.println("Select file where to read points default folder is './data'");
 
         File currentFolder = new File("data");
         File[] listOfFiles = currentFolder.listFiles(new FilenameFilter() {
