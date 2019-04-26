@@ -22,7 +22,9 @@ Kolmioinnin jälkeen jokaiselle kuvan pisteelle lasketaan arvo etsimällä kolmi
 
 IDW-interpolointi huomattavasti simppelempi. Tässä menetelmässä lasketaan jokaisen kuvan pikselin kohdalla määritetyn hakuetäisyyden sisään jäävien pisteiden käänteisiä etäisyyksiä seuraavan kaavan mukaan:
 
-TODO
+![IDW formula](images/IDW_formula.png)
+
+jossa *n* on hakualueen sisään jäävien pisteiden määrä, *w* on tunnetun pisteen arvo ja *d* etäisyys nykyisestä pikselistä tunnettuun pisteeseen. 
 
 
 ## Saavutetut aika- ja tilavaativuudet (m.m. O-analyysit pseudokoodista)
