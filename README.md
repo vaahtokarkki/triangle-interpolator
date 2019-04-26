@@ -32,3 +32,4 @@ mvn jxr:jxr checkstyle:checkstyle
 * [Viikko 3](documentation/viikkoraportit/viikko3.md)
 * [Viikko 4](documentation/viikkoraportit/viikko4.md)
 * [Viikko 5](documentation/viikkoraportit/viikko5.md)
+* [Viikko 6](documentation/viikkoraportit/viikko6.md)
