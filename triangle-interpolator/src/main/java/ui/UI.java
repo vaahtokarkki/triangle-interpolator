@@ -73,9 +73,9 @@ public class UI {
     }
 
     public void selectFile() {
-        System.out.println("Select file where to read points");
+        System.out.println("Select file where to read points default folder is '../data'");
 
-        File currentFolder = new File(".");
+        File currentFolder = new File("data");
         File[] listOfFiles = currentFolder.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File file, String string) {
@@ -87,7 +87,7 @@ public class UI {
 
         int fileId = UITools.readNumber(sc, 1, listOfFiles.length);
 
-        inputFileName = listOfFiles[fileId - 1].getName();
+        inputFileName = "data/"+listOfFiles[fileId - 1].getName();
 
         getCsvSeparator();
 
@@ -168,7 +168,9 @@ public class UI {
     }
 
     private void selectOutput() {
-        String[] defaultOutputName = inputFileName.split("\\.");
+        String[] filePath = inputFileName.split("/");
+        String[] defaultOutputName = filePath[filePath.length-1].split("\\.");
+        
         System.out.println(
                 "Give file name without extension where to write output images [" + defaultOutputName[0] + ".png]");
         outputFileName = UITools.readString(sc, defaultOutputName[0] + ".png");

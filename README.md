@@ -19,6 +19,11 @@ mvn jacoco:report
  ```bash
 mvn jxr:jxr checkstyle:checkstyle
  ```
+
+ Jar-tiedoston tekeminen `target/` kansioon:
+ ```bash
+mvn package
+ ```
 ## Dokumentaatio
 
 * [Määrittelydokumentti](documentation/maarittelydokumentti.md)
