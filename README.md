@@ -26,6 +26,7 @@ mvn package
  ```
 ## Dokumentaatio
 
+* [Käyttöohje](documentation/kayttoohje.md)
 * [Määrittelydokumentti](documentation/maarittelydokumentti.md)
 * [Toteutusdokumentti](documentation/toteutusdokumentti.md)
 * [Testausdokumentti](documentation/testausdokumentti.md)
