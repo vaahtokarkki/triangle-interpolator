@@ -149,26 +149,6 @@ public class Writer {
     }
 
     /**
-     * Maps a value in given range to a rgb value. Used to colorize classified gray
-     * scale values
-     * 
-     * Note: Not used anymore!
-     *
-     * @param value value to map a rgb value
-     * @param min   minimum value used
-     * @param max   maximum value used
-     * @return
-     */
-    private static Color getRGBForValue(int value, double min, double max) {
-        double ratio = 2 * (value - min) / (max - min);
-        int b = (int) Math.max(0, 255 * (1 - ratio));
-        int r = (int) Math.max(0, 255 * (ratio - 1));
-        int g = 255 - b - r;
-
-        return new Color(r, g, b);
-    }
-
-    /**
      * Draw points from list to Graphics2D object.
      *
      * @param g2d    Graphics2D object

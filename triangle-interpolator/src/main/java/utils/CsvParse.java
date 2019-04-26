@@ -162,44 +162,4 @@ public class CsvParse {
             linesFromFile = new MyArrayList<>();
         }
     }
-
-    /**
-     * Finds index of columns for X- Y- and Z-coordinates from header (first) row of
-     * csv file. Other columns are ignored. Output is an array containing in 1st
-     * element index of X-coordinate, in 2nd element index of Y-coordinate and 3rd
-     * element containing index of Z-coordinate
-     *
-     * Note: Not used anymore!
-     *
-     * @param headerRow array of values in header row
-     * @param xCoord    name of X-coordinate column
-     * @param yCoord    name of Y-coordinate column
-     * @param zValue    name of Z-coordinate or weight column
-     * @return
-     */
-    private int[] mapColumnsForValues(String[] headerRow, String xCoord, String yCoord, String zValue) {
-        if (!utils.MyArrays.contains(headerRow, xCoord) || !utils.MyArrays.contains(headerRow, yCoord)
-                || !utils.MyArrays.contains(headerRow, zValue)) {
-            return null;
-        }
-
-        int[] output = new int[3];
-
-        for (int i = 0; i < headerRow.length; i++) {
-            if (headerRow[i].equals(xCoord)) {
-                output[0] = i;
-            }
-
-            if (headerRow[i].equals(yCoord)) {
-                output[1] = i;
-            }
-
-            if (headerRow[i].equals(zValue)) {
-                output[2] = i;
-            }
-        }
-
-        return output;
-
-    }
 }

@@ -124,4 +124,29 @@ public class InterpolatorTest {
         expected = new MyHashSet<>();
         assertEquals(expected.size(), result.size());
     }
+
+    @Test
+    public void testInterpolateInverseDistance() {
+        double[][] expected = new double[10][10];
+        MyArrayList<Point> list = new MyArrayList<>();
+        MyArrayList<Point> emptyList = new MyArrayList<>();
+
+        list.add(new Point(60.0000, 25.0000, 0.0));
+        double[][] result = Interpolator.interpolateInverseDistance(10, 10, list, 100, 2, 1);
+        for (int i = 0; i < expected.length; i++) {
+            assertArrayEquals(expected[i], result[i], 0.01);
+        }
+
+        double[][] resultWhenEmpty = Interpolator.interpolateInverseDistance(10, 10, emptyList, 100, 2, 1);
+        for(int y=0;y<resultWhenEmpty.length;y++) {
+            for(int x=0;x<resultWhenEmpty.length;x++) {
+                assertEquals(Double.NaN, resultWhenEmpty[y][x], 0);
+            }
+        }
+    }
+    
+    @Test
+    public void testInterpolateMatrix() {
+        
+    }
 }
