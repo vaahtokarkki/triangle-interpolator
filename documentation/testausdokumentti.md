@@ -54,3 +54,52 @@ Hämeentie 7| Helsinki| Finland|60.181574|24.955299|success|33
 Mannerheimintie 57-59| Helsinki| Finland|60.1903|24.915794|success|39
 Kehä I| Helsinki| Finland|60.243998|24.945843|success|33
 Hämeentie 84-90| Helsinki| Finland|60.195236|24.961124|success|20
+
+
+# Omien Math-metodien testaus 
+
+## pow(double a, double b)
+
+Testaus tehtiin testaamalla metodia syötteellä `2^i`, jossa i on kahden desimaalin tarkkuudella luku välillä -20 – 20.
+
+`pow(double a, double b)` metodin testauksen tulokset: 
+
+|   |   |
+|--|--|
+|Ero keskimäärin|0.000000000093|
+|Oman toteutuksen aika|6.6611|ms|
+|Java toteutuksen aika|0.0009ms|
+|Mitattujen aikojen ero|6.6602ms|
+|Testiajoja|4000 kpl|
+
+Oman liukulukuja käyttävän pow-metodin toteutuksen rahat tulivat vastaan noin 2^33, jolloin alkoi tulla yli 0.0001 virheitä lopputulokseen.
+
+pow(double a, int b) metodin testauksen tulokset 
+
+Testaus tehtiin testaamalla metodia syötteellä i^(int) i, jossa i on kahden desimaalin tarkkuudella luku välillä -20 – 20 ja (int) i on kokonaislukuesitys tästä juoksevasta liukuluvusta. 
+
+|   |   |
+|--|--|
+|Ero keskimäärin|0.141670863082|
+|Oman toteutuksen aika|0.000717ms|
+|Java toteutuksen aika|0.001705ms|
+|Mitattujen aikojen ero|0.000988ms|
+|Testiajoja|15 kpl|
+
+TODO: Parempi tarkkuus, raja nyt n 13^13
+
+## sqrt(double a)
+sqrt(double a) metodin testauksen tulokset
+
+Testaus tehtiin  testaamalla metodia syötteellä sqrt(i), jossa i on luku 0 – 2 000 000 välillä kahden desimaalin tarkkuudella
+
+|   |   |
+|--|--|
+|Ero keskimäärin|0.000000000000|
+|Oman toteutuksen aika|0.000122ms|
+|Java toteutuksen aika|0.000021ms|
+|Mitattujen aikojen ero|0.000100ms|
+|Testiajoja|200 000 000 kpl|
+
+Metodi vaikuttaisi toimivan oikein myös hyvin suurilla luvuilla. 
+
