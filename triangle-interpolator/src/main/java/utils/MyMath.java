@@ -1,6 +1,7 @@
 package utils;
 
 import geometry.Point;
+import java.util.Arrays;
 
 /**
  * Math functions
@@ -10,8 +11,99 @@ public class MyMath {
     public final static int INF = 999999999;
     public final static double PI = 3.141592653589793;
 
+    /**
+     * Method calculates first value raised to the power of second value. Gives
+     * approx (0.0001 error) correct answers bellow numbers like 2^33.
+     *
+     * @param value base
+     * @param exp exponent
+     * @return value base to the power of exponent
+     */
     public static double pow(double value, double exp) {
-        throw new UnsupportedOperationException();
+        if (exp == 0) {
+            return 1;
+        }
+
+        int integerPart = (int) abs(exp);
+        double decimalPart = abs(exp) - integerPart;
+
+        if (decimalPart == 0) {
+            return pow(value, (int) exp);
+        }
+
+        double[] fractions = decompose(decimalPart);
+
+        double integerPow = pow(value, integerPart);
+
+        double nthRootOfValue = nthRoot(value, (int) fractions[1]);
+
+        if (fractions[0] != 0) {
+            nthRootOfValue = pow(nthRootOfValue, (int) fractions[0]);
+        }
+
+        if (exp < 0) {
+            return 1 / (integerPow * nthRootOfValue);
+        }
+
+        return integerPow * nthRootOfValue;
+
+    }
+
+    /**
+     * Method calculates first value raised to the power of second value. Gives
+     * approx (0.0001 error) correct answers bellow numbers like 13^13.
+     *
+     * TODO: Better accuracy
+     *
+     * @param value base
+     * @param exp exponent
+     * @return value base to the power of exponent
+     */
+    public static double pow(double value, int exp) {
+        if (exp == 0) {
+            return 1;
+        }
+
+        double result = value;
+
+        for (int i = 1; i < abs(exp); i++) {
+            result *= value;
+        }
+
+        if (exp < 0) {
+            return 1 / result;
+        }
+
+        return result;
+    }
+
+    /**
+     * Calculates nth root of given value. Uses Newton's iterative method.
+     *
+     * @see MyMath#sqrt(double)
+     *
+     * @param value value
+     * @param root nth root
+     * @return nth root of given value
+     */
+    public static double nthRoot(double value, int root) {
+        final double PRECISION = 0.00000000001;
+
+        if (value < 0) {
+            return -1;
+        } else if (value == 0) {
+            return 0;
+        }
+
+        double x1 = value;
+        double x2 = value / root;
+
+        while (MyMath.abs(x1 - x2) > PRECISION) {
+            x1 = x2;
+            x2 = ((root - 1.0) * x2 + value / Math.pow(x2, root - 1)) / root;
+        }
+
+        return x2;
     }
 
     /**
@@ -58,6 +150,38 @@ public class MyMath {
     }
 
     /**
+     * Decompose a double to fractions, for example 0.2 -> 1/5. This is done
+     * with <a href="https://en.wikipedia.org/wiki/Continued_fraction">continued
+     * fractions</a>.
+     *
+     * @param x value to decompose
+     * @return an array where [top, bottom]
+     */
+    private static double[] decompose(double x) {
+        final double PRECISION = 0.00000000001;
+        double top = 1, tempTop = 0;
+        double bottom = 0, tempBottom = 1;
+        double guess = x;
+
+        while (MyMath.abs(x - top / bottom) > x * PRECISION) {
+            double newGuess = (int) guess;
+            double helper = top;
+
+            top = newGuess * top + tempTop;
+            tempTop = helper;
+            helper = bottom;
+            bottom = newGuess * bottom + tempBottom;
+            tempBottom = helper;
+
+            guess = 1 / (guess - newGuess);
+
+        }
+
+        double[] output = {top, bottom};
+        return output;
+    }
+
+    /**
      * Returns maximum of given two values
      *
      * @param a value 1
@@ -92,10 +216,11 @@ public class MyMath {
      * @return rounded value
      */
     public static int round(double value) {
-        boolean negative = value < 0 ? true : false;
+        boolean negative = value < 0;
 
         int integerPart = (int) abs(value);
-        double decimalPart = abs(value) - integerPart;
+
+        double decimalPart = value - integerPart;
 
         if (decimalPart < 0.5) {
             if (negative) {
@@ -111,12 +236,48 @@ public class MyMath {
     }
 
     /**
+     * Returns given value rounded to given precision
+     *
+     * @param x value to round
+     * @param precision precision, that is how many decimals
+     * @return rounded value
+     */
+    public static double round(double x, int precision) {
+        double p = 1.0;
+        for (int i = 0; i < precision; i++) {
+            p *= 10;
+        }
+
+        return MyMath.round(x * p) / p;
+    }
+
+    /**
+     * Returns largest integer that is less or equal to given value.
+     *
+     * @param x value to floor
+     * @return floored value
+     */
+    public static int floor(double x) {
+        return (int) x;
+    }
+
+    /**
      * Returns the absolute value of give double.
      *
      * @param value value
      * @return absolute value of given value
      */
     public static double abs(double value) {
+        return value >= 0 ? value : -value;
+    }
+
+    /**
+     * Returns the absolute value of give double.
+     *
+     * @param value
+     * @return
+     */
+    public static int abs(int value) {
         return value >= 0 ? value : -value;
     }
 
