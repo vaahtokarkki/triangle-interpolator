@@ -15,6 +15,8 @@ public class MyMath {
      * Method calculates first value raised to the power of second value. Gives
      * approx (0.0001 error) correct answers bellow numbers like 2^33.
      *
+     * If value is bellow zero and exponent is not an integer, result id NaN
+     *
      * @param value base
      * @param exp exponent
      * @return value base to the power of exponent
@@ -26,6 +28,10 @@ public class MyMath {
 
         int integerPart = (int) abs(exp);
         double decimalPart = abs(exp) - integerPart;
+
+        if (value < 0 && decimalPart != 0) {
+            return Double.NaN;
+        }
 
         if (decimalPart == 0) {
             return pow(value, (int) exp);
@@ -42,9 +48,17 @@ public class MyMath {
         }
 
         if (exp < 0) {
+            if (value < 0 && exp % 2 != 0) {
+                return -(1 / (integerPow * nthRootOfValue));
+
+            }
             return 1 / (integerPow * nthRootOfValue);
         }
 
+        if (value < 0 && exp % 2 != 0) {
+            return -(integerPow * nthRootOfValue);
+
+        }
         return integerPow * nthRootOfValue;
 
     }
@@ -74,6 +88,9 @@ public class MyMath {
             return 1 / result;
         }
 
+        if (value < 0 && exp % 2 != 0) {
+            return -result;
+        }
         return result;
     }
 
@@ -210,7 +227,8 @@ public class MyMath {
     }
 
     /**
-     * Returns given value rounded to nearest integer.
+     * Returns given value rounded to nearest integer. If value is negative and
+     * distance to nearest integer is same, value is rounded towards zero.
      *
      * @param value value to round
      * @return rounded value
@@ -220,19 +238,20 @@ public class MyMath {
 
         int integerPart = (int) abs(value);
 
-        double decimalPart = value - integerPart;
-
-        if (decimalPart < 0.5) {
-            if (negative) {
-                return -integerPart;
-            }
-            return integerPart;
-        }
+        double decimalPart = abs(value) - integerPart;
 
         if (negative) {
-            return -(integerPart + 1);
+            if (decimalPart > 0.5) {
+                return -(integerPart + 1);
+            }
+            return -integerPart;
         }
-        return integerPart + 1;
+
+        if (decimalPart >= 0.5) {
+            return integerPart + 1;
+        }
+        return integerPart;
+
     }
 
     /**

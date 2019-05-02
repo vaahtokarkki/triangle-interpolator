@@ -80,6 +80,33 @@ public class MyMathTest {
     }
 
     @Test
+    public void testRoundToDouble() {
+        // 1 decimal
+        for (double i = -10.0; i < 10; i += 0.1) {
+            double expected = Math.round(i * 100.0) / 100.0;
+            double result = MyMath.round(i, 1);
+
+            assertEquals(expected, result, 0.1);
+        }
+
+        // 2 decimals
+        for (double i = -1.0; i <= 1; i += 0.01) {
+            double expected = Math.round(i * 1000.0) / 1000.0;
+            double result = MyMath.round(i, 2);
+
+            assertEquals(expected, result, 0.01);
+        }
+
+        // 3 decimals
+        for (double i = -1.0; i <= 1; i += 0.001) {
+            double expected = Math.round(i * 10000.0) / 10000.0;
+            double result = MyMath.round(i, 3);
+
+            assertEquals(expected, result, 0.001);
+        }
+    }
+
+    @Test
     public void testMax() {
         assertEquals(0, MyMath.max(0, 0), 0.001);
         assertEquals(1, MyMath.max(0, 1), 0.001);
@@ -115,6 +142,74 @@ public class MyMathTest {
             double result = MyMath.sqrt(i);
             double expected = Math.sqrt(i);
             assertEquals(expected, result, 0.000001);
+        }
+    }
+
+    @Test
+    public void testPowIntegerExponent() {
+        //powers of 2
+        for (int i = -10; i < 10; i++) {
+            double expected = Math.pow(2, i);
+            double result = MyMath.pow(2, i);
+
+            assertEquals(expected, result, 0.0001);
+        }
+
+        //powers of decimal value
+        for (int i = -10; i < 10; i++) {
+            double expected = Math.pow(1.55, i);
+            double result = MyMath.pow(1.55, i);
+
+            assertEquals(expected, result, 0.0001);
+        }
+        
+        //powers of square
+        for (int i = -10; i < 10; i++) {
+            double expected = Math.pow(i, i);
+            double result = MyMath.pow(i, i);
+
+            assertEquals(expected, result, 0.0001);
+        }
+
+        //big exponents
+        for (int i = 1000; i < 2000; i++) {
+            double expected = Math.pow(2, i);
+            double result = MyMath.pow(2, i);
+
+            assertEquals(expected, result, 0.0001);
+        }
+    }
+
+    @Test
+    public void testPowDoubleExponent() {
+        //Powers of 2
+        for (double i = -10; i <= 10;) {
+            double expected = Math.pow(2, i);
+            double result = MyMath.pow(2, i);
+
+            assertEquals(expected, result, 0.0001);
+
+            i = MyMath.round((i + 0.1) * 100.0) / 100.0;
+        }
+
+        //Square
+        for (double i = -10; i <= 10;) {
+            double expected = Math.pow(i, i);
+            double result = MyMath.pow(i, i);
+
+            assertEquals(expected, result, 0.0001);
+
+            i = MyMath.round((i + 0.1) * 100.0) / 100.0;
+        }
+        
+        //Decimal values
+        for (double i = -10; i <= 10;) {
+            double expected = Math.pow(1.55, i);
+            double result = MyMath.pow(1.55, i);
+
+            assertEquals(expected, result, 0.0001);
+
+            i = MyMath.round((i + 0.1) * 100.0) / 100.0;
         }
     }
 
