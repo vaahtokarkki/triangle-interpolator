@@ -385,37 +385,17 @@ public class MyMath {
             return points;
         }
 
-        double[] minAndMaxCoordinates = findMinAndMaxCoordinates(points);
+        double[] scalingCoefficients = getScalingCoefficients(points);
+        double coefficientX = scalingCoefficients[0];
+        double coefficientY = scalingCoefficients[1];
+
+        MyArrayList<Point> pointsMovedToOrigin = moveCoordinatesToOrigin(points);
+        double[] minAndMaxCoordinates = findMinAndMaxCoordinates(pointsMovedToOrigin);
 
         double xMax = minAndMaxCoordinates[0];
         double yMax = minAndMaxCoordinates[2];
         double xMin = minAndMaxCoordinates[1];
         double yMin = minAndMaxCoordinates[3];
-
-        Point p1 = new Point(xMin, yMin);
-        Point p2 = new Point(xMax, yMin);
-        Point p3 = new Point(xMin, yMax);
-
-        // Original width and height in km
-        double distanceX = p1.calculateHaversineDistance(p2);
-        double distanceY = p1.calculateHaversineDistance(p3);
-
-        double coefficientX, coefficientY;
-        if (distanceX > distanceY) {
-            coefficientX = distanceX / distanceY;
-            coefficientY = 1;
-        } else {
-            coefficientY = distanceY / distanceX;
-            coefficientX = 1;
-        }
-
-        MyArrayList<Point> pointsMovedToOrigin = moveCoordinatesToOrigin(points);
-        minAndMaxCoordinates = findMinAndMaxCoordinates(pointsMovedToOrigin);
-
-        xMax = minAndMaxCoordinates[0];
-        yMax = minAndMaxCoordinates[2];
-        xMin = minAndMaxCoordinates[1];
-        yMin = minAndMaxCoordinates[3];
 
         double width2 = (xMax - xMin) * coefficientX;
         double height2 = (yMax - yMin) * coefficientY;
@@ -437,6 +417,43 @@ public class MyMath {
             Point scaledPoint = new Point(x, y, p.getWeight());
             output.add(scaledPoint);
         }
+
+        return output;
+    }
+
+    /**
+     * Returns scaling coefficients for X and Y axis. Coefficients keeps aspect
+     * ratio correct.
+     *
+     * @param points list of points where to get the coefficients
+     * @return 2 element array as [coefficientX, coefficientY]
+     */
+    private static double[] getScalingCoefficients(MyArrayList<Point> points) {
+        double[] minAndMaxCoordinates = findMinAndMaxCoordinates(points);
+
+        double xMax = minAndMaxCoordinates[0];
+        double yMax = minAndMaxCoordinates[2];
+        double xMin = minAndMaxCoordinates[1];
+        double yMin = minAndMaxCoordinates[3];
+
+        Point p1 = new Point(xMin, yMin);
+        Point p2 = new Point(xMax, yMin);
+        Point p3 = new Point(xMin, yMax);
+
+        // Original width and height in km
+        double widthInKm = p1.calculateHaversineDistance(p2);
+        double heightInKm = p1.calculateHaversineDistance(p3);
+
+        double coefficientX, coefficientY;
+        if (widthInKm > heightInKm) {
+            coefficientX = widthInKm / heightInKm;
+            coefficientY = 1;
+        } else {
+            coefficientY = heightInKm / widthInKm;
+            coefficientX = 1;
+        }
+
+        double[] output = {coefficientX, coefficientY};
 
         return output;
     }

@@ -5,7 +5,6 @@ import geometry.Triangle;
 import static interpolate.Interpolator.interpolateInverseDistance;
 import static interpolate.Interpolator.interpolateMatrix;
 import static interpolate.Interpolator.triangulate;
-import static io.Writer.writeToGrayscaleImage;
 import static io.Writer.writeTrianglesToImage;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -16,6 +15,8 @@ import utils.CsvParse;
 import utils.MyArrayList;
 import utils.MyHashSet;
 import utils.MyMath;
+import static io.Writer.writeValuesToImage;
+import static io.Writer.writeValuesToImage;
 
 public class UI {
 
@@ -112,16 +113,16 @@ public class UI {
 
         System.out.println("Writing barycentric");
         if (drawLabels) {
-            writeToGrayscaleImage(barycentricInterpolation, list, "barycentric_" + outputFileName, classes, color);
+            writeValuesToImage(barycentricInterpolation, list, "barycentric_" + outputFileName, classes, color);
         } else {
-            writeToGrayscaleImage(barycentricInterpolation, "barycentric_" + outputFileName, classes, color);
+            writeValuesToImage(barycentricInterpolation, "barycentric_" + outputFileName, classes, color);
         }
 
         System.out.println("Writing idw");
         if (drawLabels) {
-            writeToGrayscaleImage(idwInterpolation, list, "idw_" + outputFileName, classes, color);
+            writeValuesToImage(idwInterpolation, list, "idw_" + outputFileName, classes, color);
         } else {
-            writeToGrayscaleImage(idwInterpolation, "idw_" + outputFileName, classes, color);
+            writeValuesToImage(idwInterpolation, "idw_" + outputFileName, classes, color);
         }
 
         System.out.println("writing triangles");

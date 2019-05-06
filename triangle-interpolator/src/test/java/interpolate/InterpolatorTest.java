@@ -82,20 +82,6 @@ public class InterpolatorTest {
     }
 
     @Test
-    public void testGetGrayscaleValueForClass() {
-        assertEquals(-1, interpolate.Interpolator.getGrayscaleValueForClass(0, 0), 0.01);
-
-        for (int i = 1; i <= 3; i++) {
-            int expected = i == 1 ? 0 : i * 85;
-            assertEquals(expected, interpolate.Interpolator.getGrayscaleValueForClass(i - 1, 3), 0.01);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            assertEquals(0, interpolate.Interpolator.getGrayscaleValueForClass(i, 1), 0.01);
-        }
-    }
-
-    @Test
     public void testTriangulate() {
         MyHashSet<Triangle> result = Interpolator.triangulate(list);
         MyHashSet<Triangle> expected = new MyHashSet<>();

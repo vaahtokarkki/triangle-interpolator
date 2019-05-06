@@ -13,8 +13,8 @@ import me.tongfei.progressbar.ProgressBarStyle;
 public class Interpolator {
 
     /**
-     * Creates a set of valid Delaunay triangles based on given list of points. This
-     * algorithm runs in O(n^3) time.
+     * Creates a set of valid Delaunay triangles based on given list of points.
+     * This algorithm runs in O(n^3) time.
      *
      * @param listOfPoints list of points where to create Delaunay triangles
      * @return set of Delaunay triangles, null if there is none
@@ -52,11 +52,11 @@ public class Interpolator {
      * element in matrix. If the pixel is outside of any triangle it gets value
      * "NaN". After interpolation this matrix can be processed to a image file.
      *
-     * @param width        width of output matrix
-     * @param height       height of output matrix
+     * @param width width of output matrix
+     * @param height height of output matrix
      * @param listOfPoints list of points from to interpolate values
-     * @param classes      in how many different values interpolated values are
-     *                     classified, usually between 10-50
+     * @param classes in how many different values interpolated values are
+     * classified, usually between 10-50
      * @return matrix with interpolated values
      */
     public static double[][] interpolateMatrix(int width, int height, MyArrayList<Point> listOfPoints,
@@ -80,7 +80,6 @@ public class Interpolator {
                         if (t.isPointInsideTriangle(currentPosition)) {
                             double value = t.calcWeightOfPoint(currentPosition);
                             double classified = classifyValue(value, minAndMaxValues, classes);
-                            // classified = getGrayscaleValueForClass(classified, classes);
                             output[y][x] = classified;
                             found = true;
                             break;
@@ -100,25 +99,25 @@ public class Interpolator {
     }
 
     /**
-     * Interpolates values to a matrix by given list of points with inverse distance
-     * weight method. This method calculates values for element in matrix by taking
-     * all points inside the given search radius and calculates the value by
-     * distances to other points. General formula is something like: sum(p.weight /
-     * d(p)^p) / sum(1/d(p)^p), where d(p) is distance from current element to the
-     * point inside search radius.
+     * Interpolates values to a matrix by given list of points with inverse
+     * distance weight method. This method calculates values for element in
+     * matrix by taking all points inside the given search radius and calculates
+     * the value by distances to other points. General formula is something
+     * like: sum(p.weight / d(p)^p) / sum(1/d(p)^p), where d(p) is distance from
+     * current element to the point inside search radius.
      *
      * If there is not any points inside search radius, element gets value NaN
      *
      *
      *
-     * @param width        width of output matrix
-     * @param height       height of output matrix
+     * @param width width of output matrix
+     * @param height height of output matrix
      * @param listOfPoints list of points from to interpolate values
      * @param serachRadius search radius, that is how far away points affect
-     *                     interpolation
-     * @param p            distance to the power of p, usually value between 1 and 2
-     * @param classes      in how many different values interpolated values are
-     *                     classified, usually between 10-50
+     * interpolation
+     * @param p distance to the power of p, usually value between 1 and 2
+     * @param classes in how many different values interpolated values are
+     * classified, usually between 10-50
      * @return matrix with interpolated values
      */
     public static double[][] interpolateInverseDistance(int width, int height, MyArrayList<Point> listOfPoints,
@@ -167,7 +166,6 @@ public class Interpolator {
                 }
             }
         }
-
         return output;
     }
 
@@ -176,11 +174,10 @@ public class Interpolator {
      * calculating a range of given minium and maximum value and divided by the
      * amount of classes. Output is integer between 0 and amount of classes.
      *
-     * @param value           Value to classify
-     * @param minAndMaxValues arrays of min and max values used in interpolation,
-     *                        see
-     *                        {@link MyMath#getMaxAndMinValues(utils.MyArrayList)}
-     * @param classes         Amount of classes used in classification
+     * @param value Value to classify
+     * @param minAndMaxValues arrays of min and max values used in
+     * interpolation, see {@link MyMath#getMaxAndMinValues(utils.MyArrayList)}
+     * @param classes Amount of classes used in classification
      * @return Classified value, or -1 if value is NaN
      */
     public static int classifyValue(double value, double[] minAndMaxValues, int classes) {
@@ -206,39 +203,6 @@ public class Interpolator {
         }
 
         return classes;
-    }
-
-    /**
-     * Returns a grayscale value for given class. Values are in range 0-255, class 0
-     * is always value of 0 and highest class is always value of 255.
-     *
-     *
-     * @param classifiedValue class to get grayscale value for
-     * @param classes         amount of classes used
-     * @return value between 0 and 255, if classes is 0 returns -1
-     */
-    public static double getGrayscaleValueForClass(double classifiedValue, int classes) {
-        if (classes <= 0) {
-            return -1;
-        }
-
-        if (classifiedValue == 0 || classes == 1) {
-            return 0;
-        } else if ((int) classifiedValue == classes - 1 || (int) classifiedValue == classes) {
-            return 255;
-        }
-
-        double width = 255.0 / classes;
-
-        double currentValue = width;
-        for (int i = 0; i < classes; i++) {
-            if (i == classifiedValue) {
-                return (int) currentValue;
-            }
-            currentValue += width;
-        }
-
-        return currentValue;
     }
 
 }

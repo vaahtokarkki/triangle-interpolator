@@ -29,7 +29,7 @@ mvn package
 
 * Colors JUnit test
 * Writer getColorForColorScheme() JUnit
-* Jar commandline arguments (data folder)
+* ~~Jar commandline arguments (data folder)~~
 * More comparisions (wappu)
 * Javadoc generation
 * Dokumentaatioon miksi ei sin, cos, asin
