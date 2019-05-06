@@ -24,6 +24,17 @@ mvn jxr:jxr checkstyle:checkstyle
  ```bash
 mvn package
  ```
+
+## TODO
+
+* Colors JUnit test
+* Writer getColorForColorScheme() JUnit
+* Jar commandline arguments (data folder)
+* More comparisions (wappu)
+* Javadoc generation
+* Dokumentaatioon miksi ei sin, cos, asin
+* Dokumentaatioon lähteitä
+
 ## Dokumentaatio
 
 * [Käyttöohje](documentation/kayttoohje.md)

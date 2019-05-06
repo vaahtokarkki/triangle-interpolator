@@ -1,7 +1,5 @@
 package interpolate;
 
-import java.util.Arrays;
-
 import geometry.Point;
 import geometry.Triangle;
 import utils.MyArrayList;

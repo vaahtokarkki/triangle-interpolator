@@ -30,7 +30,7 @@ public class UI {
 
     private int width, height, classes;
 
-    private double p = 2, searchRadius = 500;
+    private double p = 2, searchRadius = 1000;
     private ColorScheme color = ColorScheme.SEQUENTIAL;
 
     public UI() {
@@ -68,7 +68,7 @@ public class UI {
             searchRadius = UITools.readDouble(sc, 1, 9999, searchRadius);
         }
 
-        System.out.println("Select color scheme for output image [Seqential]");
+        System.out.println("Select color scheme for output image, seqential/diverging [Seqential]");
         color = UITools.readColorScheme(sc, "sequential");
     }
 

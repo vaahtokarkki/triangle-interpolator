@@ -44,5 +44,5 @@ Ohjelmalle annetaan syötteenä csv-tiedosto, jossa on luettavat pisteet ja niil
 
 Esimerkkidataa on kansiossa `triangle-interpolator/data`:
 
-* `temperatures.csv` koko suomen lämpötilamittaukset xx.xx.2019 TODO, Ilmatieteenlaitos
-* `airquality_hki_2017.csv` Helsingin ilmanlaadun mittaukset vuonna 2017, TODO kenen
+* `temperatures.csv` koko suomen lämpötilamittaukset 01.05.2019 TODO, Ilmatieteenlaitos
+* `airquality_hki_2017.csv` Helsingin ilmanlaadun mittaukset vuonna 2017, HSY

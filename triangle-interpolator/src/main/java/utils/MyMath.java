@@ -17,6 +17,10 @@ public class MyMath {
      *
      * If value is bellow zero and exponent is not an integer, result id NaN
      *
+     * In general form a^b is a^c * a^n/m, where c is integer part of exponent
+     * and n/m is fractal representation of remaining. a^c * a^n/m is same as
+     * a^c * (m:th root of a)^n
+     *
      * @param value base
      * @param exp exponent
      * @return value base to the power of exponent
