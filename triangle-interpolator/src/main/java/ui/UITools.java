@@ -80,6 +80,21 @@ public class UITools {
 
         return output;
     }
+    
+    public static String readString(Scanner sc, String defaultValue, int length) {
+        String output = readString(sc, defaultValue);
+        
+        if(output.equals(defaultValue)) {
+            return output;
+        }
+        
+        while(output.length() != length) {
+            System.out.println("Input length must be exactly "+length+" characters long!");
+            output = readString(sc, defaultValue);
+        }
+        
+        return output;
+    }
 
     public static boolean readBoolean(Scanner sc, boolean defaultValue) {
         while (true) {
@@ -127,5 +142,10 @@ public class UITools {
         for (int i = 0; i < files.length; i++) {
             System.out.println("[" + (i + 1) + "] " + files[i].getName());
         }
+    }
+
+    public static boolean isValidFolder(String dataFolder) {
+        File f = new File(dataFolder);
+        return f.exists() && f.isDirectory();
     }
 }

@@ -20,9 +20,9 @@ import utils.MyMath;
 public class UI {
 
     private Scanner sc;
-    CsvParse parser;
+    private CsvParse parser;
 
-    private String inputFileName, outputFileName;
+    private String inputFileName, outputFileName, dataFolder = "data";
     private boolean drawLabels;
 
     private String csvSeparator;
@@ -43,8 +43,8 @@ public class UI {
         height = 0;
     }
 
-    public void start() {
-        selectFile();
+    public void start(String dataFolder) {
+        selectFile(dataFolder);
         selectHeadersForFile();
         selectDimensions();
         selectInterpolationParameters();
@@ -56,26 +56,31 @@ public class UI {
     }
 
     private void selectInterpolationParameters() {
-        System.out.println("Select classes (1-25) used in output (how may colors) [10]");
+        System.out.println("Select classes (1-25) used in output (how may colors) [10]: ");
         classes = UITools.readNumber(sc, 1, 25, 10);
 
-        System.out.println("Use default IDW parameters? p=2, variable serach radius of 1000 pixels [yes]");
+        System.out.println("Use default IDW parameters? p=2, variable serach radius of 1000 pixels [yes]: ");
 
         if (!UITools.readBoolean(sc, true)) {
             System.out.println("Give p value [2]");
             p = UITools.readDouble(sc, 0, 10, 2);
-            System.out.println("Give serach radius in distance ["+searchRadius+"]");
+            System.out.println("Give serach radius in distance [" + searchRadius + "]: ");
             searchRadius = UITools.readDouble(sc, 1, 9999, searchRadius);
         }
 
-        System.out.println("Select color scheme for output image, seqential/diverging [Seqential]");
+        System.out.println("Select color scheme for output image, seqential/diverging [Seqential]: ");
         color = UITools.readColorScheme(sc, "sequential");
     }
 
-    public void selectFile() {
-        System.out.println("Select file where to read points default folder is './data'");
+    public void selectFile(String argsDataFolder) {
+        if (argsDataFolder != null && UITools.isValidFolder(argsDataFolder)) {
+            this.dataFolder = argsDataFolder;
+            System.out.println("Found given folder '" + argsDataFolder + "'! Select file where to read points: ");
+        } else {
+            System.out.println("Select file where to read points, default folder is './" + dataFolder + "': ");
+        }
 
-        File currentFolder = new File("data");
+        File currentFolder = new File(dataFolder);
         File[] listOfFiles = currentFolder.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File file, String string) {
@@ -87,7 +92,7 @@ public class UI {
 
         int fileId = UITools.readNumber(sc, 1, listOfFiles.length);
 
-        inputFileName = "data/"+listOfFiles[fileId - 1].getName();
+        inputFileName = "data/" + listOfFiles[fileId - 1].getName();
 
         getCsvSeparator();
 
@@ -127,33 +132,19 @@ public class UI {
         String[] headers = parser.getCsvHeaders(csvSeparator);
         UITools.printColumns(headers);
 
-        System.out.println("Select column for x-coordinate (1-" + headers.length + ")");
+        System.out.println("Select column for x-coordinate [1-" + headers.length + "]: ");
         xCoord = UITools.readNumber(sc, 1, headers.length) - 1;
 
-        System.out.println("Select column for y-coordinate (1-" + headers.length + ")");
+        System.out.println("Select column for y-coordinate [1-" + headers.length + "]: ");
         yCoord = UITools.readNumber(sc, 1, headers.length) - 1;
 
-        System.out.println("Select column for value to interpolate (1-" + headers.length + ")");
+        System.out.println("Select column for value to interpolate [1-" + headers.length + "]: ");
         zCoord = UITools.readNumber(sc, 1, headers.length) - 1;
     }
 
     private void getCsvSeparator() {
-        System.out.println("Separator used in csv-file? [;]");
-        String separator = sc.nextLine();
-
-        separator = separator.trim();
-
-        if (separator.isEmpty()) {
-            this.csvSeparator = ";";
-            return;
-        }
-
-        while (separator.length() != 1) {
-            System.out.println("Separator must be exactly one character long!");
-            separator = sc.nextLine();
-            separator = separator.trim();
-        }
-        this.csvSeparator = separator;
+        System.out.println("Give separator used in csv-file? [;]: ");
+        this.csvSeparator = UITools.readString(sc, ";", 1);
     }
 
     private void selectDimensions() {
@@ -169,8 +160,8 @@ public class UI {
 
     private void selectOutput() {
         String[] filePath = inputFileName.split("/");
-        String[] defaultOutputName = filePath[filePath.length-1].split("\\.");
-        
+        String[] defaultOutputName = filePath[filePath.length - 1].split("\\.");
+
         System.out.println(
                 "Give file name without extension where to write output images [" + defaultOutputName[0] + ".png]");
         outputFileName = UITools.readString(sc, defaultOutputName[0] + ".png");
