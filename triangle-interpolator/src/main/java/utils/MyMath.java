@@ -52,17 +52,9 @@ public class MyMath {
         }
 
         if (exp < 0) {
-            if (value < 0 && exp % 2 != 0) {
-                return -(1 / (integerPow * nthRootOfValue));
-
-            }
             return 1 / (integerPow * nthRootOfValue);
         }
 
-        if (value < 0 && exp % 2 != 0) {
-            return -(integerPow * nthRootOfValue);
-
-        }
         return integerPow * nthRootOfValue;
 
     }
@@ -92,9 +84,6 @@ public class MyMath {
             return 1 / result;
         }
 
-        if (value < 0 && exp % 2 != 0) {
-            return -result;
-        }
         return result;
     }
 
@@ -107,7 +96,7 @@ public class MyMath {
      * @param root nth root
      * @return nth root of given value
      */
-    public static double nthRoot(double value, int root) {
+    private static double nthRoot(double value, int root) {
         final double PRECISION = 0.00000000001;
 
         if (value < 0) {

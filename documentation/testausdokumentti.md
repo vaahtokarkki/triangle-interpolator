@@ -67,16 +67,18 @@ Testaus tehtiin testaamalla metodia syötteellä `2^i`, jossa i on kahden desima
 |   |   |
 |--|--|
 |Ero keskimäärin|0.000000000093|
-|Oman toteutuksen aika|6.6611|ms|
+|Oman toteutuksen aika|6.6611ms|
 |Java toteutuksen aika|0.0009ms|
 |Mitattujen aikojen ero|6.6602ms|
 |Testiajoja|4000 kpl|
 
 Oman liukulukuja käyttävän pow-metodin toteutuksen rahat tulivat vastaan noin 2^33, jolloin alkoi tulla yli 0.0001 virheitä lopputulokseen.
 
-pow(double a, int b) metodin testauksen tulokset 
+## pow(double a, int b)  
 
 Testaus tehtiin testaamalla metodia syötteellä i^(int) i, jossa i on kahden desimaalin tarkkuudella luku välillä -20 – 20 ja (int) i on kokonaislukuesitys tästä juoksevasta liukuluvusta. 
+
+`pow(double a, int b)` metodin testauksen tulokset:
 
 |   |   |
 |--|--|
@@ -101,5 +103,34 @@ Testaus tehtiin  testaamalla metodia syötteellä sqrt(i), jossa i on luku 0 –
 |Mitattujen aikojen ero|0.000100ms|
 |Testiajoja|200 000 000 kpl|
 
-Metodi vaikuttaisi toimivan oikein myös hyvin suurilla luvuilla. 
+Metodi vaikuttaisi toimivan oikein myös hyvin suurilla luvuilla.
 
+## Tietorakenteiden suorituskykytestaus
+
+Testit suoritettu ajamalla samaa testiä 30 kertaa ja laskemalla näiden suoritusajoista keskiarvo. 
+
+### ArrayList -toteutus
+
+|metodi|oman toteutus|Javan toteutus|listan koko|
+|--|--|--|--|
+|add()|200ms|80ms|1 milj
+|remove()*|10ms|1000ms| 50 000
+|remove()**|650ms|60ms| 50 000
+|indexOf()|747ms|726ms|30 000
+
+\* Poistaminen tehty listan lopusta   
+\** Poistaminen tehty listan alusta
+
+`get()` ja `set()` metodeja ei vertailtu, koska molemmat käytännössä O(1) aikaisia toteutuksia.
+
+### HashSet -toteutus
+
+|metodi|oman toteutus|Javan toteutus|listan koko|
+|--|--|--|--|
+|add()*|44ms|22ms|100 000
+|remove()|21ms|12ms|500 000
+|contains()|36ms|26ms|500 000
+
+Käänteisessä järjestyksessä poisteetuna nopeudessa ei merkittävää eroa.
+
+\* Testituloksissa suuria vaihteluja, noin 100 000 kokoisella listalla suoritusajat alkoivat pysyä samana (suuremmilla heittelee)

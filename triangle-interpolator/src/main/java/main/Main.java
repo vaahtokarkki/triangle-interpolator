@@ -5,7 +5,6 @@ import ui.UI;
 public class Main {
 
     public static void main(String[] args) {
-
         String dataFolder = null;
 
         if (args.length > 0) {

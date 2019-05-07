@@ -225,4 +225,5 @@ public class WriterTest {
         assertEquals(width, testImage.getWidth());
         assertEquals(height, testImage.getHeight());
     }
+    
 }

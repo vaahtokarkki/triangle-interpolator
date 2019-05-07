@@ -27,8 +27,7 @@ mvn package
 
 ## TODO
 
-* Colors JUnit test
-* Writer getColorForColorScheme() JUnit
+* ~~Colors JUnit test~~
 * ~~Jar commandline arguments (data folder)~~
 * More comparisions (wappu)
 * Javadoc generation

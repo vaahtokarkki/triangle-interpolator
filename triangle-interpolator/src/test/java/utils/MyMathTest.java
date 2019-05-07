@@ -162,8 +162,7 @@ public class MyMathTest {
 
             assertEquals(expected, result, 0.0001);
         }
-        
-        //powers of square
+
         for (int i = -10; i < 10; i++) {
             double expected = Math.pow(i, i);
             double result = MyMath.pow(i, i);
@@ -192,7 +191,6 @@ public class MyMathTest {
             i = MyMath.round((i + 0.1) * 100.0) / 100.0;
         }
 
-        //Square
         for (double i = -10; i <= 10;) {
             double expected = Math.pow(i, i);
             double result = MyMath.pow(i, i);
@@ -201,7 +199,7 @@ public class MyMathTest {
 
             i = MyMath.round((i + 0.1) * 100.0) / 100.0;
         }
-        
+
         //Decimal values
         for (double i = -10; i <= 10;) {
             double expected = Math.pow(1.55, i);
@@ -211,6 +209,25 @@ public class MyMathTest {
 
             i = MyMath.round((i + 0.1) * 100.0) / 100.0;
         }
+
+        //Negative values with negative exponent
+        for (double i = -2.0; i > -20.0;) {
+            double expected = Math.pow(-2, i);
+            double result = MyMath.pow(-2, i);
+
+            assertEquals(expected, result, 0.0001);
+            i = MyMath.round((i - 0.1) * 100.0) / 100.0;
+        }
+
+        //Negative values with positive exponent
+        for (double i = 0; i < 10;) {
+            double expected = Math.pow(-2, i);
+            double result = MyMath.pow(-2, i);
+
+            assertEquals(expected, result, 0.0001);
+            i = MyMath.round((i + 0.1) * 100.0) / 100.0;
+        }
+
     }
 
     @Test
