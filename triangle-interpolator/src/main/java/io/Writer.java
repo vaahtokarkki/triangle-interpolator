@@ -149,7 +149,7 @@ public class Writer {
             case SEQUENTIAL:
                 return MyColors.getSequentialColorForClass(value, classes);
             case DIVERGING:
-                return MyColors.getDivergingColor(value, classes);
+                return MyColors.getDivergingColorForClass(value, classes);
             default:
                 return MyColors.DEFAULT;
         }

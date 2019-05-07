@@ -1,14 +1,15 @@
 package main;
 
 import ui.UI;
+import utils.MyColors;
 
 public class Main {
 
     public static void main(String[] args) {
-        
+
         String dataFolder = null;
-        
-        if(args.length > 0) {
+
+        if (args.length > 0) {
             dataFolder = args[0];
         }
 

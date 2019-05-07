@@ -62,7 +62,7 @@ public class MyColors {
      * @return
      */
     public static Color getSequentialColorForClass(double currentClass, int classes) {
-        if (Double.isNaN(currentClass)) {
+        if (Double.isNaN(currentClass) || classes <= 0) {
             return DEFAULT;
         }
 
@@ -73,7 +73,7 @@ public class MyColors {
         double width = SEQUENTIAL.length / classes;
         int index = getIndex(currentClass, classes, SEQUENTIAL.length);
 
-        if (index <= width) {
+        if (index < width) {
             return SEQUENTIAL[0];
         } else if (index >= (SEQUENTIAL.length - width)) {
             return SEQUENTIAL[SEQUENTIAL.length - 1];
@@ -91,8 +91,8 @@ public class MyColors {
      * @param classes total amount of classes used
      * @return
      */
-    public static Color getDivergingColor(double currentClass, int classes) {
-        if (Double.isNaN(currentClass)) {
+    public static Color getDivergingColorForClass(double currentClass, int classes) {
+        if (Double.isNaN(currentClass) || classes <= 0) {
             return DEFAULT;
         }
 
@@ -103,7 +103,7 @@ public class MyColors {
         double width = DIVERGING.length / classes;
         int index = getIndex(currentClass, classes, DIVERGING.length);
 
-        if (index <= width) {
+        if (index < width) {
             return DIVERGING[0];
         } else if (index >= (DIVERGING.length - width)) {
             return DIVERGING[DIVERGING.length - 1];
@@ -112,16 +112,16 @@ public class MyColors {
         return DIVERGING[index];
     }
 
-    private static int getIndex(double currentClass, int classes, int length) {
-        double width = length / classes;
+    public static int getIndex(double currentClass, int classes, int length) {
+        double width = length * 1.0 / classes;
 
-        int startIndex = MyMath.round(currentClass * width);
+        int startIndex = (int) (currentClass * width);
 
         int avg = 0;
         for (int i = startIndex; i < startIndex + width; i++) {
             avg += i;
         }
-        avg = MyMath.round(avg / width);
+        avg = (int) (avg / width);
 
         return avg;
     }
