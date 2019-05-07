@@ -1,7 +1,6 @@
 package main;
 
 import ui.UI;
-import utils.MyColors;
 
 public class Main {
 
@@ -15,7 +14,6 @@ public class Main {
 
         UI ui = new UI();
         ui.start(dataFolder);
-
     }
 
 }
