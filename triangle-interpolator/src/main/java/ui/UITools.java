@@ -80,19 +80,19 @@ public class UITools {
 
         return output;
     }
-    
+
     public static String readString(Scanner sc, String defaultValue, int length) {
         String output = readString(sc, defaultValue);
-        
-        if(output.equals(defaultValue)) {
+
+        if (output.equals(defaultValue)) {
             return output;
         }
-        
-        while(output.length() != length) {
-            System.out.println("Input length must be exactly "+length+" characters long!");
+
+        while (output.length() != length) {
+            System.out.println("Input length must be exactly " + length + " characters long!");
             output = readString(sc, defaultValue);
         }
-        
+
         return output;
     }
 
@@ -147,5 +147,14 @@ public class UITools {
     public static boolean isValidFolder(String dataFolder) {
         File f = new File(dataFolder);
         return f.exists() && f.isDirectory();
+    }
+
+    static String defineDefaultFolder() {
+        if (isValidFolder("./data")) {
+            return "./data";
+        } else if (isValidFolder("./triangle-interpolator/data")) {
+            return "./triangle-interpolator/data";
+        }
+        return null;
     }
 }

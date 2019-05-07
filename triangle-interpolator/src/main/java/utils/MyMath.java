@@ -47,7 +47,7 @@ public class MyMath {
 
         double nthRootOfValue = nthRoot(value, (int) fractions[1]);
 
-        if (fractions[0] != 0) {
+        if (fractions[0] > 0) {
             nthRootOfValue = pow(nthRootOfValue, (int) fractions[0]);
         }
 

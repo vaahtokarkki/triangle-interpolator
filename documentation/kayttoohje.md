@@ -11,13 +11,22 @@ Tämän jälkeen ohjelman saa ajettua komennolla:
 
 ```bash
 cd triangle-interpolator
-#TODO: Ei toimi vielä!
-java -jar triangle-interpolator/triangle-interpolator-1.0-SNAPSHOT.jar 
+java -jar interpolate.jar 
 ```
+
+Ohjelmalle saa annettua parametrinä kansion, josta se etsii luettavia tiedostoja, esim `java -jar interpolate.jar my_folder`.
+
+Ohjelman saa käännettyä lähdekoodista mavenilla komennolla:
+
+```bash
+mvn package
+```
+
+Tämän jälkeen ajettavan jar-tiedoston pitäisi olla kansiossa `triangle-interpolator/triangle-interpolator/target/triangle-interpolator-1.0-SNAPSHOT.jar`
 
 ## Ohjelman käyttö
 
-* Ohjelma etsii kansiosta `triangle-interpolator/data` csv-tiedostoja, joista käyttäjää pyydetään valitsemaan haluttu tiedosto pisteiden luku varten.
+* Ohjelma etsii oletusarvoisesti kansiosta `triangle-interpolator/data` csv-tiedostoja, joista käyttäjää pyydetään valitsemaan haluttu tiedosto pisteiden luku varten.
 * Valitse käytettävä csv-erotin, oletusarvoisesti ;
 * Valitse sarake, josta luetaan pisteen x-koordinaatti. Tämä on yleensä e-koordinaatti, esim n 60.1223 __e 25.0012__
 * Valitse sarake, josta luetaan pisteen y-koordinaatti. Tämä on yleensä n-koordinaatti

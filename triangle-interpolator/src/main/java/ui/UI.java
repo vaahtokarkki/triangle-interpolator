@@ -16,7 +16,6 @@ import utils.MyArrayList;
 import utils.MyHashSet;
 import utils.MyMath;
 import static io.Writer.writeValuesToImage;
-import static io.Writer.writeValuesToImage;
 
 public class UI {
 
@@ -42,10 +41,17 @@ public class UI {
         drawLabels = true;
         width = 0;
         height = 0;
+
+        dataFolder = UITools.defineDefaultFolder();
     }
 
-    public void start(String dataFolder) {
-        selectFile(dataFolder);
+    public void start(String userDefinedDataFolder) {
+        if (this.dataFolder == null && userDefinedDataFolder == null) {
+            System.out.println("Can't find default data folder, please give as command line argument");
+            return;
+        }
+
+        selectFile(userDefinedDataFolder);
         selectHeadersForFile();
         selectDimensions();
         selectInterpolationParameters();
@@ -78,7 +84,7 @@ public class UI {
             this.dataFolder = argsDataFolder;
             System.out.println("Found given folder '" + argsDataFolder + "'! Select file where to read points: ");
         } else {
-            System.out.println("Select file where to read points, default folder is './" + dataFolder + "': ");
+            System.out.println("Select file where to read points, default folder is '" + dataFolder + "': ");
         }
 
         File currentFolder = new File(dataFolder);

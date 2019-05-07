@@ -107,7 +107,9 @@ Metodi vaikuttaisi toimivan oikein myös hyvin suurilla luvuilla.
 
 ## Tietorakenteiden suorituskykytestaus
 
-Testit suoritettu ajamalla samaa testiä 30 kertaa ja laskemalla näiden suoritusajoista keskiarvo. 
+Testit suoritettu ajamalla kutakin testiä 30 kertaa ja laskemalla näiden suoritusajoista keskiarvo. `indexOf()` ja `contains()` metodien testiaineisto on satunnaisia lukuja määrätyltä väliltä, muut metodit testattu suurusjärjestyksessä olevalla aineistolla.
+
+Yleisesti testituloksissa oli melko suuria vaihteluja eri testikertojen välillä, joten testitulokset ovat melko suuntaa antavia.
 
 ### ArrayList -toteutus
 

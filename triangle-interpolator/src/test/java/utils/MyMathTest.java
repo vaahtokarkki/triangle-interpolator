@@ -310,6 +310,17 @@ public class MyMathTest {
 
         assertEquals(null, MyMath.scaleCoordinates(10, 10, null));
         assertEquals(0, MyMath.scaleCoordinates(10, 10, emptyList).size());
-
+    }
+    
+    @Test
+    public void testPI() {
+        assertEquals(Math.PI, MyMath.PI, 0.000000000000001);
+    }
+    
+    @Test
+    public void testToRadians() {
+        for(double i=-500;i<500;i+=0.5) {
+            assertEquals(Math.toRadians(i), MyMath.toRadians(i), 0.0001);
+        }
     }
 }
