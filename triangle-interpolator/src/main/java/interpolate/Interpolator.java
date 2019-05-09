@@ -150,7 +150,7 @@ public class Interpolator {
                             continue;
                         }
 
-                        dist = Math.pow(dist, p);
+                        dist = MyMath.pow(dist, p);
 
                         sum += point.getWeight() / dist;
                         distances += 1 / dist;

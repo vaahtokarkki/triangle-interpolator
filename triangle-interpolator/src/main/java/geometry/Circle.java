@@ -7,6 +7,7 @@ package geometry;
 
 import utils.MyArrayList;
 import utils.MyHashSet;
+import utils.MyMath;
 
 /**
  * Used in Triangle to check if the triangle is a valid delaunay triangle
@@ -65,9 +66,9 @@ public class Circle {
             return false;
         }
 
-        double xDelta = Math.pow(p.getX() - centre.getX(), 2);
-        double yDelta = Math.pow(p.getY() - centre.getY(), 2);
-        double radiusSquare = Math.pow(radius, 2);
+        double xDelta = MyMath.pow(p.getX() - centre.getX(), 2);
+        double yDelta = MyMath.pow(p.getY() - centre.getY(), 2);
+        double radiusSquare = MyMath.pow(radius, 2);
 
         return yDelta + xDelta <= radiusSquare;
     }

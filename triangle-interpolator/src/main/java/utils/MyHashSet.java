@@ -101,7 +101,7 @@ public class MyHashSet<T> implements Iterable<T> {
      * @return
      */
     private MyArrayList<T> getList(T obj) {
-        int hashCode = obj == null ? 0 : Math.abs(obj.hashCode() % array.length);
+        int hashCode = obj == null ? 0 : MyMath.abs(obj.hashCode() % array.length);
 
         if (array[hashCode] == null) {
             array[hashCode] = new MyArrayList<>();
@@ -138,7 +138,7 @@ public class MyHashSet<T> implements Iterable<T> {
         for (int i = 0; i < this.array[index].size(); i++) {
             T obj = this.array[index].get(i);
 
-            int hasCode = Math.abs(obj.hashCode() % newArray.length);
+            int hasCode = MyMath.abs(obj.hashCode() % newArray.length);
             if (newArray[hasCode] == null) {
                 newArray[hasCode] = new MyArrayList<>();
             }

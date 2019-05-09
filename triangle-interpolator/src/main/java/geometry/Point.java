@@ -1,5 +1,7 @@
 package geometry;
 
+import utils.MyMath;
+
 /**
  *
  * Represents a point in 2D plane
@@ -101,7 +103,7 @@ public class Point {
         double deltaX = point.x - this.x;
         double deltaY = point.y - this.y;
 
-        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        double distance = MyMath.sqrt(deltaX * deltaX + deltaY * deltaY);
         return distance;
     }
 
@@ -118,15 +120,15 @@ public class Point {
     public double calculateHaversineDistance(Point p) {
         double r = 6372.8; // Radius of Earth in km
 
-        double dLat = Math.toRadians(this.y - p.y);
-        double dLon = Math.toRadians(this.x - p.x);
+        double dLat = MyMath.toRadians(this.y - p.y);
+        double dLon = MyMath.toRadians(this.x - p.x);
 
-        double lat1 = Math.toRadians(this.y);
-        double lat2 = Math.toRadians(p.y);
+        double lat1 = MyMath.toRadians(this.y);
+        double lat2 = MyMath.toRadians(p.y);
 
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
                 + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-        double c = 2 * Math.asin(Math.sqrt(a));
+        double c = 2 * Math.asin(MyMath.sqrt(a));
         return r * c;
     }
 
@@ -155,10 +157,6 @@ public class Point {
 
     @Override
     public int hashCode() {
-        /*
-         * int hashCode = 0; hashCode = (int) Math.pow(hashCode * 31, x); hashCode =
-         * (int) Math.pow(hashCode * 31, y);
-         */
         int hashCode = 23;
         hashCode = hashCode * 31 + (int) x;
         hashCode = hashCode * 31 + (int) y;
