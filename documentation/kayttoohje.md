@@ -14,7 +14,10 @@ cd triangle-interpolator
 java -jar interpolate.jar 
 ```
 
-Ohjelmalle saa annettua parametrinä kansion, josta se etsii luettavia tiedostoja, esim `java -jar interpolate.jar my_folder`.
+Ohjelmalle saa annettua parametrinä kansion, josta se etsii luettavia tiedostoja, esim:
+```bash
+java -jar interpolate.jar my_folder
+```
 
 Ohjelman saa käännettyä lähdekoodista mavenilla komennolla:
 
@@ -23,6 +26,8 @@ mvn package
 ```
 
 Tämän jälkeen ajettavan jar-tiedoston pitäisi olla kansiossa `triangle-interpolator/triangle-interpolator/target/triangle-interpolator-1.0-SNAPSHOT.jar`
+
+Valmista testidataa on kansiossa `triangle-interpolator/data`.
 
 ## Ohjelman käyttö
 
