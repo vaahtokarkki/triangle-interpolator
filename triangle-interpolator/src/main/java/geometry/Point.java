@@ -1,8 +1,5 @@
 package geometry;
 
-import utils.MyArrayList;
-import utils.MyMath;
-
 /**
  *
  * Represents a point in 2D plane
@@ -113,7 +110,7 @@ public class Point {
      * @return distance in km
      */
     public double calculateHaversineDistance(Point p) {
-        double R = 6372.8; // Radius of Earth in km
+        double r = 6372.8; // Radius of Earth in km
 
         double dLat = Math.toRadians(this.y - p.y);
         double dLon = Math.toRadians(this.x - p.x);
@@ -124,7 +121,7 @@ public class Point {
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
                 + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         double c = 2 * Math.asin(Math.sqrt(a));
-        return R * c;
+        return r * c;
     }
 
     @Override

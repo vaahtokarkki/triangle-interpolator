@@ -1,7 +1,6 @@
 package utils;
 
 import geometry.Point;
-import java.util.Arrays;
 
 /**
  * Math functions

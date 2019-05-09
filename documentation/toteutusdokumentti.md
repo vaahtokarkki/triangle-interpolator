@@ -24,8 +24,11 @@ IDW-interpolointi huomattavasti simppelempi. Tässä menetelmässä lasketaan jo
 
 ![IDW formula](images/IDW_formula.png)
 
-jossa *n* on hakualueen sisään jäävien pisteiden määrä, *w* on tunnetun pisteen arvo ja *d* etäisyys nykyisestä pikselistä tunnettuun pisteeseen. 
+jossa *n* on hakualueen sisään jäävien pisteiden määrä, *w* on tunnetun pisteen arvo ja *d* etäisyys nykyisestä pikselistä tunnettuun pisteeseen.
 
+## Tietorakenteet
+
+Tietorakenteista ArrayList- ja HashSet-toteutuksiin on tehty oleellisimmat metodit niiden käyttöön. HashSetiin on lisäksi tehty Iterable-toteutus, jotta tietorakenteen koko sisällön voisi käydä läpi helposti. Koin järkevämmäksi toteuttaa Iterable-rajapinnan kuin alkaa korvata sitä omalla, näin saadan tuki myös javan `for(int i : set)` syntaksille. ArrayListiin tätä ei ole toteutettu koska, saman voi tehdä helposti size() ja get() metodeilla.
 
 # Saavutetut aika- ja tilavaativuudet (m.m. O-analyysit pseudokoodista)
 
@@ -36,5 +39,7 @@ Interpoloinnin vaatima aika on vahvasti sidoksissa kuvan resoluutioon, koska jok
 # Suorituskyky- ja O-analyysivertailu (mikäli työ vertailupainotteinen)
 
 # Työn mahdolliset puutteet ja parannusehdotukset
+
+Puutteita työssäni on muutamia. Ehkä näkyvimpänä on luettujen pisteiden sijainnin vääristyminen. Vääristymä on kuitenkin sen verran pientä, etten ala parantaa sen tarkkuutta. Myös toteuttamani potenssifunktiot voisivat olla tarkempia. Tyydyn kuitenkin noin neljän desimaalin tarkkuuteen. Ohjelmassani ei ole tarvetta käyttää suuria exponentteja tai muuten valtavan suuria lukuja, joten tarkkuuden hiominen ei tässä tuo merkittävää lisäarvoa ohjelman toimintaan.
 
 # Lähteet
