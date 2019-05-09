@@ -14,8 +14,8 @@ public class Point {
     /**
      * Creates a point with x and y coordinates and specified weight
      *
-     * @param x      x-coordinate
-     * @param y      y-coordinate
+     * @param x x-coordinate
+     * @param y y-coordinate
      * @param weight weight or value assigned to point
      */
     public Point(double x, double y, double weight) {
@@ -25,6 +25,12 @@ public class Point {
 
     }
 
+    /**
+     * Creates a point with x and y coordinates and weight of 0.
+     *
+     * @param x x-coordinate
+     * @param y y-coordinate
+     */
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
@@ -103,8 +109,8 @@ public class Point {
      * Calculates distance in km from this point to given point by Haversine
      * formula, that is great-circle distance between points.
      *
-     * Note: Used only when using geographical coordinates, i.e. coordinates with
-     * WGS84 datum.
+     * Note: Used only when using geographical coordinates, i.e. coordinates
+     * with WGS84 datum.
      *
      * @param p Point where to calculate distance from this point
      * @return distance in km

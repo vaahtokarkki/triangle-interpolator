@@ -18,6 +18,7 @@ public class Reader {
      * @param fileName file to read
      * @return array list containing rows in file or null if caught an
      * exception.
+     * @throws java.io.FileNotFoundException
      */
     public static MyArrayList<String> readRows(String fileName) throws FileNotFoundException {
 

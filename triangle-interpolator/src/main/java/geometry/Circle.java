@@ -100,7 +100,7 @@ public class Circle {
      * results if given points are found
      *
      * @param listOfPoints list of points where to search
-     * @param setOfPointsToExclude list of points which to exclude from output
+     * @param setOfPointsToExlude list of points which to exclude from output
      * @return array of points found, in none found returns empty array
      */
     public MyArrayList<Point> findPointsInside(MyArrayList<Point> listOfPoints, MyHashSet<Point> setOfPointsToExlude) {

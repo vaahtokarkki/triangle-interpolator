@@ -51,6 +51,9 @@ public class MyColors {
         new Color(181, 26, 71),
         new Color(158, 1, 66)};
 
+    /**
+     * Default color for values like Double.NaN
+     */
     public static final Color DEFAULT = new Color(0, 0, 0);
 
     /**
@@ -112,6 +115,16 @@ public class MyColors {
         return DIVERGING[index];
     }
 
+    /**
+     * Returns the index for given value from color scheme array. That is, the
+     * array is divided into parts based on amount of used classes and correct
+     * index is returned based on those parts.
+     *
+     * @param currentClass vale to get index for
+     * @param classes amount of classes used
+     * @param length how many different color original array contains
+     * @return index in original array for given value
+     */
     public static int getIndex(double currentClass, int classes, int length) {
         double width = length * 1.0 / classes;
 

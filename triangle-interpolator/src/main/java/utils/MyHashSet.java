@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * Resizable HashSet implementation using {@link utils.MyArrayList}
  *
- * @author lroni
+ * @param <T> 
  */
 public class MyHashSet<T> implements Iterable<T> {
 

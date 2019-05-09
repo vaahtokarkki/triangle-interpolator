@@ -30,6 +30,8 @@ public class Writer {
      *
      * @param values matrix to write
      * @param filename filename of created image, for example "grayscale.png"
+     * @param classes how many different classes are in matrix of values
+     * @param color {@link ColorScheme} Color scheme to use
      */
     public static void writeValuesToImage(double[][] values, String filename, int classes, ColorScheme color) {
         try {
@@ -54,6 +56,8 @@ public class Writer {
      * @param values matrix to write
      * @param points list of points to add
      * @param filename filename of created image, for example "interpolated.png"
+     * @param classes how many different classes are in matrix of values
+     * @param color {@link ColorScheme} Color scheme to use
      */
     public static void writeValuesToImage(double[][] values, MyArrayList<Point> points, String filename, int classes,
             ColorScheme color) {

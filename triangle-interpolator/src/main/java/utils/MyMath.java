@@ -142,6 +142,12 @@ public class MyMath {
         return guess;
     }
 
+    /**
+     * Converts degrees to radians.
+     *
+     * @param a input degrees
+     * @return given degrees as radians
+     */
     public static double toRadians(double a) {
         return a * PI / 180;
     }

@@ -10,6 +10,9 @@ import utils.MyMath;
 import me.tongfei.progressbar.ProgressBar;
 import me.tongfei.progressbar.ProgressBarStyle;
 
+/**
+ * This class contains static methods to run interpolation. 
+ */
 public class Interpolator {
 
     /**
@@ -55,6 +58,7 @@ public class Interpolator {
      * @param width width of output matrix
      * @param height height of output matrix
      * @param listOfPoints list of points from to interpolate values
+     * @param triangles set of valid Delaunay triangles
      * @param classes in how many different values interpolated values are
      * classified, usually between 10-50
      * @return matrix with interpolated values
