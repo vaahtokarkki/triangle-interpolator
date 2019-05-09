@@ -7,6 +7,7 @@ package interpolate;
 
 import geometry.Point;
 import geometry.Triangle;
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -112,6 +113,49 @@ public class InterpolatorTest {
     }
 
     @Test
+    public void testInterpolateWithTriangles() {
+        Point p1 = new Point(0, 0, 1);
+        Point p2 = new Point(5, 0, 100);
+        Point p3 = new Point(0, 5, 1);
+
+        MyArrayList<Point> listOfPoints = new MyArrayList<>();
+        listOfPoints.add(p1);
+        listOfPoints.add(p2);
+        listOfPoints.add(p3);
+
+        MyHashSet<Triangle> triangles = Interpolator.triangulate(listOfPoints);
+
+        MyHashSet<Double> values = new MyHashSet<>();
+
+        double[][] res = interpolate.Interpolator.interpolateMatrix(5, 5, listOfPoints, triangles, 2);
+
+        for (double[] row : res) {
+            for (double x : row) {
+                if (!Double.isNaN(x)) {
+                    values.add(x);
+                }
+            }
+        }
+
+        assertTrue(values.contains(0.0));
+        assertTrue(values.contains(1.0));
+        assertEquals(2, values.size());
+
+        //Triangles null
+        values = new MyHashSet<>();
+        listOfPoints = new MyArrayList<>();
+        res = interpolate.Interpolator.interpolateMatrix(5, 5, listOfPoints, null, 2);
+
+        for (double[] row : res) {
+            for (double x : row) {
+                values.add(x);
+            }
+        }
+        assertTrue(values.contains(Double.NaN));
+        assertEquals(1, values.size());
+    }
+
+    @Test
     public void testInterpolateInverseDistance() {
         double[][] expected = new double[10][10];
         MyArrayList<Point> list = new MyArrayList<>();
@@ -124,15 +168,15 @@ public class InterpolatorTest {
         }
 
         double[][] resultWhenEmpty = Interpolator.interpolateInverseDistance(10, 10, emptyList, 100, 2, 1);
-        for(int y=0;y<resultWhenEmpty.length;y++) {
-            for(int x=0;x<resultWhenEmpty.length;x++) {
+        for (int y = 0; y < resultWhenEmpty.length; y++) {
+            for (int x = 0; x < resultWhenEmpty.length; x++) {
                 assertEquals(Double.NaN, resultWhenEmpty[y][x], 0);
             }
         }
     }
-    
+
     @Test
     public void testInterpolateMatrix() {
-        
+
     }
 }
