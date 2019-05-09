@@ -6,9 +6,19 @@ Pyrin mahdollisimman kattavaan ykiskkötestaukseen Junit-testeillä.
 
 TODO: Testasin myös ohjelman tuottamia tuloksia ArcGIS-ohjelmalla tehtyihin interpolointeihin samasta aineistosta ja vertailin näiden eroja. 
 
-## Minkälaisilla syötteillä testaus tehtiin (vertailupainotteisissa töissä tärkeää)
+## Minkälaisilla syötteillä testaus tehtiin 
+
+Interpoloinnin testiaineistona käytettiin ilmanlaatuaineistoa (22 pistettä) ja koko suomen kattavaa lämpötila-aineistoa (192 pistettä).
 
 ## Miten testit voidaan toistaa
+
+JUnit testit voi ajaa komennolla
+
+```bash
+mvn test
+```
+
+Testipaketeista löytyy myös performance paketti, jossa on suoritettavia testejä tietorakenteiden suorituskyvyn testaamiseen.
 
 ## Ohjelman toiminnan empiirisen testauksen tulosten esittäminen graafisessa muodossa
 

@@ -71,4 +71,12 @@ Kaikki kun kuva on 1000x1000px ja 100x100px
 
 Puutteita työssäni on muutamia. Ehkä näkyvimpänä on luettujen pisteiden sijainnin vääristyminen. Vääristymä on kuitenkin sen verran pientä, etten ala parantaa sen tarkkuutta. Myös toteuttamani potenssifunktiot voisivat olla tarkempia. Tyydyn kuitenkin noin neljän desimaalin tarkkuuteen. Ohjelmassani ei ole tarvetta käyttää suuria exponentteja tai muuten valtavan suuria lukuja, joten tarkkuuden hiominen ei tässä tuo merkittävää lisäarvoa ohjelman toimintaan.
 
+En toteuttanut Math-luokan sin-, cos- tai asin-metodeja. Näiden toteutus olisi luultavasti ollut mahdollista, mutta niiden tarve ilmeni vasta työn melko loppuvaiheilla, joten en käyttänyt näihin aikaa. Toteutus olisi kuitenkin ollut myös [hyvin matemaattinen](https://stackoverflow.com/questions/2284860/how-does-c-compute-sin-and-other-math-functions/14869358#14869358) ja osaamisalueeni ulkopuolella, joten olisin tarvinnut huomattavasti enemmän aikaa metodien toteuttamiseen siten, että myös ymmärrän mitä niissä tapahtuu.
+
 # Lähteet
+
+* https://stackoverflow.com/questions/2284860/how-does-c-compute-sin-and-other-math-functions/14869358#14869358
+* http://jonisalonen.com/2012/converting-decimal-numbers-to-ratios/
+* https://helloacm.com/newton-iterative-sqrt-method/
+* http://colorbrewer2.org/
+* http://wiki.gis.com/wiki/index.php/Color_scheme

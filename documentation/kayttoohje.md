@@ -10,13 +10,18 @@ cd triangle-interpolator
 Tämän jälkeen ohjelman saa ajettua komennolla:
 
 ```bash
-cd triangle-interpolator
 java -jar interpolate.jar 
 ```
 
 Ohjelmalle saa annettua parametrinä kansion, josta se etsii luettavia tiedostoja, esim:
 ```bash
 java -jar interpolate.jar my_folder
+```
+
+Netbeansissa suoraan ajettuna käyttöliittymässä interpoloinnin edistymistä näyttävä palkki ei näy oikein, joten ohjelma täytyy ajaa komentoriviltä. Mavenilla ohjelman saa ajettua:
+
+```bash
+mvn exec:java -Dexec.mainClass="main.Main"
 ```
 
 Ohjelman saa käännettyä lähdekoodista mavenilla komennolla:
@@ -26,6 +31,16 @@ mvn package
 ```
 
 Tämän jälkeen ajettavan jar-tiedoston pitäisi olla kansiossa `triangle-interpolator/triangle-interpolator/target/triangle-interpolator-1.0-SNAPSHOT.jar`
+
+Jacoco testikattavuuden saa generoitua:
+ ```bash
+mvn jacoco:report
+ ```
+
+Checkstyle-raportin generointi:
+ ```bash
+mvn jxr:jxr checkstyle:checkstyle
+ ```  
 
 Valmista testidataa on kansiossa `triangle-interpolator/data`.
 

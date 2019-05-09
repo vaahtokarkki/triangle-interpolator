@@ -4,26 +4,13 @@ Tiralabra 2019 IV
 
 Ohjelmassa on toteutettu kaksi erilaista interpolointimenetelmää. Näistä varsinainen projektin aihe on [Delaunay kolmiointiin](https://en.wikipedia.org/wiki/Delaunay_triangulation) ja arvojen laskeminen näiden avulla käyttäen [barysentrisiä koordinaatteja](https://en.wikipedia.org/wiki/Barycentric_coordinate_system). Ohjelmassa on myös toteutettu [käänteisen etäisyyden menetelmään](https://en.wikipedia.org/wiki/Inverse_distance_weighting) perustuva interpolointi, joka on melko simppeli toteuttaa. Menetelmä on hyvin yleinen ja tämän lopputulos näyttää useimmille tutulta, esimerkiksi sääkartoista. 
 
- Netbeansissa suoraan ajettuna käyttöliittymässä interpoloinnin edistymistä näyttävä palkki ei näy oikein ja sen saa toimimaan ajamalla ohjelman suoraan konsolista kansiosta `triangle-interpolator`komennolla:
+Pikakäyttöohje:
 
- ```bash
-mvn exec:java -Dexec.mainClass="main.Main"
- ```
-
- Jacoco testikattavuuden generointi:
- ```bash
-mvn jacoco:report
- ```
-
- Checkstyle-raportin generointi:
- ```bash
-mvn jxr:jxr checkstyle:checkstyle
- ```
-
- Jar-tiedoston tekeminen `target/` kansioon:
- ```bash
-mvn package
- ```
+```bash
+git clone https://github.com/vaahtokarkki/triangle-interpolator.git
+cd triangle-interpolator
+java -jar interpolate.jar 
+```
 
 ## TODO
 
@@ -31,8 +18,8 @@ mvn package
 * ~~Jar commandline arguments (data folder)~~
 * More comparisions (wappu)
 * Javadoc generation
-* Dokumentaatioon miksi ei sin, cos, asin
-* Dokumentaatioon lähteitä
+* ~~Dokumentaatioon miksi ei sin, cos, asin~~
+* ~~Dokumentaatioon lähteitä~~
 
 ## Dokumentaatio
 
