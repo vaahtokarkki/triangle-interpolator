@@ -33,6 +33,8 @@ public class UI {
     private double p = 2, searchRadius = 1000;
     private ColorScheme color = ColorScheme.SEQUENTIAL;
 
+    private long t1, t2, t3;
+
     public UI() {
         sc = new Scanner(System.in);
 
@@ -113,9 +115,13 @@ public class UI {
         list = MyMath.scaleCoordinates(width, height, list);
 
         System.out.println("Generating Delaunay triangles");
+
+        t1 = System.currentTimeMillis();
         MyHashSet<Triangle> t = triangulate(list);
         double[][] barycentricInterpolation = interpolateMatrix(width, height, list, t, classes);
+        t2 = System.currentTimeMillis();
         double[][] idwInterpolation = interpolateInverseDistance(width, height, list, searchRadius, p, classes);
+        t3 = System.currentTimeMillis();
 
         System.out.println("Writing barycentric");
         if (drawLabels) {
@@ -133,6 +139,10 @@ public class UI {
 
         System.out.println("writing triangles");
         writeTrianglesToImage(width, height, t, "triangles_" + outputFileName);
+
+        System.out.println("Interpolating with triangles took " + (t2 - t1) + "ms");
+        System.out.println("Interpolating with IDW took " + (t3 - t2) + "ms");
+
     }
 
     private void selectHeadersForFile() {
