@@ -75,3 +75,7 @@ Esimerkkidataa on kansiossa `triangle-interpolator/data`:
 
 * `temperatures.csv` koko suomen lämpötilamittaukset 01.05.2019 TODO, Ilmatieteenlaitos
 * `airquality_hki_2017.csv` Helsingin ilmanlaadun mittaukset vuonna 2017, HSY
+
+## Javadoc
+
+Javadoceista on generoitu myös HTML-sivut, jotka löytyvät [täältä](../triangle-interpolator/javadoc/index.html)
