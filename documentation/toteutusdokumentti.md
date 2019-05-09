@@ -38,7 +38,26 @@ Delaunay kolmoiden muodostaminen on tällä hetkellä O(n^3) aikainen, mutta tä
 
 Interpoloinnin vaatima aika on vahvasti sidoksissa kuvan resoluutioon, koska jokaiselle pikselille täytyy laskea arvo. Tällöin luettujen pisteiden määrällä ei ole suurta vaikutusta, jos ne pysyvät alle noin viidenkymmenen. Tätä suurempi määrä pisteitä hidastaa kolmioilla interpolointia, mutta IDW-interpolointi pysyy suhteellisen nopeana.
 
-# Suorituskyky- ja O-analyysivertailu (mikäli työ vertailupainotteinen)
+# Suorituskykyvertailu
+
+Alla vertailua ohjelman suoritusajoista, kun käytössä javan Math-luokan metodit ja itse toteutetut vastaavat metodit. Kaikki testit suoritettu 1000x1000px kuvalla.
+
+**Kolmioilla interpolointi:**
+
+**Aineisto**|**Javan aika**|**Oma aika**
+|--|--|--|
+|22 pistettä|1195ms|1323ms|
+|192 pistettä|32s|33s|
+
+**IDW-interpolointi:**
+
+**Aineisto**|**Javan aika**|**Oma aika**
+|--|--|--|
+|22 pistettä|364ms|1323ms|
+|192 pistettä|1561ms|15s|
+
+Kolmioilla interpoloidessa aijoissa ei ole suuria eroja, mutta IDW-interpoloinnissa ero muodostuu oman pow() metodini hitaudesta. Yleisesti IDW-interpolointi on nopeampi, mutta ero voisi tasoittua jos Delaunay-kolmionti olisi nopeampi.
+
 
 Tähän aikavertailua kolmioilla ja idw interpoloinnilla. Ainkain:
 * Monta pistettä kolmiointi
