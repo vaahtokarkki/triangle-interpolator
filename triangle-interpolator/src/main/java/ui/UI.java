@@ -101,7 +101,7 @@ public class UI {
 
         int fileId = UITools.readNumber(sc, 1, listOfFiles.length);
 
-        inputFileName = "data/" + listOfFiles[fileId - 1].getName();
+        inputFileName = dataFolder + listOfFiles[fileId - 1].getName();
 
         getCsvSeparator();
 

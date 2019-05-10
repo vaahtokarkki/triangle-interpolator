@@ -150,10 +150,10 @@ public class UITools {
     }
 
     static String defineDefaultFolder() {
-        if (isValidFolder("./data")) {
-            return "./data";
-        } else if (isValidFolder("./triangle-interpolator/data")) {
-            return "./triangle-interpolator/data";
+        if (isValidFolder("data")) {
+            return "data/";
+        } else if (isValidFolder("triangle-interpolator/data")) {
+            return "triangle-interpolator/data/";
         }
         return null;
     }
