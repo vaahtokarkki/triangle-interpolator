@@ -78,4 +78,4 @@ Esimerkkidataa on kansiossa `triangle-interpolator/data`:
 
 ## Javadoc
 
-Javadoceista on generoitu myös HTML-sivut, jotka löytyvät [täältä](../triangle-interpolator/javadoc/index.html)
+Javadoceista on generoitu myös HTML-sivut, jotka löytyvät kansiosta `triangle-interpolator/javadoc`

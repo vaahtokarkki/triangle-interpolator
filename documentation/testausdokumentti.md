@@ -38,9 +38,18 @@ Yllä olevassa kuvassa on päällekkäin ohjelmani tekemä kuva, jossa pisteet s
 
 ### IDW-vertaiulu
 
-![IDW Suomi](images/comparison_idw.png)
+![IDW Helsinki](images/comparison_idw.png)
 
 Yllä olevassa kuvassa vasemmalla ohjelmani tekemä IDW-interpolointi ja oikealla ArcGIS-ohjelmalla tehty vastaava interpolointi Helsingin ilmanlaatumittauksista. Oikean puoleisessa kuvassa hieman eri parametrit ja hakukriteerit, mutta lopputulokset ovat kuitenkin melko samat.
+
+![IDW Suomi](images/comparison_idw_wappu.png)
+Yllä olevassa kuvassa vasemmalla ohjelmani tekemä IDW-interpolointi ja oikealla ArcGIS-ohjelmalla tehty vastaava interpolointi koko Suomen kattavasta lämpötila-aineistosta. Oikean puoleisessa kuvassa hieman eri parametrit ja hakukriteerit, mutta lopputulokset ovat kuitenkin melko samat
+
+### IDW ja kolmioinnin vertailu
+
+![IDW ja kolmiointi](images/comparison_idw_triangles.png)
+
+Yllä olevassa kuvassa vasemmalla kolmioinnilla interpoloitu kuva ja oikealla omalla IDW-toteutuksella interpolointu kuva. Aineistona molemmissa kuvissa käytettiin koko Suomen kattavaa lämpötila-aineistoa.
 
 ## Testauksessa käytetty aineisto 
 

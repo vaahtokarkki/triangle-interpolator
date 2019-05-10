@@ -16,8 +16,8 @@ java -jar interpolate.jar
 
 * ~~Colors JUnit test~~
 * ~~Jar commandline arguments (data folder)~~
-* More comparisions (wappu)
-* Javadoc generation
+* ~~More comparisions (wappu)~~
+* ~~Javadoc generation~~
 * ~~Dokumentaatioon miksi ei sin, cos, asin~~
 * ~~Dokumentaatioon lähteitä~~
 
