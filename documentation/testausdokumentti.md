@@ -2,9 +2,7 @@
 
 ## Mitä on testattu, miten tämä tehtiin
 
-Pyrin mahdollisimman kattavaan ykiskkötestaukseen Junit-testeillä.
-
-TODO: Testasin myös ohjelman tuottamia tuloksia ArcGIS-ohjelmalla tehtyihin interpolointeihin samasta aineistosta ja vertailin näiden eroja. 
+Olen tehnyt empiiristä testausta ja vertailuja ohjelmani tuottamista lopputuloksista [ArcGIS-ohjelmalla](https://en.wikipedia.org/wiki/ArcGIS) tehtyihin kuviin. Lisäksi olen tehnyt suorituskykyvertailua toteuttamilleni tietorakenteille ja Math-luokan metodeille. Saavutin myös koodille kattavan ykiskkötestauksen Junit-testeillä.
 
 ## Minkälaisilla syötteillä testaus tehtiin 
 
